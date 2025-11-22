@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnx3dga7hwaub"
-path="res://.godot/imported/索敌.png-154adcdf38e7f06d002eef10f928fcaa.ctex"
+uid="uid://sdu6gms73f1e"
+path="res://.godot/imported/索敌2.png-9f946fcce60aeed92e263c7f277880cb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/美术/索敌.png"
-dest_files=["res://.godot/imported/索敌.png-154adcdf38e7f06d002eef10f928fcaa.ctex"]
+source_file="res://Asset/索敌2.png"
+dest_files=["res://.godot/imported/索敌2.png-9f946fcce60aeed92e263c7f277880cb.ctex"]
 
 [params]
 

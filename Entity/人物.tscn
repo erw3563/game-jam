@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://84ihgrrxl3xf" path="res://Entity/玩家.gd" id="1_0swfv"]
 [ext_resource type="Shader" uid="uid://clp8hn51js7q0" path="res://Shader/受击.gdshader" id="2_8mfip"]
-[ext_resource type="Texture2D" uid="uid://l5l1raqvfnvg" path="res://Asset/美术/卡比.png" id="2_77ag0"]
-[ext_resource type="Texture2D" uid="uid://dqlm1ukqi6g5u" path="res://Asset/美术/卡比-攻击-Sheet.png" id="3_0dmg4"]
-[ext_resource type="Texture2D" uid="uid://sdu6gms73f1e" path="res://Asset/美术/索敌2.png" id="4_0tw4y"]
-[ext_resource type="Texture2D" uid="uid://hq4m3hx486qm" path="res://Asset/美术/四轴_1.tres" id="6_1fpcv"]
+[ext_resource type="Texture2D" uid="uid://l5l1raqvfnvg" path="res://Asset/卡比.png" id="2_77ag0"]
+[ext_resource type="Texture2D" uid="uid://dqlm1ukqi6g5u" path="res://Asset/卡比-攻击-Sheet.png" id="3_0dmg4"]
+[ext_resource type="Texture2D" uid="uid://sdu6gms73f1e" path="res://Asset/索敌2.png" id="4_0tw4y"]
+[ext_resource type="Texture2D" uid="uid://hq4m3hx486qm" path="res://Asset/四轴_1.tres" id="6_1fpcv"]
 [ext_resource type="PackedScene" uid="uid://chrr4rapknsu0" path="res://Entity/显示条/显示条.tscn" id="6_77ag0"]
-[ext_resource type="Texture2D" uid="uid://xfadbtdydbsh" path="res://Asset/美术/四轴_2.tres" id="7_1fpcv"]
-[ext_resource type="Texture2D" uid="uid://dtjt68bb6o3nj" path="res://Asset/美术/按钮.tres" id="8_vloyp"]
+[ext_resource type="Texture2D" uid="uid://xfadbtdydbsh" path="res://Asset/四轴_2.tres" id="7_1fpcv"]
+[ext_resource type="Texture2D" uid="uid://dtjt68bb6o3nj" path="res://Asset/按钮.tres" id="8_vloyp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0dmg4"]
 size = Vector2(43, 43)

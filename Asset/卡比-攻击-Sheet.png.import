@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sdu6gms73f1e"
-path="res://.godot/imported/索敌2.png-a443bc5d8be1f0a97db7438252619046.ctex"
+uid="uid://dqlm1ukqi6g5u"
+path="res://.godot/imported/卡比-攻击-Sheet.png-4f8999c58676532e91a6fc2fcfe4cd8b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/美术/索敌2.png"
-dest_files=["res://.godot/imported/索敌2.png-a443bc5d8be1f0a97db7438252619046.ctex"]
+source_file="res://Asset/卡比-攻击-Sheet.png"
+dest_files=["res://.godot/imported/卡比-攻击-Sheet.png-4f8999c58676532e91a6fc2fcfe4cd8b.ctex"]
 
 [params]
 
