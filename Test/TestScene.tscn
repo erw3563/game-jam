@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://ckftfiwcnxsfq"]
 
-[sub_resource type="TileSet" id="TileSet_pn5b2"]
+[ext_resource type="TileSet" uid="uid://cmh537og13tx6" path="res://Scene/地块.tres" id="1_804c2"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_set = SubResource("TileSet_pn5b2")
+tile_set = ExtResource("1_804c2")
