@@ -1,18 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://l6yw5wxqbbm3"]
 
-[ext_resource type="Texture2D" uid="uid://8pblmexqx5vk" path="res://Asset/boxes.png" id="1_6e8rh"]
-[ext_resource type="Texture2D" uid="uid://48hnhf62todh" path="res://Asset/meme.png" id="2_uqc13"]
+[ext_resource type="Texture2D" uid="uid://8pblmexqx5vk" path="res://Asset/boxes.png" id="1_sxyjl"]
+[ext_resource type="Texture2D" uid="uid://48hnhf62todh" path="res://Asset/meme.png" id="2_h2qjg"]
 
 [node name="Entity" type="Node2D"]
 
 [node name="Sprite" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite"]
-texture = ExtResource("1_6e8rh")
+texture = ExtResource("1_sxyjl")
 region_enabled = true
 region_rect = Rect2(0, 16, 16, 16)
 
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite"]
-texture = ExtResource("2_uqc13")
+texture = ExtResource("2_h2qjg")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)

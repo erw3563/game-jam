@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dssccalehutiv"]
+
+[ext_resource type="Script" uid="uid://cj3xyb234cfoh" path="res://GDBase/Health/health_cells_progress_bar.gd" id="1_yvmay"]
+[ext_resource type="Script" uid="uid://6e551kvioost" path="res://GDBase/Spawner/SpawnerBase/spawner.gd" id="2_7ejcu"]
+
+[node name="CellsProgressBar" type="Node2D"]
+script = ExtResource("1_yvmay")
+max_cells_num = 4
+
+[node name="Spawner" type="Node" parent="."]
+script = ExtResource("2_7ejcu")

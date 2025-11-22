@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxfvf3w4ep1kd"]
+
+[ext_resource type="Texture2D" uid="uid://8pblmexqx5vk" path="res://Asset/boxes.png" id="1_tj7na"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jtrm7"]
+atlas = ExtResource("1_tj7na")
+region = Rect2(38, 38, 3, 4)
+
+[node name="ProgressBarCell" type="Sprite2D"]
+texture = SubResource("AtlasTexture_jtrm7")
