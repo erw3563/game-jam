@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ks74cfuka2mp"]
+[gd_scene load_steps=9 format=3 uid="uid://ks74cfuka2mp"]
 
 [ext_resource type="Texture2D" uid="uid://dhuyg6rqovntn" path="res://Asset/史莱姆-Sheet.png" id="1_pcsgp"]
 [ext_resource type="Script" uid="uid://crsfwmq4lqlfe" path="res://GDBase/Health/damage_component.gd" id="2_cbgps"]
@@ -10,11 +10,19 @@ script/source = "extends  CharacterBody2D
 ###测试合并
 @export var 敌人:CharacterBody2D
 
+var is_front_ground:bool = true##前面是否有地面
+var is_front_wall:bool = false##前面是否有地面
+var dir:int = 1:##角色的朝向
+	set(value):
+		dir = signi(value)
+		if dir == 1:
+			scale.x = 0.5
+		if dir == -1:
+			scale.x = -0.5
 var 禁用_下落:bool=false
-var 模式:Callable=靠近
+var 模式:Callable=巡逻
 func _physics_process(delta: float) -> void:
-	if 敌人:
-		模式.call(delta)
+	模式.call(delta)
 	if not 禁用_下落:
 		if not is_on_floor():
 			velocity.y+=delta*300
@@ -23,6 +31,21 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 var 图片_方向:=1
+func 巡逻(delta:float):
+	if is_front_wall:
+		dir = -dir
+		is_front_wall = false
+		print(\"墙壁转向\")
+	elif !is_front_ground:
+		dir = -dir
+		is_front_ground = true
+		print(\"无路转向\")
+	velocity.x = dir * 32
+	print(\"前面是否有墙\"+str(is_front_wall))
+	print(\"前面是否有路\"+str(is_front_ground))
+	if 敌人:
+		模式=靠近
+
 func 靠近(delta: float):
 	var 水平差值=敌人.global_position.x-global_position.x
 	if 水平差值*图片_方向<-1:
@@ -76,6 +99,22 @@ func _on_health_component_died() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Player:
 		敌人 = body
+
+func _on_check_ground_body_exited(body: Node2D) -> void:
+	if body is TileMapLayer:
+		is_front_ground = false
+
+func _on_check_ground_body_entered(body: Node2D) -> void:
+	if body is TileMapLayer:
+		is_front_ground = true
+
+func _on_check_wall_body_entered(body: Node2D) -> void:
+	if body is TileMapLayer:
+		is_front_wall = true
+
+func _on_check_wall_body_exited(body: Node2D) -> void:
+	if body is TileMapLayer:
+		is_front_wall = false
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ud7mm"]
@@ -83,6 +122,9 @@ size = Vector2(68, 56)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ghsdk"]
 size = Vector2(286, 172)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r118s"]
+size = Vector2(10, 10)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
@@ -126,12 +168,30 @@ health_component = NodePath("..")
 max_cells_num = 6
 current_cells_num = 6
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Vision" type="Area2D" parent="."]
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
 position = Vector2(107, -62)
 shape = SubResource("RectangleShape2D_ghsdk")
 
+[node name="CheckWall" type="Area2D" parent="."]
+position = Vector2(38, 12)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckWall"]
+position = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_r118s")
+
+[node name="CheckGround" type="Area2D" parent="."]
+position = Vector2(38, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CheckGround"]
+position = Vector2(5, 5)
+shape = SubResource("RectangleShape2D_r118s")
+
 [connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Vision" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="CheckWall" to="." method="_on_check_wall_body_entered"]
+[connection signal="body_exited" from="CheckWall" to="." method="_on_check_wall_body_exited"]
+[connection signal="body_entered" from="CheckGround" to="." method="_on_check_ground_body_entered"]
+[connection signal="body_exited" from="CheckGround" to="." method="_on_check_ground_body_exited"]
