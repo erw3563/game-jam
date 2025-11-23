@@ -4,6 +4,7 @@ class_name HealthComponent
 
 signal health_delta_applied(amount:int)
 signal current_health_updated(current_health_:int)
+signal hited(dir:Vector2i)
 signal died
 signal to_die
 
@@ -69,6 +70,10 @@ func damage(amount:int):
 	change_current_health(-amount)
 	
 	health_delta_applied.emit(-amount)
+
+func damage_with_dir(num:int,dir:Vector2):
+	damage(num)
+	hited.emit(dir)
 
 func heal(amount:int):
 	if is_heal_blocked:

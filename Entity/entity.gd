@@ -13,3 +13,6 @@ func _on_fire_ball_fired(dir: Vector2) -> void:
 	$MoveGravityByInput.set_velocity(-dir * 256)
 func _on_circular_chop_fired(dir: Vector2) -> void:
 	$MoveGravityByInput.set_velocity(-dir * 16)
+
+func _on_health_component_hited(dir: Vector2i) -> void:
+	$MoveGravityByInput.set_velocity(-dir * 256)
