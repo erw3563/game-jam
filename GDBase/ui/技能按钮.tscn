@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bk6rbdjm7r8bs"]
 
 [ext_resource type="Texture2D" uid="uid://8pblmexqx5vk" path="res://Asset/boxes.png" id="1_w0aym"]
-[ext_resource type="Texture2D" uid="uid://qoimgouxa6dt" path="res://Asset/ui/攻击.png" id="2_ysopj"]
+[ext_resource type="FontFile" uid="uid://dx2k78fa72r2n" path="res://VonwaonBitmap-16px.ttf" id="2_w0aym"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwhkp"]
 atlas = ExtResource("1_w0aym")
@@ -24,30 +24,27 @@ extends TextureRect
 	set(a):
 		技能_图标=a
 		if texture_rect :texture_rect.texture=a
-		
+
+var timer:Timer
+
 func _ready() -> void:
 	texture_rect.texture=技能_图标
 	label.text=按键
 	#set_process(false)
-	
-	
 
-@export var 冷却时间:float=5   #单位 秒
-var 冷却值:float=0
-func 冷却():
-	冷却值=冷却时间
-	label_2.text=str(0.1*int(冷却值*10))+\"s\"
-	label_2.visible=true
-	set_process(true)
+func init(timer_:Timer):
+	timer = timer_
+	timer.timeout.connect(_on_timer_out)
+
+@warning_ignore(\"unused_parameter\")
 func _process(delta: float) -> void:
-	冷却值-=delta
-	label_2.text=str(0.1*int(冷却值*10))+\"s\"
-	progress_bar.value=冷却值/冷却时间*100
-	if 冷却值<=0:
-		set_process(false)
-		label_2.visible=false
-		冷却结束.emit()
-signal 冷却结束
+	if !timer:
+		return
+	if !timer.is_stopped():
+		$\"冷却/Label2\".text = str(timer.time_left)
+
+func _on_timer_out():
+	$\"冷却/Label2\".text = \"\"
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0aym"]
@@ -80,7 +77,6 @@ theme_override_constants/margin_bottom = 6
 
 [node name="TextureRect" type="TextureRect" parent="技能_图标"]
 layout_mode = 2
-texture = ExtResource("2_ysopj")
 expand_mode = 1
 
 [node name="按键" type="Label" parent="."]
@@ -98,7 +94,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 30
-text = "q"
+text = "R"
 horizontal_alignment = 1
 
 [node name="冷却" type="TextureRect" parent="."]
@@ -111,17 +107,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_w0aym")
 
-[node name="Label2" type="Label" parent="冷却"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "1s"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="ProgressBar" type="ProgressBar" parent="冷却"]
 layout_mode = 1
 anchors_preset = 15
@@ -131,6 +116,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_w0aym")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ysopj")
-value = 38.3
 fill_mode = 3
 show_percentage = false
+
+[node name="Label2" type="Label" parent="冷却"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 12.0
+offset_right = -13.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_w0aym")
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 1

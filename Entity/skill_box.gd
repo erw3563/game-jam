@@ -14,4 +14,3 @@ func _process(delta: float) -> void:
 
 func _on_timer_out():
 	$Label.text = ""
-	print("我知道计时器结束了")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://l6yw5wxqbbm3"]
+[gd_scene load_steps=18 format=3 uid="uid://l6yw5wxqbbm3"]
 
 [ext_resource type="Script" uid="uid://c2t057q0qw21e" path="res://Entity/entity.gd" id="1_orqw4"]
 [ext_resource type="Texture2D" uid="uid://8pblmexqx5vk" path="res://Asset/boxes.png" id="1_sxyjl"]
@@ -13,7 +13,6 @@
 [ext_resource type="Script" uid="uid://cst52mewg8j3" path="res://GDBase/Spawner/Launcher/launcher.gd" id="10_pgb4x"]
 [ext_resource type="PackedScene" uid="uid://dob7qv6qmj4li" path="res://GDBase/Spawner/Launcher/Bullet/fireball.tscn" id="11_vjdlm"]
 [ext_resource type="PackedScene" uid="uid://b0e1lkj7glll0" path="res://GDBase/Spawner/Launcher/Bullet/circular_chop.tscn" id="13_orqw4"]
-[ext_resource type="Texture2D" uid="uid://ba4iwbj1wwf88" path="res://Asset/ui/左键双击.png" id="16_dwhkp"]
 [ext_resource type="PackedScene" uid="uid://bk6rbdjm7r8bs" path="res://GDBase/ui/技能按钮.tscn" id="17_dibct"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sxyjl"]
@@ -134,48 +133,33 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -315.0
-offset_top = -99.0
-offset_right = -31.0
-offset_bottom = -41.0
+offset_left = -291.0
+offset_top = -63.0
+offset_right = -7.0
+offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/separation = 20
 
-[node name="技能按钮2" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
+[node name="R" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
 layout_mode = 2
 
-[node name="技能按钮" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
+[node name="F" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
 layout_mode = 2
-"按键" = "G"
+"按键" = "F"
 
-[node name="技能按钮3" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
+[node name="V" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
 layout_mode = 2
 "按键" = "V"
 
-[node name="技能按钮4" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
+[node name="G" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
 layout_mode = 2
-"按键" = ""
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HBoxContainer/技能按钮4"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = 7.0
-offset_right = 20.0
-offset_bottom = 33.0
-grow_horizontal = 2
-grow_vertical = 0
-texture = ExtResource("16_dwhkp")
-expand_mode = 1
+"按键" = "G"
 
 [connection signal="hited" from="HealthComponent" to="." method="_on_health_component_hited"]
 [connection signal="fired" from="Attack" to="." method="_on_attack_fired"]
 [connection signal="fired" from="Fire" to="." method="_on_fire_fired"]
 [connection signal="created_interval_timer" from="FireBall" to="." method="_on_fire_ball_created_interval_timer"]
 [connection signal="fired" from="FireBall" to="." method="_on_fire_ball_fired"]
+[connection signal="created_interval_timer" from="circular_chop" to="." method="_on_circular_chop_created_interval_timer"]
 [connection signal="fired" from="circular_chop" to="." method="_on_circular_chop_fired"]

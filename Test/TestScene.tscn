@@ -16,7 +16,7 @@ position = Vector2(-53, -22)
 
 [node name="Camera2D" type="Camera2D" parent="Entity"]
 position = Vector2(53, 22)
-zoom = Vector2(1.5, 1.5)
+zoom = Vector2(2, 2)
 
 [node name="Thron2" parent="." instance=ExtResource("3_xbm2f")]
 position = Vector2(-305, -16)
