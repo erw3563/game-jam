@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+class_name Player
 
 func _on_fire_ball_created_interval_timer(timer: Timer) -> void:
 	$CanvasLayer/SkillBox.init(timer)

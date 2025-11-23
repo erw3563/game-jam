@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ks74cfuka2mp"]
+[gd_scene load_steps=8 format=3 uid="uid://ks74cfuka2mp"]
 
 [ext_resource type="Texture2D" uid="uid://dhuyg6rqovntn" path="res://Asset/史莱姆-Sheet.png" id="1_pcsgp"]
 [ext_resource type="Script" uid="uid://crsfwmq4lqlfe" path="res://GDBase/Health/damage_component.gd" id="2_cbgps"]
@@ -20,8 +20,8 @@ func _physics_process(delta: float) -> void:
 			velocity.y+=delta*300
 		else :
 			velocity.y=0
-		
 	move_and_slide()
+	print(\"敌人是\"+str(敌人))
 
 var 图片_方向:=1
 func 靠近(delta: float):
@@ -73,10 +73,17 @@ func 两点_判断_是否联通(from: Vector2, to: Vector2, 物理层: int = 1) 
 
 func _on_health_component_died() -> void:
 	queue_free()
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body is Player:
+		敌人 = body
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ud7mm"]
 size = Vector2(68, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ghsdk"]
+size = Vector2(286, 172)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
@@ -120,4 +127,12 @@ health_component = NodePath("..")
 max_cells_num = 6
 current_cells_num = 6
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(107, -62)
+shape = SubResource("RectangleShape2D_ghsdk")
+
 [connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
