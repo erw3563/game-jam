@@ -129,7 +129,7 @@ func _check_dash():
 
 func _seted_move_by_other():
 	if attack_move_velocity != Vector2.ZERO:
-		mover.velocity.x = attack_move_velocity.x
+		mover.velocity = attack_move_velocity
 		attack_move_velocity = Vector2.ZERO
 
 func set_velocity(velocity:Vector2):
