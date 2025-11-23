@@ -35,14 +35,10 @@ func 巡逻(delta:float):
 	if is_front_wall:
 		dir = -dir
 		is_front_wall = false
-		print(\"墙壁转向\")
 	elif !is_front_ground:
 		dir = -dir
 		is_front_ground = true
-		print(\"无路转向\")
 	velocity.x = dir * 32
-	print(\"前面是否有墙\"+str(is_front_wall))
-	print(\"前面是否有路\"+str(is_front_ground))
 	if 敌人:
 		模式=靠近
 
