@@ -3,6 +3,7 @@
 [ext_resource type="TileSet" uid="uid://qk4jyafelh87" path="res://Asset/Tile/tile.tres" id="1_804c2"]
 [ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity.tscn" id="2_wyv1x"]
 [ext_resource type="PackedScene" uid="uid://ks74cfuka2mp" path="res://Entity/史莱姆/史莱姆.tscn" id="3_xbm2f"]
+[ext_resource type="PackedScene" uid="uid://dbw31i4g315ci" path="res://Entity/Thron/thron.tscn" id="3_xbm2f"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -21,3 +22,7 @@ zoom = Vector2(2.5, 2.5)
 position = Vector2(-232, -49)
 collision_layer = 2
 "敌人" = NodePath("../Entity")
+[node name="Thron" parent="." instance=ExtResource("3_xbm2f")]
+position = Vector2(-25, -72)
+rotation = -3.1415927
+is_fall = true
