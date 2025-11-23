@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://l6yw5wxqbbm3"]
+[gd_scene load_steps=19 format=3 uid="uid://l6yw5wxqbbm3"]
 
+[ext_resource type="Script" uid="uid://c2t057q0qw21e" path="res://Entity/entity.gd" id="1_orqw4"]
 [ext_resource type="Texture2D" uid="uid://8pblmexqx5vk" path="res://Asset/boxes.png" id="1_sxyjl"]
 [ext_resource type="Texture2D" uid="uid://48hnhf62todh" path="res://Asset/meme.png" id="2_h2qjg"]
 [ext_resource type="PackedScene" uid="uid://dvyakgw5nqb70" path="res://GDBase/Spawner/Launcher/launcher.tscn" id="4_adxne"]
@@ -11,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://b84eyanlvuixs" path="res://GDBase/Spawner/Launcher/Bullet/bullet.tscn" id="9_sb4mi"]
 [ext_resource type="Script" uid="uid://cst52mewg8j3" path="res://GDBase/Spawner/Launcher/launcher.gd" id="10_pgb4x"]
 [ext_resource type="PackedScene" uid="uid://dob7qv6qmj4li" path="res://GDBase/Spawner/Launcher/Bullet/fireball.tscn" id="11_vjdlm"]
+[ext_resource type="Script" uid="uid://sykpawsavia7" path="res://Entity/skill_box.gd" id="12_gdubu"]
+[ext_resource type="FontFile" uid="uid://dx2k78fa72r2n" path="res://VonwaonBitmap-16px.ttf" id="13_opyyd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sxyjl"]
 size = Vector2(12, 12)
@@ -23,9 +26,14 @@ point_count = 2
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdubu"]
+atlas = ExtResource("1_sxyjl")
+region = Rect2(17, 17, 14, 14)
+
 [node name="Entity" type="CharacterBody2D"]
 z_index = 1
 collision_layer = 2
+script = ExtResource("1_orqw4")
 
 [node name="Sprite" type="Node2D" parent="."]
 
@@ -109,3 +117,32 @@ fire_interval = 5.0
 bullet = ExtResource("11_vjdlm")
 bullet_velocity = 8.0
 metadata/_custom_type_script = "uid://cst52mewg8j3"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SkillBox" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -46.0
+offset_top = -44.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 0
+script = ExtResource("12_gdubu")
+
+[node name="icon" type="TextureRect" parent="CanvasLayer/SkillBox"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = SubResource("AtlasTexture_gdubu")
+
+[node name="Label" type="Label" parent="CanvasLayer/SkillBox"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("13_opyyd")
+horizontal_alignment = 1
+text_overrun_behavior = 1
+
+[connection signal="created_interval_timer" from="FireBall" to="." method="_on_fire_ball_created_interval_timer"]

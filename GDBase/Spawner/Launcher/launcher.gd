@@ -1,6 +1,8 @@
 extends Node2D
 class_name Launcher
 
+signal created_interval_timer(timer:Timer)##供技能冷却显示使用
+
 @onready var spawner: Spawner = Spawner.new()
 
 @export var shooter:Node
@@ -35,7 +37,6 @@ enum ControlType{
 func _ready() -> void:
 	spawner.init(bullet)
 
-
 @warning_ignore("unused_parameter")
 func _process(delta: float) -> void:
 	if control == ControlType.OTHERS:
@@ -57,6 +58,7 @@ func _start_interval_timer():
 		fire_interval_timer.one_shot = true
 		fire_interval_timer.timeout.connect(func():is_fire_interval = false)
 		add_child(fire_interval_timer)
+		created_interval_timer.emit(fire_interval_timer)
 	fire_interval_timer.start(fire_interval)
 
 func fires(fire_dir:Vector2,bullet_mods:Array[Node] = []):
@@ -66,14 +68,14 @@ func fires(fire_dir:Vector2,bullet_mods:Array[Node] = []):
 
 func fire(fire_dir:Vector2,bullet_mods:Array[Node] = []):
 	if remaining_bullets != 0:
-		var bullet:Bullet = spawner.request_instance()
-		bullet.position = gun.position
+		var new_bullet:Bullet = spawner.request_instance()
+		new_bullet.position = gun.position
 		for mod in bullet_mods:
-			bullet.install_mod(mod)
-		add_child(bullet)
+			new_bullet.install_mod(mod)
+		add_child(new_bullet)
 		var scatter_angel = randf_range(-max_scatter_angle,+max_scatter_angle)
 		var dir = fire_dir.rotated(scatter_angel)
-		bullet.init(shooter,bullet_velocity * dir,bullet_exit_time)
+		new_bullet.init(shooter,bullet_velocity * dir,bullet_exit_time)
 	
 	if remaining_bullets > 0:
 		remaining_bullets = max(0,remaining_bullets - 1)
