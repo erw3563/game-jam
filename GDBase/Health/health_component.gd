@@ -27,7 +27,8 @@ var is_dead:bool = false
 ##当处于即时制中，下方的time就是状态持续时间，通过内部计时器控制time减少
 @export var is_turn_based:bool
 @export var is_stop_before_death:bool
-
+@export var is_hited_with_invulnerable:bool
+@export var hitd_invulnerable_time:float
 @export_group("特殊效果")
 @export var is_invulnerable:bool = false
 @export var invulnerable_time:float = 0
@@ -67,13 +68,18 @@ func damage(amount:int):
 		if is_stop_before_death:
 			return
 	
+	if is_hited_with_invulnerable:
+		enable_invulnerable(true,hitd_invulnerable_time)
+	
 	change_current_health(-amount)
 	
 	health_delta_applied.emit(-amount)
 
 func damage_with_dir(num:int,dir:Vector2):
-	damage(num)
+	if is_invulnerable:
+		return
 	hited.emit(dir)
+	damage(num)
 
 func heal(amount:int):
 	if is_heal_blocked:

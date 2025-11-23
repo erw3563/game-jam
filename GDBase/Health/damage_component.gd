@@ -27,7 +27,6 @@ func _on_area_entered(area: Area2D) -> void:
 	if whitelist.has(area.get_parent()):
 		return
 	var dir:Vector2 = sign(global_position - area.global_position)
-	print(dir)
 	for i in damage_num:
 		area.damage_with_dir(damage_amount,dir)
 	
