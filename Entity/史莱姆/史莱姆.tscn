@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ks74cfuka2mp"]
+[gd_scene load_steps=7 format=3 uid="uid://ks74cfuka2mp"]
 
 [ext_resource type="Texture2D" uid="uid://dhuyg6rqovntn" path="res://Asset/史莱姆-Sheet.png" id="1_pcsgp"]
+[ext_resource type="Script" uid="uid://crsfwmq4lqlfe" path="res://GDBase/Health/damage_component.gd" id="2_cbgps"]
+[ext_resource type="Script" uid="uid://v4uwxotregtq" path="res://GDBase/Health/health_component.gd" id="3_ghsdk"]
+[ext_resource type="PackedScene" uid="uid://dssccalehutiv" path="res://GDBase/CellProgressBar/cells_progress_bar.tscn" id="4_r118s"]
 
 [sub_resource type="GDScript" id="GDScript_pcsgp"]
 script/source = "extends  CharacterBody2D
@@ -55,6 +58,10 @@ func 下砸_攻击(_delta: float):
 		下砸_冷却=6
 		模式=靠近
 	
+
+
+func _on_health_component_died() -> void:
+	queue_free()
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ud7mm"]
@@ -72,3 +79,30 @@ hframes = 5
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_ud7mm")
+
+[node name="DamageComponent" type="Area2D" parent="."]
+script = ExtResource("2_cbgps")
+metadata/_custom_type_script = "uid://crsfwmq4lqlfe"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageComponent"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_ud7mm")
+
+[node name="HealthComponent" type="Area2D" parent="."]
+script = ExtResource("3_ghsdk")
+max_health = 6
+current_health = 6
+metadata/_custom_type_script = "uid://v4uwxotregtq"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_ud7mm")
+
+[node name="CellsProgressBar" parent="HealthComponent" node_paths=PackedStringArray("health_component") instance=ExtResource("4_r118s")]
+position = Vector2(-40, 18)
+scale = Vector2(2.825, 2.825)
+health_component = NodePath("..")
+max_cells_num = 6
+current_cells_num = 6
+
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]

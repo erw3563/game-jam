@@ -19,7 +19,10 @@ position = Vector2(53, 22)
 zoom = Vector2(2.5, 2.5)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("3_xbm2f")]
-position = Vector2(-232, -49)
+position = Vector2(-195, -17)
 
 [node name="Thron" parent="." instance=ExtResource("3_xbm2f")]
 position = Vector2(-17, -17)
+
+[node name="CharacterBody2D2" parent="." instance=ExtResource("4_8ovih")]
+position = Vector2(-127, -28)
