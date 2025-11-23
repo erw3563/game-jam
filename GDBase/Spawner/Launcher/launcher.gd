@@ -2,6 +2,7 @@ extends Node2D
 class_name Launcher
 
 signal created_interval_timer(timer:Timer)##供技能冷却显示使用a
+signal fired(dir:Vector2)
 
 @onready var spawner: Spawner = Spawner.new()
 
@@ -76,7 +77,7 @@ func fire(fire_dir:Vector2,bullet_mods:Array[Node] = []):
 		var scatter_angel = randf_range(-max_scatter_angle,+max_scatter_angle)
 		var dir = fire_dir.rotated(scatter_angel)
 		new_bullet.init(shooter,bullet_velocity * dir,bullet_exit_time)
-	
+		fired.emit(fire_dir)
 	if remaining_bullets > 0:
 		remaining_bullets = max(0,remaining_bullets - 1)
 

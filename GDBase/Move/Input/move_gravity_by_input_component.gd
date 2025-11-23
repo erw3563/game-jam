@@ -42,6 +42,8 @@ enum State{
 
 var current_state:State
 
+var attack_move_velocity:Vector2 = Vector2.ZERO
+
 func _ready() -> void:
 	empty_jump_timer = _create_timer(empty_jump_time)
 	dash_timer = _create_timer(dash_time)
@@ -53,6 +55,7 @@ func _physics_process(delta: float) -> void:
 	_check_state()
 	_set_mover_velocity_x(delta)
 	_set_mover_veloctiy_y()
+	_seted_move_by_other()
 	_check_dash()
 	mover.move_and_slide()
 
@@ -123,3 +126,11 @@ func _create_timer(time:float)->Timer:
 func _check_dash():
 	if !dash_timer.is_stopped():
 		mover.velocity.x = dash_speed * signf(mover.velocity.x)
+
+func _seted_move_by_other():
+	if attack_move_velocity != Vector2.ZERO:
+		mover.velocity.x = attack_move_velocity.x
+		attack_move_velocity = Vector2.ZERO
+
+func set_velocity(velocity:Vector2):
+	attack_move_velocity = velocity

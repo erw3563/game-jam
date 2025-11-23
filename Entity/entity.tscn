@@ -155,4 +155,8 @@ theme_override_fonts/font = ExtResource("13_opyyd")
 horizontal_alignment = 1
 text_overrun_behavior = 1
 
+[connection signal="fired" from="Attack" to="." method="_on_attack_fired"]
+[connection signal="fired" from="Fire" to="." method="_on_fire_fired"]
 [connection signal="created_interval_timer" from="FireBall" to="." method="_on_fire_ball_created_interval_timer"]
+[connection signal="fired" from="FireBall" to="." method="_on_fire_ball_fired"]
+[connection signal="fired" from="circular_chop" to="." method="_on_circular_chop_fired"]
