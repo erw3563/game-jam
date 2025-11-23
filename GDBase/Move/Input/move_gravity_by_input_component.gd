@@ -91,13 +91,14 @@ func _deceleration(delta:float):
 	var curve_value = slower_curve.sample(slower_progress)
 	var mover_velocity_x:float = mover.velocity.normalized().x
 	if input_x == 0:
-		mover.velocity.x = max_speed * curve_value * input_x
+		var a=mover.velocity.x
+		mover.velocity.x=a-a*delta*10 if abs(a)>1 else 0.0 ## 平滑停下
 	else:
 		mover.velocity.x = max_speed * curve_value * lerpf(mover_velocity_x,input_x,slower_progress)
 
 func _set_mover_veloctiy_y():
 	if mover.is_on_floor():
-		mover.velocity.y += gravity
+		mover.velocity.y=0
 	else:
 		mover.velocity.y += gravity
 	
