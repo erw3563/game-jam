@@ -13,6 +13,8 @@ class_name MoveGravityByInputComponent
 	set(value):
 		jump_num = clamp(value,0,max_jump_num)
 @export var empty_jump_time:float = 0
+@export var dash_time:float = 1
+@export var dash_speed:float = 256
 ##请注意，若需要加速时间严格等于下方时间，需要您的加速曲线在结尾处才达到最高点
 ##减速时间同理，在结尾处达到最低点
 @export var time_faster:float = 1 ##加速时间
@@ -28,6 +30,7 @@ var slower_progress:float = 0: ##减速进度
 		slower_progress = clamp(value,0,1)
 
 var empty_jump_timer:Timer
+var dash_timer:Timer
 
 var input_x:float
 var input_y:float
@@ -40,7 +43,8 @@ enum State{
 var current_state:State
 
 func _ready() -> void:
-	_create_empty_jump_timer()
+	empty_jump_timer = _create_timer(empty_jump_time)
+	dash_timer = _create_timer(dash_time)
 
 func _physics_process(delta: float) -> void:
 	if !mover:
@@ -49,11 +53,14 @@ func _physics_process(delta: float) -> void:
 	_check_state()
 	_set_mover_velocity_x(delta)
 	_set_mover_veloctiy_y()
+	_check_dash()
 	mover.move_and_slide()
 
 func _check_input():
 	input_x = Input.get_axis("move_left","move_right")
 	input_y = Input.is_action_pressed("move_up")
+	if Input.is_action_just_pressed("dash"):
+		dash_timer.start()
 
 func _check_state():
 	if mover.is_on_floor():
@@ -106,10 +113,13 @@ func _set_mover_veloctiy_y():
 		mover.velocity.y = - input_y * jump_power
 		jump_num -= 1
 
-func _create_empty_jump_timer():
-	if empty_jump_timer:
-		return
-	empty_jump_timer = Timer.new()
-	empty_jump_timer.one_shot = true
-	empty_jump_timer.wait_time = empty_jump_time
-	add_child(empty_jump_timer)
+func _create_timer(time:float)->Timer:
+	var timer = Timer.new()
+	timer.one_shot = true
+	timer.wait_time = time
+	add_child(timer)
+	return timer
+
+func _check_dash():
+	if !dash_timer.is_stopped():
+		mover.velocity.x = dash_speed * signf(mover.velocity.x)
