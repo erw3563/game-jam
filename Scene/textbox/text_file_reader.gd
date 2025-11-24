@@ -27,3 +27,4 @@ func show_words():
 		await get_tree().create_timer(0.05).timeout
 	words_box.text = new_text
 	saying_word_num += 1
+	
