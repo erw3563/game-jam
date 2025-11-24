@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://nftsnt53vq0w"]
+
+[ext_resource type="Script" uid="uid://beyqg2drcscgj" path="res://Scene/文字系统/文字渐变.tres.gd" id="2_heu3g"]
+[ext_resource type="Texture2D" uid="uid://d12422v4jck8a" path="res://Scene/第一章  桥/数据之海.jpg" id="3_r6hjn"]
+
+[sub_resource type="GDScript" id="GDScript_heu3g"]
+script/source = "extends CanvasLayer
+@onready var rich_text_label: RichTextLabel = $RichTextLabel
+const 数据=[\"你好,世界。\"
+,\"（这句好像是启动用语）\"
+,\"系统检测中。。。。\"
+,\"自建完成。\"
+,\"请分配指令。\"
+]
+var a:int=数据.size()-1
+func _ready() -> void:
+	_on_rich_text_label_吐字完毕()
+
+
+@onready var texture_rect: TextureRect = $TextureRect
+
+func _on_rich_text_label_吐字完毕() -> void:
+	if 数据.size()>a:
+		rich_text_label.吐字(数据[a])
+		a+=1
+	else :
+		var x= load(\"res://Scene/第一章  桥/第一章_桥_2.tscn\")
+		get_tree().root.add_child(x.instantiate(),false,Node.INTERNAL_MODE_FRONT)
+		var g= get_tree().create_tween()
+		g.tween_property(texture_rect,'modulate',Color(0.0, 0.0, 0.0, 0.0),3)
+		g.finished.connect(func ():queue_free())
+"
+
+[node name="Node2D" type="CanvasLayer"]
+script = SubResource("GDScript_heu3g")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_r6hjn")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/normal_font_size = 34
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_heu3g")
+"吐字间隔" = 0.2
+
+[connection signal="吐字完毕" from="RichTextLabel" to="." method="_on_rich_text_label_吐字完毕"]

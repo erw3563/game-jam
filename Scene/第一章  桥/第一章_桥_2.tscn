@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://6tntm5jo2ro0"]
+
+[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity.tscn" id="1_qxfuw"]
+[ext_resource type="Texture2D" uid="uid://ctd3abltt45vk" path="res://Scene/第一章  桥/桥.png" id="2_alpqs"]
+[ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/文字系统/对话框.tscn" id="3_1mwi8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_alpqs"]
+size = Vector2(536, 20)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Entity" parent="." instance=ExtResource("1_qxfuw")]
+
+[node name="Camera2D" type="Camera2D" parent="Entity"]
+zoom = Vector2(2, 2)
+
+[node name="桥_这是临时的" type="Sprite2D" parent="."]
+position = Vector2(128, -49)
+texture = ExtResource("2_alpqs")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="桥_这是临时的"]
+position = Vector2(-127, -95)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="桥_这是临时的/StaticBody2D"]
+position = Vector2(0, 190)
+shape = SubResource("RectangleShape2D_alpqs")
+
+[node name="对话框" parent="." instance=ExtResource("3_1mwi8")]
