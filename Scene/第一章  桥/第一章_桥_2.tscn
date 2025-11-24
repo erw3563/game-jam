@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity.tscn" id="1_qxfuw"]
 [ext_resource type="Texture2D" uid="uid://ctd3abltt45vk" path="res://Scene/第一章  桥/桥.png" id="2_alpqs"]
-[ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/文字系统/对话框.tscn" id="3_1mwi8"]
+[ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="3_1mwi8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_alpqs"]
 size = Vector2(536, 20)
