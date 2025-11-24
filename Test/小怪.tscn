@@ -1,0 +1,78 @@
+[gd_scene load_steps=4 format=4 uid="uid://cfj0itpglo055"]
+
+[ext_resource type="TileSet" uid="uid://qk4jyafelh87" path="res://Asset/Tile/tile.tres" id="1_l0dwc"]
+[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity.tscn" id="3_jxalb"]
+
+[sub_resource type="GDScript" id="GDScript_mc7mb"]
+script/source = "extends Node2D
+const 词库=[[\"咿咿呀呀\",\"叽叽喳喳\"]
+,[\"阴阳怪气\",\"指手画脚\"]
+,[\"装聋\",\"作哑\"]
+#,[\"比比画画\",\"真真假假\"]
+]
+@export var 玩家:CharacterBody2D
+func _ready() -> void:
+	if not 玩家:return
+	放怪()
+var 阶段:int=0
+func 放怪():
+	await get_tree().physics_frame
+	if 阶段>=词库.size():return
+	match 阶段:
+		_:
+			放怪_常规(阶段,0)
+			放怪_常规(阶段,1)
+	阶段+=1
+
+var 小怪=preload(\"res://Entity/字体系_怪物/小怪_字.tscn\")
+@onready var marker_2d: Marker2D = $Marker2D
+@onready var marker_2d_2: Marker2D = $Marker2D/Marker2D
+@onready var ww:Dictionary[int,Marker2D]={0:marker_2d,1:marker_2d_2}
+func 放怪_常规(阶段_,w:int):
+	var h:String=词库[阶段_][w]
+	var a= 位置(ww.get(w).global_position,h)
+	for i in h.length():
+		var b=小怪_产生(h[i])
+		b.global_position=a[i]
+		add_child(b)
+
+
+func 小怪_产生(字:String)->CharacterBody2D:
+	var a=小怪.instantiate()
+	a.敌人=玩家
+	a.字=字
+	小怪_存在数目+=1
+	a.死亡.connect(死亡)
+	return a
+func 位置(w:Vector2,s:String):
+	var 间隔=20
+	var r=[]
+	for i in s.length():
+		r.append(w+Vector2(i-(s.length()-1)*0.5,0)*间隔)
+	return r
+
+var 小怪_存在数目:int=0
+func 死亡():
+	小怪_存在数目-=1
+	if 小怪_存在数目<=0:
+		放怪()
+"
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("玩家")]
+script = SubResource("GDScript_mc7mb")
+"玩家" = NodePath("Entity")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAgAAcAAAAEAAgAAAAfAAcAAAACAAAAAAAeAAcAAAACAAAAAAAdAAcAAAACAAAAAAAcAAcAAAACAAAAAAAbAAcAAAACAAAAAAAaAAcAAAACAAAAAAAZAAcAAAACAAAAAAAYAAcAAAACAAAAAAAXAAcAAAACAAAAAAAWAAcAAAACAAAAAAAVAAcAAAACAAAAAAAUAAcAAAACAAAAAAATAAcAAAACAAAAAAASAAcAAAACAAAAAAARAAcAAAACAAAAAAAQAAcAAAACAAAAAAAPAAcAAAACAAAAAAAOAAcAAAACAAAAAAANAAcAAAACAAAAAAAMAAcAAAACAAAAAAALAAcAAAACAAAAAAAKAAcAAAACAAAAAAAJAAcAAAACAAAAAAAIAAcAAAACAAAAAAAHAAcAAAACAAAAAAAGAAcAAAACAAAAAAAFAAcAAAACAAAAAAAEAAcAAAACAAAAAAADAAcAAAACAAAAAAACAAcAAAACAAAAAAABAAcAAAACAAAAAAAAAAcAAAACAAAAAAD//wcAAAACAAAAAAD+/wcAAAACAAAAAAD9/wcAAAACAAAAAAD8/wcAAAACAAAAAAD7/wcAAAACAAAAAAD6/wcAAAACAAAAAAD5/wcAAAACAAAAAAD4/wcAAAACAAAAAAD3/wcAAAACAAAAAAD2/wcAAAACAAAAAAD1/wcAAAACAAAAAAD0/wcAAAACAAAAAADz/wcAAAACAAAAAADy/wcAAAACAAAAAADx/wcAAAACAAAAAADw/wcAAAACAAAAAADv/wcAAAACAAAAAADu/wcAAAACAAAAAADt/wcAAAACAAAAAADs/wcAAAACAAAAAADr/wcAAAACAAAAAADq/wcAAAACAAAAAADp/wcAAAACAAAAAADo/wcAAAACAAAAAADn/wcAAAACAAAAAADm/wcAAAACAAAAAADl/wcAAAACAAAAAADk/wcAAAACAAAAAADj/wcAAAACAAAAAADi/wcAAAACAAAAAADh/wcAAAACAAAAAADg/wcAAAACAAAAAADf/wcAAAAAAAgAAADf//L/AAADAAEAAADf//P/AAADAAIAAADf//T/AAADAAIAAADf//X/AAADAAIAAADf//b/AAADAAIAAADf//f/AAADAAIAAADf//j/AAADAAIAAADf//n/AAADAAIAAADf//r/AAADAAIAAADf//v/AAADAAIAAADf//z/AAADAAIAAADf//3/AAADAAIAAADf//7/AAADAAIAAADf////AAADAAIAAADf/wAAAAADAAIAAADf/wEAAAADAAIAAADf/wIAAAADAAIAAADf/wMAAAADAAIAAADf/wQAAAADAAIAAADf/wUAAAADAAIAAADf/wYAAAADAAIAAAAgAO3/AAADAAEAAAAgAO7/AAADAAIAAAAgAO//AAADAAIAAAAgAPD/AAADAAIAAAAgAPH/AAADAAIAAAAgAPL/AAADAAIAAAAgAPP/AAADAAIAAAAgAPT/AAADAAIAAAAgAPX/AAADAAIAAAAgAPb/AAADAAIAAAAgAPf/AAADAAIAAAAgAPj/AAADAAIAAAAgAPn/AAADAAIAAAAgAPr/AAADAAIAAAAgAPv/AAADAAIAAAAgAPz/AAADAAIAAAAgAP3/AAADAAIAAAAgAP7/AAADAAIAAAAgAP//AAADAAIAAAAgAAAAAAADAAIAAAAgAAEAAAADAAIAAAAgAAIAAAADAAIAAAAgAAMAAAADAAIAAAAgAAQAAAADAAIAAAAgAAUAAAADAAIAAAAgAAYAAAADAAIAAAA=")
+tile_set = ExtResource("1_l0dwc")
+
+[node name="Entity" parent="." instance=ExtResource("3_jxalb")]
+
+[node name="Camera2D" type="Camera2D" parent="Entity"]
+zoom = Vector2(2, 2)
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-297, 16)
+
+[node name="Marker2D" type="Marker2D" parent="Marker2D"]
+position = Vector2(648, -7)
