@@ -6,7 +6,7 @@ signal attacked
 @export var whitelist:Array[Node]
 @export_group("伤害参数")
 ##伤害间隔
-@export var attack_interval:float
+@export var attack_interval:float = 5
 ##伤害量
 @export var damage_amount:int = 1
 ##伤害次数
@@ -42,6 +42,7 @@ func _create_attack_timer():
 		attack_timer = Timer.new()
 		attack_timer.wait_time = attack_interval
 		attack_timer.timeout.connect(attack_enemies)
+		add_child(attack_timer)
 		attack_timer.start()
 
 func _on_area_entered(area: Area2D) -> void:
