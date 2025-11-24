@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://rxjrhmrrksql"]
+
+[ext_resource type="Script" uid="uid://v4uwxotregtq" path="res://GDBase/Health/health_component.gd" id="1_1tn36"]
+[ext_resource type="Script" uid="uid://cj3xyb234cfoh" path="res://GDBase/Health/health_cells_progress_bar.gd" id="2_6oee2"]
+[ext_resource type="Script" uid="uid://crsfwmq4lqlfe" path="res://GDBase/Health/damage_component.gd" id="3_r4jkb"]
+
+[sub_resource type="GDScript" id="GDScript_807mj"]
+script/source = "@tool
+extends CharacterBody2D
+var 字体=preload(\"res://Entity/字体系_怪物/dingliehuobanfont20241217-2.ttf\")
+@export var 字:String=\"无\":
+	set(a):
+		字=a
+		if a.length()!=1:return
+		queue_redraw()
+@export var 敌人:CharacterBody2D
+func _ready() -> void:
+	if Engine.is_editor_hint():set_process(false)
+func _draw() -> void:
+	var 左下角=字体.get_string_size(字)*Vector2(-0.5,0.5)
+	draw_char(字体,左下角,字,16)
+	
+var 落地_等待:float=0
+func _physics_process(delta: float) -> void:
+	if Engine.is_editor_hint():
+		set_process(false)
+		return
+	if is_on_floor():
+		velocity=Vector2.ZERO
+		落地_等待+=delta
+		if 落地_等待>0.4 and 敌人:
+			落地_等待=0
+			velocity=Vector2(50,-50)*2
+			velocity.x=velocity.x* sign(敌人.global_position.x-global_position.x)
+	else :
+		velocity.y+=20
+	move_and_slide()
+
+signal 死亡
+func _on_health_component_died() -> void:
+	死亡.emit()
+	queue_free()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_807mj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6oee2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uafib"]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 5
+script = SubResource("GDScript_807mj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_807mj")
+
+[node name="HealthComponent" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_1tn36")
+max_health = 2
+current_health = 2
+metadata/_custom_type_script = "uid://v4uwxotregtq"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
+shape = SubResource("RectangleShape2D_6oee2")
+
+[node name="HealthCellsProgressBar" type="Node2D" parent="HealthComponent" node_paths=PackedStringArray("health_component")]
+position = Vector2(-13, 4)
+script = ExtResource("2_6oee2")
+health_component = NodePath("..")
+max_cells_num = 2
+current_cells_num = 2
+metadata/_custom_type_script = "uid://cj3xyb234cfoh"
+
+[node name="DamageComponent" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_r4jkb")
+metadata/_custom_type_script = "uid://crsfwmq4lqlfe"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageComponent"]
+shape = SubResource("RectangleShape2D_uafib")
+
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
