@@ -21,5 +21,9 @@ func show_words():
 		words = line.get_slice(":",1)
 		word_num = words.get_slice_count("/")
 		saying_word_num = 0
-	words_box.text = words.get_slice("/",saying_word_num)
+	var new_text = words.get_slice("/",saying_word_num)
+	for i in new_text.length():
+		words_box.text = new_text.erase(i,new_text.length() - i)
+		await get_tree().create_timer(0.05).timeout
+	words_box.text = new_text
 	saying_word_num += 1
