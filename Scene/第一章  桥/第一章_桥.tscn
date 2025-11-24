@@ -12,7 +12,7 @@ const 数据=[\"你好,世界。\"
 ,\"自建完成。\"
 ,\"请分配指令。\"
 ]
-var a:int=数据.size()-1
+var a:int=0
 func _ready() -> void:
 	_on_rich_text_label_吐字完毕()
 
