@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://nftsnt53vq0w"]
 
-[ext_resource type="Script" uid="uid://beyqg2drcscgj" path="res://Scene/文字系统/文字渐变.tres.gd" id="2_heu3g"]
+[ext_resource type="Script" uid="uid://beyqg2drcscgj" path="res://Scene/textbox/文字渐变.tres.gd" id="2_heu3g"]
 [ext_resource type="Texture2D" uid="uid://d12422v4jck8a" path="res://Scene/第一章  桥/数据之海.jpg" id="3_r6hjn"]
 
 [sub_resource type="GDScript" id="GDScript_heu3g"]
