@@ -1,30 +1,62 @@
-extends Control
+extends CanvasLayer
 
-@export var txt_path:String = "res://hello_world.txt"
-var file:FileAccess = FileAccess.open(txt_path,FileAccess.READ)
-var words:String
-var word_num:int
-var saying_word_num:int
+class_name TextBox
 
-@export var words_box:RichTextLabel
-@export var name_box:RichTextLabel
-
-@warning_ignore("unused_parameter")
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("attack"):
-		show_words()
-
-func show_words():
-	if saying_word_num == word_num:
-		var line:String = file.get_line()
-		name_box.text = line.get_slice(":",0)
-		words = line.get_slice(":",1)
-		word_num = words.get_slice_count("/")
-		saying_word_num = 0
-	var new_text = words.get_slice("/",saying_word_num)
-	for i in new_text.length():
-		words_box.text = new_text.erase(i,new_text.length() - i)
-		await get_tree().create_timer(0.05).timeout
-	words_box.text = new_text
-	saying_word_num += 1
+###这是公开的
+#敏感符号
+#  : 用于分割 角色名 与 话 (每行必须有一个,首个) （统一用中文）
+# [] 用于加工 文字
+# 空行 允许
+func 开始(a:String):
+	visible=true
+	剧本.assign(a.split("\n"))
 	
+	剧本.assign(剧本.filter(func(line): return line.strip_edges().length() > 0) \
+		.map(func(line): return line.strip_edges()))
+	进度=0
+	下一段()
+@export var 话间_间隔:float=1 ##仅用于 自动播放 还没做
+signal 结束
+
+#有别的地方使用
+static func 切割对话(a:String)->Array[String]:
+	var c:Array[String]=[]
+	var b=a.find("：")
+	c.append(a.substr(0,b))
+	c.append(a.substr(b+1,a.length()-b-1))
+	return c
+######
+
+@onready var 名字: RichTextLabel = $"Control/VBoxContainer/名字/Control/PanelContainer/MarginContainer/Label"
+@onready var text: 文字渐变 = $"Control/VBoxContainer/文本框/MarginContainer/文字渐变"
+
+var 剧本:Array[String]
+var 进度:int
+
+func 下一段():
+	if 进度<剧本.size():
+		var a=切割对话(剧本[进度])
+		assert(a.size()==2)
+		名字.text=a[0]
+		text.吐字(a[1])
+	else :
+		visible=false
+		结束.emit()
+	进度+=1
+
+func _on_texture_button_pressed() -> void:
+	if text.显示完毕_或立即显示():下一段()
+	
+		
+
+@onready var texture_button_2: TextureButton = $TextureButton2
+@onready var juben: Control = $剧本
+
+func _on_texture_button_2_pressed() -> void:
+	texture_button_2.visible=false
+	juben.初始(剧本.slice(0,进度))
+	juben.visible=true
+
+
+func _on_剧本_关闭() -> void:
+	texture_button_2.visible=true

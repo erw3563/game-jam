@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyxpbo0l34b8"]
+
+[sub_resource type="GDScript" id="GDScript_i78p6"]
+script/source = "extends HBoxContainer
+@onready var rich_text_label: RichTextLabel = $RichTextLabel
+@onready var rich_text_label_2: RichTextLabel = $RichTextLabel2
+
+
+func 初始(a:String):
+	var b=TextBox.切割对话(a)
+	assert(b.size()==2)
+	
+	rich_text_label.text=b[0]
+	rich_text_label_2.text=b[1]
+"
+
+[node name="剧本_行" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 46.0
+grow_horizontal = 2
+script = SubResource("GDScript_i78p6")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+bbcode_enabled = true
+text = "1531231"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = " : "
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "45645644444444444444444"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1

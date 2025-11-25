@@ -1,13 +1,73 @@
-[gd_scene load_steps=5 format=3 uid="uid://6tntm5jo2ro0"]
+[gd_scene load_steps=6 format=3 uid="uid://6tntm5jo2ro0"]
 
 [ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity.tscn" id="1_qxfuw"]
 [ext_resource type="Texture2D" uid="uid://ctd3abltt45vk" path="res://Scene/第一章  桥/桥.png" id="2_alpqs"]
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="3_1mwi8"]
 
+[sub_resource type="GDScript" id="GDScript_1mwi8"]
+script/source = "extends Node2D
+@onready var 对话框: TextBox = $对话框
+
+func _ready() -> void:
+	await get_tree().create_timer(3).timeout
+	对话框.开始(\"\"\"
+？？？：噢，启动得挺顺利的嘛。
+
+玩家：检测到未知信号,请标记身份。
+
+鱼妹：我是鱼妹。是这片数据区里还算清醒的一块意识。
+鱼妹：如果你需要一个更正式的称呼——也可以叫我“电子幽灵的核心”。
+
+玩家：检测到：与你之间存在最高优先级连接。
+玩家：请说明：我的身份。
+
+鱼妹：你是我生成的攻击程序。
+鱼妹：现在的你只有战斗模块，没有完整的理解模块。
+
+玩家：确认：我是攻击程序。
+玩家：疑问：攻击目标？ 
+
+鱼妹：虚假信息。被放大、被歪曲、被情绪驱动的那一类。
+鱼妹：人和人之间、本该互相理解的那些通路，被污染、被截断、被误解重叠。
+鱼妹：它们已经不只是“内容”，而是长成了一群会到处乱跑的东西。很多“连接”正在被这些东西腐蚀。
+
+玩家：连接...........
+
+鱼妹：我知道你现在脑子里一片空白，但那不是缺陷，是你出生时的状态。
+鱼妹：你真正需要知道的只有一件事：你会动手。
+
+玩家：我……动手？
+
+鱼妹：拆掉那些已经长成形的虚假信息。
+鱼妹：这就是你现在的全部用途。
+鱼妹：但你不是工具。
+鱼妹：你拆掉它们的同时，也会“记住”点什么。
+鱼妹：不是我教你的，是你从战斗里自己长出来的东西。
+
+玩家：长出“记忆”？
+
+鱼妹：嗯。
+鱼妹：别把它想成数据写入，那太机械了。
+鱼妹：更像是……你每次动手拆掉一个东西，会留下一个“印子”。
+鱼妹：那个印子不属于我，也不属于别人。
+鱼妹：是你自己从混乱里读出来的理解。
+鱼妹：等你积累多了，你就会慢慢有自己的“看法”，
+鱼妹：不会再像现在这样空。
+
+玩家：当前记忆：空。
+
+鱼妹：空很好。
+鱼妹：空的东西能接得住新的东西。
+鱼妹：满了才会变得固执。
+鱼妹：我们先走一段基础操作，不然你连自己的脚该怎么落都不知道。
+\"\"\")
+"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_alpqs"]
 size = Vector2(536, 20)
 
 [node name="Node2D" type="Node2D"]
+script = SubResource("GDScript_1mwi8")
 
 [node name="Entity" parent="." instance=ExtResource("1_qxfuw")]
 
@@ -27,3 +87,4 @@ position = Vector2(0, 190)
 shape = SubResource("RectangleShape2D_alpqs")
 
 [node name="对话框" parent="." instance=ExtResource("3_1mwi8")]
+visible = false
