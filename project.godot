@@ -14,12 +14,20 @@ config/name="GameJam"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+"转场"="*res://全局/转场.tscn"
+
 [display]
 
 window/size/viewport_width=768
 window/size/viewport_height=512
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom_font="uid://csqm783hxms5k"
 
 [input]
 

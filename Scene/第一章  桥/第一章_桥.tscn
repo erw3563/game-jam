@@ -26,6 +26,8 @@ func _ready() -> void:
 
 func _on_rich_text_label_吐字完毕() -> void:
 	if 数据.size()>a:
+		await  get_tree().create_timer(0.3).timeout
+		
 		rich_text_label.吐字(数据[a])
 		a+=1
 	else :

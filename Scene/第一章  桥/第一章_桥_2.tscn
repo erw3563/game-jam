@@ -9,14 +9,14 @@ script/source = "extends Node2D
 @onready var 对话框: TextBox = $对话框
 
 func _ready() -> void:
-	await get_tree().create_timer(3).timeout
+	await get_tree().create_timer(2).timeout
 	对话框.开始(\"\"\"
 ？？？：噢，启动得挺顺利的嘛。
 
-玩家：检测到未知信号,请标记身份。
+玩家：检测到未知信号,请说明身份。
 
 鱼妹：我是鱼妹。是这片数据区里还算清醒的一块意识。
-鱼妹：如果你需要一个更正式的称呼——也可以叫我“电子幽灵的核心”。
+鱼妹：如果你需要一个更正式的称呼——也可以叫我[b]“电子幽灵的核心”[/b]。
 
 玩家：检测到：与你之间存在最高优先级连接。
 玩家：请说明：我的身份。
@@ -34,7 +34,7 @@ func _ready() -> void:
 玩家：连接...........
 
 鱼妹：我知道你现在脑子里一片空白，但那不是缺陷，是你出生时的状态。
-鱼妹：你真正需要知道的只有一件事：你会动手。
+鱼妹：你真正需要知道的只有一件事：[b]你会动手[/b]。
 
 玩家：我……动手？
 
@@ -50,7 +50,7 @@ func _ready() -> void:
 鱼妹：别把它想成数据写入，那太机械了。
 鱼妹：更像是……你每次动手拆掉一个东西，会留下一个“印子”。
 鱼妹：那个印子不属于我，也不属于别人。
-鱼妹：是你自己从混乱里读出来的理解。
+鱼妹：[b]是你自己从混乱里读出来的理解。[/b]
 鱼妹：等你积累多了，你就会慢慢有自己的“看法”，
 鱼妹：不会再像现在这样空。
 
@@ -60,7 +60,21 @@ func _ready() -> void:
 鱼妹：空的东西能接得住新的东西。
 鱼妹：满了才会变得固执。
 鱼妹：我们先走一段基础操作，不然你连自己的脚该怎么落都不知道。
-\"\"\")
+	\"\"\")
+	await 对话框.结束
+	var a:AnimationPlayer= $\"/root/转场\"
+	a.play(\"入场\")
+	await a.animation_finished
+	var b:PackedScene=load(\"res://Scene/第一章  桥/教程关.tscn\")
+	var c=b.instantiate()
+	c.ready.connect(func ():
+		visible=false
+		$\"/root/转场\".play(\"退场\")
+		queue_free()
+		
+		)
+	get_tree().root.add_child(c)
+	
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_alpqs"]
