@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://6tntm5jo2ro0"]
 
-[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity.tscn" id="1_qxfuw"]
+[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="1_qxfuw"]
 [ext_resource type="Texture2D" uid="uid://ctd3abltt45vk" path="res://Scene/第一章  桥/桥.png" id="2_alpqs"]
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="3_1mwi8"]
 

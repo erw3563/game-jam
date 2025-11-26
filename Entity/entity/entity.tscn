@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://l6yw5wxqbbm3"]
+[gd_scene load_steps=19 format=3 uid="uid://l6yw5wxqbbm3"]
 
-[ext_resource type="Script" uid="uid://c2t057q0qw21e" path="res://Entity/entity.gd" id="1_orqw4"]
+[ext_resource type="Script" uid="uid://c2t057q0qw21e" path="res://Entity/entity/entity.gd" id="1_orqw4"]
 [ext_resource type="Texture2D" uid="uid://8pblmexqx5vk" path="res://Asset/boxes.png" id="1_sxyjl"]
 [ext_resource type="Texture2D" uid="uid://48hnhf62todh" path="res://Asset/meme.png" id="2_h2qjg"]
 [ext_resource type="PackedScene" uid="uid://dvyakgw5nqb70" path="res://GDBase/Spawner/Launcher/launcher.tscn" id="4_adxne"]
 [ext_resource type="Script" uid="uid://twsbkr63b21g" path="res://GDBase/Move/Input/move_gravity_by_input_component.gd" id="4_boq8c"]
+[ext_resource type="Texture2D" uid="uid://c28ysxg0620yd" path="res://Entity/entity/主角.png" id="4_tttpu"]
 [ext_resource type="Script" uid="uid://cmo1t30f66qgo" path="res://GDBase/Move/Orbit/orbit_component.gd" id="5_adxne"]
 [ext_resource type="Script" uid="uid://v4uwxotregtq" path="res://GDBase/Health/health_component.gd" id="6_ilp0k"]
 [ext_resource type="PackedScene" uid="uid://dssccalehutiv" path="res://GDBase/CellProgressBar/cells_progress_bar.tscn" id="7_psbbe"]
@@ -16,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bk6rbdjm7r8bs" path="res://GDBase/ui/技能按钮.tscn" id="17_dibct"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sxyjl"]
-size = Vector2(12, 12)
+size = Vector2(14, 28)
 
 [sub_resource type="Curve" id="Curve_h2qjg"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -34,16 +35,23 @@ script = ExtResource("1_orqw4")
 [node name="Sprite" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite"]
+visible = false
 texture = ExtResource("1_sxyjl")
 region_enabled = true
 region_rect = Rect2(0, 16, 16, 16)
 
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite"]
+visible = false
 texture = ExtResource("2_h2qjg")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
 
+[node name="主角" type="Sprite2D" parent="Sprite"]
+position = Vector2(0, -2)
+texture = ExtResource("4_tttpu")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -5)
 shape = SubResource("RectangleShape2D_sxyjl")
 
 [node name="MoveGravityByInput" type="Node" parent="." node_paths=PackedStringArray("mover")]
@@ -71,6 +79,7 @@ to_mouse = true
 metadata/_custom_type_script = "uid://cmo1t30f66qgo"
 
 [node name="HealthComponent" type="Area2D" parent="."]
+position = Vector2(1, -5)
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("6_ilp0k")
@@ -84,7 +93,7 @@ metadata/_custom_type_script = "uid://v4uwxotregtq"
 shape = SubResource("RectangleShape2D_sxyjl")
 
 [node name="CellsProgressBar" parent="HealthComponent" node_paths=PackedStringArray("health_component") instance=ExtResource("7_psbbe")]
-position = Vector2(-12, 5)
+position = Vector2(-12, 10)
 health_component = NodePath("..")
 max_cells_num = 6
 current_cells_num = 6
@@ -133,10 +142,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -291.0
-offset_top = -63.0
-offset_right = -7.0
-offset_bottom = -5.0
+offset_left = -302.0
+offset_top = -84.0
+offset_right = -18.0
+offset_bottom = -26.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/separation = 20

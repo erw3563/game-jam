@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=4 uid="uid://c25raeu5fcosf"]
 
 [ext_resource type="TileSet" uid="uid://qk4jyafelh87" path="res://Asset/Tile/tile.tres" id="1_l0dwc"]
-[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity.tscn" id="3_jxalb"]
+[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="3_jxalb"]
 
 [sub_resource type="GDScript" id="GDScript_mc7mb"]
 script/source = "extends Node2D
