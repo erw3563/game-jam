@@ -1,37 +1,42 @@
 [gd_scene load_steps=4 format=3 uid="uid://nftsnt53vq0w"]
 
-[ext_resource type="Script" uid="uid://beyqg2drcscgj" path="res://Scene/textbox/文字渐变.tres.gd" id="2_heu3g"]
+[ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="3_0fqnc"]
 [ext_resource type="Texture2D" uid="uid://d12422v4jck8a" path="res://Scene/第一章  桥/数据之海.jpg" id="3_r6hjn"]
 
 [sub_resource type="GDScript" id="GDScript_heu3g"]
 script/source = "extends CanvasLayer
-@onready var rich_text_label: RichTextLabel = $RichTextLabel
-const 数据=[\"你好,世界。\"
-,\"（这句好像是启动用语）\"
-,\"系统检测中。。。。\"
-,\"自建完成。\"
-,\"请分配指令。\"
-,\"系统提示:\"
-,\"桥接模块：……加载失败。\"
-,\"错误代码: 0xc0000225\"
-,\"原因：缺失“对端”。\"
-,\"正在等待……对端确认。\"
-]
+#@onready var rich_text_label: RichTextLabel = $RichTextLabel
+const 数据=\"\"\"
+[i]你好，世界。[/i]
+……这句话好像是启动用语。
+系统检测中。
+自检完成。
+请分配指令。
+
+[color=red]系统提示：[/color]
+[color=red]桥接模块：……加载失败[/color]
+[color=red]错误代码：0xc0000225[/color]
+[color=red]原因：缺失“对端”[/color]
+[color=red]正在等待……对端确认[/color]
+\"\"\"
+var y:Array[String]
 var a:int=0
 func _ready() -> void:
+	y=TextBox.切割多行文本(数据)
 	_on_rich_text_label_吐字完毕()
 
 
 @onready var texture_rect: TextureRect = $TextureRect
+@onready var dialogue_label: DialogueLabel = $DialogueLabel
 
 func _on_rich_text_label_吐字完毕() -> void:
-	if 数据.size()>a:
+	if y.size()>a:
 		await  get_tree().create_timer(0.3).timeout
-		
-		rich_text_label.吐字(数据[a])
+		dialogue_label.开始(y[a])
+		#rich_text_label.吐字(y[a])
 		a+=1
 	else :
-		rich_text_label.visible=false
+		dialogue_label.visible=false
 		var x= load(\"res://Scene/第一章  桥/第一章_桥_2.tscn\")
 		get_tree().root.add_child(x.instantiate(),false,Node.INTERNAL_MODE_FRONT)
 		var g= get_tree().create_tween()
@@ -52,18 +57,18 @@ texture = ExtResource("3_r6hjn")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="DialogueLabel" parent="." instance=ExtResource("3_0fqnc")]
 anchors_preset = 15
-anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/outline_size = 10
 theme_override_font_sizes/normal_font_size = 34
-bbcode_enabled = true
+theme_override_font_sizes/bold_font_size = 34
+theme_override_font_sizes/bold_italics_font_size = 34
+theme_override_font_sizes/italics_font_size = 34
+theme_override_font_sizes/mono_font_size = 34
+autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("2_heu3g")
-"吐字间隔" = 0.1
+seconds_per_step = 0.1
 
-[connection signal="吐字完毕" from="RichTextLabel" to="." method="_on_rich_text_label_吐字完毕"]
+[connection signal="finished_typing" from="DialogueLabel" to="." method="_on_rich_text_label_吐字完毕"]

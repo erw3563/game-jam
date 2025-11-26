@@ -9,13 +9,9 @@ class_name TextBox
 # 空行 允许
 func 开始(a:String):
 	visible=true
-	剧本.assign(a.split("\n"))
-	
-	剧本.assign(剧本.filter(func(line): return line.strip_edges().length() > 0) \
-		.map(func(line): return line.strip_edges()))
+	剧本=切割多行文本(a)
 	进度=0
 	下一段()
-@export var 话间_间隔:float=1 ##仅用于 自动播放 还没做
 signal 结束
 
 #有别的地方使用
@@ -25,10 +21,16 @@ static func 切割对话(a:String)->Array[String]:
 	c.append(a.substr(0,b))
 	c.append(a.substr(b+1,a.length()-b-1))
 	return c
+static func 切割多行文本(a:String)->Array[String]:
+	var b:Array[String]=[]
+	b.assign(a.split("\n"))
+	b.assign(b.filter(func(line): return line.strip_edges().length() > 0) \
+		.map(func(line): return line.strip_edges()))
+	return b
 ######
 
 @onready var 名字: RichTextLabel = $"Control/VBoxContainer/名字/Control/PanelContainer/MarginContainer/Label"
-@onready var text: 文字渐变 = $"Control/VBoxContainer/文本框/MarginContainer/文字渐变"
+@onready var dialogue_label: DialogueLabel = $Control/VBoxContainer/文本框/MarginContainer/DialogueLabel
 
 var 剧本:Array[String]
 var 进度:int
@@ -38,14 +40,19 @@ func 下一段():
 		var a=切割对话(剧本[进度])
 		assert(a.size()==2)
 		名字.text=a[0]
-		text.吐字(a[1])
+		dialogue_label.开始(a[1])
+		#text.吐字(a[1])
 	else :
 		visible=false
 		结束.emit()
 	进度+=1
 
 func _on_texture_button_pressed() -> void:
-	if text.显示完毕_或立即显示():下一段()
+	#if text.显示完毕_或立即显示():下一段()
+	if  dialogue_label.is_typing: 
+		dialogue_label.skip_typing()
+	else :
+		下一段()
 	
 		
 
