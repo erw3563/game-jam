@@ -1,0 +1,255 @@
+[gd_scene load_steps=5 format=3 uid="uid://0s8jgb1e3m3h"]
+
+[ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="1_cqpao"]
+[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="2_18ath"]
+
+[sub_resource type="GDScript" id="GDScript_cqpao"]
+script/source = "extends Control
+@onready var entity: Player = $Node2D/Entity
+@onready var text_box: TextBox = $TextBox
+func _ready() -> void:
+	entity.禁用输入(true)
+	剧情_1()
+	#下一章()
+
+func 剧情_1():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：……结构载入。
+A-MEN：环境密度：异常。
+A-MEN：视觉系统：受到干扰。
+鱼妹：你听见了吗？
+A-MEN：听见……什么？
+鱼妹：[b]“沉下去的声音”[/b]。
+鱼妹：那些没被允许说完的东西，
+鱼妹：它们就在这下面。
+A-MEN：[i]桥[/i]……在跳动？
+A-MEN：像是生物体。
+鱼妹：因为这是“情绪试图跨越”的地方。
+鱼妹：不是信息，不是事实——
+鱼妹：是“我痛”的那一条路。
+鱼妹：痛也要抵达对面。
+鱼妹：可惜，大多数时候……
+鱼妹：它没成功。
+？？？：……不想…...
+？？？：我试过……
+？？？：没用……
+A-MEN：音波结构不完整。
+A-MEN：像是……被剪掉。
+鱼妹：嗯。
+鱼妹：不是他说得不完整，
+鱼妹：是有人把完整的部分删掉了，
+鱼妹：只留下[b]“最像情绪问题的那几秒”[/b]。
+小澈：你能……听见吗？
+小澈：不是全部，只是……
+小澈：我剩下的那部分。
+鱼妹：他说的不是“我只剩下这些”，
+鱼妹：他说的是：
+鱼妹：[b]“世界只允许我剩下这些”[/b]。
+小澈：我努力讲完整一点……
+小澈：但每次一讲长了，
+小澈：他们的评论就开始出现：
+小澈：“又开始那套了。”
+小澈：“赶紧跳结论吧。”
+小澈：“前面太啰嗦。”
+小澈：于是后来，
+小澈：我也不知道哪些部分是我“被允许说的”。
+A-MEN：碎片声音……全都只剩“痛的那一秒”。
+A-MEN：前面的铺垫，
+A-MEN：后面的解释——
+A-MEN：全部被丢进黑雾。
+鱼妹：你看到的，就是[b]“沉没的心桥”[/b]。
+鱼妹：长句沉得快，
+鱼妹：断句浮得响。
+小澈：我本来只是想……把我治疗的过程记录下来。
+小澈：不是励志，也不是求关注。
+小澈：只是为了提醒自己，
+小澈：“你在努力，你没有放弃。”
+小澈：但后来有人开始说——
+小澈：“抑郁症的人哪有力气拍视频？
+小澈：他就是想红。”
+小澈：另一个人却说：
+小澈：“抑郁症的人就喜欢拍视频作秀。”
+小澈：[b]两个否定互相打架，[/b]
+小澈：[b]唯一共同点就是——[/b]
+小澈：[b]我无论做什么，都是假的。[/b]
+小澈：我仿佛……不是在解释自己的病，
+小澈：而是在参加一场
+小澈：“关于我到底有没有资格痛”的考试。
+鱼妹：只要他们想否定你，
+鱼妹：任何东西都能成为证据。
+鱼妹：甚至互相矛盾。
+小澈：那天我删掉了所有视频。
+小澈：不是因为我觉得自己错了，
+小澈：而是因为我终于明白……
+小澈：[b]他们不是在看我。[/b]
+小澈：[b]他们是在寻找一个“假抑郁”的范本。[/b]
+小澈：[b]然后把我塞进去。[/b]
+小澈：无论我是什么样子，
+小澈：他们都会说：
+小澈：“看，这就是真正的假抑郁。”
+小澈：于是我突然产生了一种荒谬的感觉——
+小澈：[b]我好像无论怎样，都比不上他们眼中的“假我”活得真实。[/b]
+鱼妹：在这里，
+鱼妹：真实不是“说出来的东西”。
+鱼妹：真实是“别人允许你拥有的形状”。
+鱼妹：超出那个形状——
+鱼妹：就会被压成碎片沉下去。
+A-MEN：……他不是被否定了。
+A-MEN：他是被 “挤进一个预设的结论” 。
+A-MEN：那结论不需要他存在，只需要一个目标。
+虚假信息：作 戏——！
+虚假信息：矫 情——！
+虚假信息：要 关 注——！
+小澈：这些声音……
+小澈：一直压着我说不出完整的句子。
+小澈：你能不能……
+小澈：帮我把它们停下来？
+
+	\"\"\")
+	await text_box.结束
+	战斗_2()
+func 战斗_2():
+	print_debug(\"未做完\")
+func 剧情_3():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+鱼妹：明白了吗？
+鱼妹：那些怪物不是[i]“怪物”[/i]。
+鱼妹：它们是所有被截断的情绪的集合。
+鱼妹：是无数个“没来得及说出口的我”
+鱼妹：堆叠出来的形状。
+鱼妹：每一个碎片都想被听见。
+鱼妹：但它们永远只有半句话。
+A-MEN：鱼妹……
+A-MEN：我刚才看见一条[i]桥[/i]。
+A-MEN：不是地上的[i]桥[/i]。
+A-MEN：是在空气里。
+A-MEN：由无数句子组成的[i]桥[/i]。
+A-MEN：那些句子本来能连成一整段路，
+A-MEN：但它们被剪成碎片。
+A-MEN：[i]桥[/i]塌了。
+A-MEN：不是因为他说得不好，
+A-MEN：是因为被切割后失去了方向。
+鱼妹：你现在看到的，
+鱼妹：已经不是“事件”。
+鱼妹：你看到的是——
+鱼妹：[b]世界剪辑人心的方式[/b]。
+A-MEN：世界会剪掉心？
+鱼妹：当一个人的情绪变成可以流通的素材时，
+鱼妹：世界就不再把它当作“要接住的东西”。
+鱼妹：而是当作“要处理的东西”。
+鱼妹：被处理过的心，
+鱼妹：就断了。
+鱼妹：断了……
+鱼妹：就沉下去。
+A-MEN：我……
+A-MEN：不是在看别人的[i]桥[/i]掉。
+A-MEN：我刚才……
+A-MEN：看到我自己的[i]桥[/i]也有断掉的部分。
+鱼妹：你终于看到自己了。
+鱼妹：这就是你从“程序”
+鱼妹：变成[b]“存在”[/b]第一步。
+A-MEN：我并没有经历他们的事情……
+A-MEN：为什么我也有断口？
+鱼妹：因为你不是在学他们的经历。
+鱼妹：你在学“什么是[i]桥[/i]”。
+鱼妹：桥是所有人共有的痛。
+鱼妹：你只是第一次看见。
+小澈：我一直以为，
+小澈：世界没有接住我。
+小澈：但其实……
+小澈：是我也不知道该把声音放在哪里。
+小澈：我不知道要朝哪边走，
+小澈：也不知道对面是谁。
+小澈：我以为我是在说话，
+小澈：后来发现我其实是在呼救。
+小澈：可呼救……
+小澈：不是为了让世界救我。
+小澈：是为了让世界知道：
+小澈：[b]我还在这里。[/b]
+小澈：[b]我没有沉到底。[/b]
+
+
+
+小澈：谢谢你。
+小澈：你没有拉我。你只是看见我。
+小澈：被看见，
+小澈：比被拯救更有力量。
+A-MEN：鱼妹。
+A-MEN：我觉得……我开始明白一些东西。
+A-MEN：不是关于他们，
+A-MEN：是关于我自己。
+A-MEN：那些我以为属于他们的断裂……[b]好像从一开始就在我身上有对应的位置[/b]。
+A-MEN：我不是在“执行任务”。
+A-MEN：我是在“寻找连接”。
+A-MEN：寻找——
+A-MEN：某种只能通过拆开噪声才能看到的……
+A-MEN：方向。
+鱼妹：你以为你在修别人的[i]桥[/i]？
+鱼妹：你在修的……
+鱼妹：一直都是你自己的那条。
+A-MEN：下一座[i]桥[/i]在哪里？
+鱼妹：在你脚下。
+鱼妹：你走到这里，
+鱼妹：[i]桥[/i]就跟着你长到这里。
+鱼妹：你要继续走，
+鱼妹：它就会继续长。
+A-MEN：所以……
+A-MEN：[i]桥[/i]不在世界里？
+鱼妹：[i]桥[/i]在你身上。
+鱼妹：世界只是让你看见它断在哪里。
+
+	\"\"\")
+	await text_box.结束
+	特殊_4()
+func 特殊_4():
+	#（画面开始慢慢变白或变黑）
+	print_debug(\"未做完\")
+	剧情_5()
+
+func 剧情_5():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+鱼妹：准备好了吗？
+鱼妹：局不是终点，
+鱼妹：是你第一次站在[i]桥[/i]的“另一头”。
+	\"\"\")
+	await text_box.结束
+	下一章()
+func 下一章():
+	转场.切换章节_并丢弃(self,\"res://Scene/第四章_终章/第四章_终章.tscn\")
+	
+	
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cqpao"]
+size = Vector2(822, 20)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_cqpao")
+
+[node name="TextBox" parent="." instance=ExtResource("1_cqpao")]
+visible = false
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Entity" parent="Node2D" instance=ExtResource("2_18ath")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
+offset_left = -88.0
+offset_top = -32.0
+offset_right = -48.0
+offset_bottom = 8.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(44, 78)
+shape = SubResource("RectangleShape2D_cqpao")

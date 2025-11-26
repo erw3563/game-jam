@@ -1,0 +1,101 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvjaoyv22lnvf"]
+
+[ext_resource type="Script" uid="uid://0dxghkqrcmgf" path="res://Scene/战败ui/战败ui.gd" id="1_k44xs"]
+
+[node name="战败ui" type="CanvasLayer"]
+script = ExtResource("1_k44xs")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.46666667, 0.46666667, 0.46666667, 0.79607844)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.0
+offset_top = -120.0
+offset_right = 246.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 64
+text = "战败"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 55.41)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "重来"
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Button"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 8
+text = "重新打一遍"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "继续"
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Button2"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 8
+text = "满血复活，再战"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "跳过"
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Button3"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 8
+text = "跳过战斗"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button3" to="." method="_on_button_3_pressed"]

@@ -165,6 +165,9 @@ layout_mode = 2
 layout_mode = 2
 "按键" = "G"
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
 [connection signal="hited" from="HealthComponent" to="." method="_on_health_component_hited"]
 [connection signal="fired" from="Attack" to="." method="_on_attack_fired"]
 [connection signal="fired" from="Fire" to="." method="_on_fire_fired"]

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ctd3abltt45vk"
-path="res://.godot/imported/桥.png-9afc051ec9f02e42f86ea27c4f796a22.ctex"
+path="res://.godot/imported/桥.png-9db37a004750f9fe7e194e516f014528.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scene/第一章  桥/桥.png"
-dest_files=["res://.godot/imported/桥.png-9afc051ec9f02e42f86ea27c4f796a22.ctex"]
+source_file="res://Scene/第一章_开场/桥.png"
+dest_files=["res://.godot/imported/桥.png-9db37a004750f9fe7e194e516f014528.ctex"]
 
 [params]
 

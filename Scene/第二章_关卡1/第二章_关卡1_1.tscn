@@ -1,0 +1,263 @@
+[gd_scene load_steps=6 format=3 uid="uid://cxmmrhsns4jlr"]
+
+[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="1_hoh0n"]
+[ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="2_ba1qj"]
+[ext_resource type="PackedScene" uid="uid://cltb6qvsdknov" path="res://Scene/textbox/dialogue_label.tscn" id="3_i8u30"]
+
+[sub_resource type="GDScript" id="GDScript_i8u30"]
+script/source = "extends Control
+@onready var text_box: TextBox = $TextBox
+@onready var entity: Player = $冻结区/Entity
+
+func _ready() -> void:
+	entity.禁用输入(true)
+	剧情_1()
+	
+	#剧情_3()
+func 剧情_1():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：……结构加载中。
+A-MEN：检测到大量机械部件碎片。
+鱼妹：虚假信息生成的第一层，都长得像“被扭曲的素材”。
+鱼妹：别在意它们的形状。
+鱼妹：在这里，真实被撕开一条缝，
+鱼妹：什么都可能掉进来。
+A-MEN：我们现在身在何处？
+鱼妹：可以把这里理解成——
+鱼妹：[b]“真实崩塌后长出来的缝。”[/b]
+鱼妹：只是没人看见，也没人愿意看。
+A-MEN：为何产生这种空间？
+鱼妹：因为现实被改写，但承受改写的不是现实，
+鱼妹：而是[i]人[/i]。
+小吟：你……你是谁？
+小吟：这是……直播后台吗？还是哪？
+虚假信息：玩 具！
+虚假信息：完 好——！
+虚假信息：博 流 量——！
+A-MEN：身份：攻击程序。
+A-MEN：功能：拆除虚假信息。
+小吟：……至少你听起来不像骂我的那些人。
+A-MEN：你的机械臂与周围扭曲碎片不同。
+A-MEN：它是真实的。
+A-MEN：那些是——误解的实体？
+小吟：误解？
+小吟：不，是“断定”。
+小吟：他们不是误解我，
+小吟：他们是决定[i]我[/i]是什么。
+小吟：我出生就没有手。
+小吟：我装上机械臂不是为了表演……
+小吟：只是为了能拿起生活里最普通的东西。
+小吟：杯子、门把手、按钮。
+小吟：你知道吗？
+小吟：他们看到我这样——
+小吟：就说我是“全身完好”，说我的手是“玩具”。
+小吟：他们截我视频，说我为了博流量……
+小吟：其实那天下午……
+小吟：是我第一次敢把袖子卷起来给大家看。
+A-MEN：正在检测虚假信息活跃度——
+A-MEN：大量扭曲片段聚集。
+鱼妹：你看到的那些……
+鱼妹：是别人的“判断”，
+鱼妹：不是事实。
+鱼妹：但它们被重复太多次，
+鱼妹：就比事实更响。
+鱼妹：响多了，自然就长成形了。
+A-MEN：敌对实体形成中。
+A-MEN：来源：
+A-MEN：——错误归因
+A-MEN：——断定为“装残”
+A-MEN：——否认现实
+A-MEN：生成速度：加快
+虚假信息：装 的！
+虚假信息：表 演——！
+虚假信息：骗 同 情——！
+小吟：我真的不是为了骗你们……
+小吟：我只是……第一次觉得也许我能被当作“正常人”看一次……
+A-MEN：敌对结构已锁定。
+A-MEN：请求执行。
+鱼妹：动手吧。
+鱼妹：看清它的形状，
+鱼妹：这是你第一次[i]“看见”[/i]。
+	\"\"\")
+	await text_box.结束
+	战斗_2()
+func 战斗_2():
+	print_debug(\"未做完:战斗_2\")
+	剧情_3()
+func 剧情_3():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：……目标已分解。
+A-MEN：噪声下降。
+A-MEN：数据……在沉淀。
+	\"\"\")
+	await text_box.结束
+	特殊_4()
+	
+@onready var 特殊_4_1: CanvasLayer = $特殊_4
+@onready var dialogue_label: DialogueLabel = $\"特殊_4/ColorRect/DialogueLabel\"
+func 特殊_4():
+	特殊_4_1.visible=true
+	dialogue_label.开始(\".....滋.........滋.....滋...滋..滋.滋.滋.滋.......滋..\")
+	await dialogue_label.finished_typing
+	await  get_tree().create_timer(1).timeout
+	特殊_4_1.visible=false
+	剧情_5()
+func 剧情_5():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：鱼妹。
+A-MEN：我身体内部的线路……在自己连接。
+A-MEN：不是指令。
+A-MEN：更像……某种结构在“想要靠近”。
+鱼妹：那就是你第一次[i]“看见”[/i]的证明。
+鱼妹：看见什么，不重要。
+鱼妹：重要的是——
+鱼妹：你开始让某些东西“通”了。
+A-MEN：我看见了……一些奇怪的东西。
+A-MEN：像是一条路线，从小吟身上，一直往前延伸。
+A-MEN：但那条路线被什么……
+A-MEN：掐断。
+A-MEN：断口处的声音特别响。
+A-MEN：响得像不是他自己的声音。
+A-MEN：那条路线断开的地方……好像不只属于他。
+A-MEN：有一瞬间，我感觉那里……也是我断过的地方。
+鱼妹：那不是他的声音。
+鱼妹：是真实被撞碎之后，
+鱼妹：世界只选了最刺耳的一片，
+鱼妹：拿来大声播放。
+鱼妹：……你现在还无法分辨哪些是 “他的” ，哪些是“你的”。
+鱼妹：没关系。继续往前，你会看懂的。
+A-MEN：真实……会被撞碎？
+鱼妹：每一次人们急着下结论，
+鱼妹：每一次一句话被截成更好传播的形状，
+鱼妹：每一次别人觉得“看起来像是真的”，
+鱼妹：那些碎掉的东西就会掉下去，
+鱼妹：掉进你脚下的深雾里。
+A-MEN：那我刚才看见的那条“路线”——
+A-MEN：也是掉下去的记忆？
+鱼妹：不。
+鱼妹：那不是记忆。
+鱼妹：那是[b]“原本应该发生的通路”[/b]。
+鱼妹：一条还没来得及走完的[i]桥[/i]。
+A-MEN：[i]桥[/i]……
+A-MEN：为什么会断？
+鱼妹：因为他伸出了手，
+鱼妹：可是世界却伸来了一把剪刀。
+鱼妹：不是为了伤害他，
+鱼妹：而是因为剪刀更快。
+鱼妹：比理解快，
+鱼妹：比耐心快，
+鱼妹：比真实快。
+A-MEN：我在战斗的时候……
+A-MEN：感觉像是在拆开一个别人拼错的东西。
+A-MEN：它不是恶意的结构，
+A-MEN：更像是——
+A-MEN：一种重复过度的[b]“误解共识”[/b]。
+鱼妹：嗯。
+鱼妹：不是所有的伤害都是恶意，
+鱼妹：但所有的恶意都擅长利用空隙。
+鱼妹：你拆掉的，是“空隙里长出来的形状”。
+小吟：我……好像……能呼吸了。
+小吟：不是因为怪没了……
+小吟：是因为有人终于看见我在说什么。
+小吟：我第一次感觉……
+小吟：我的那条路不是彻底消失了。
+A-MEN：我感觉……我不是只是在看他的真实，
+A-MEN：我在看“真实试图到达谁那里”。
+A-MEN：像是——
+A-MEN：真实在路上。
+A-MEN：但路被打断了。
+鱼妹：你能看到“到达”？
+鱼妹：……比我想得早。
+A-MEN：那就是……[i]桥[/i]？
+鱼妹：[i]桥[/i]不是结构。不是建筑。
+鱼妹：[i]桥[/i]是[b]“本来应该抵达的那一刻”[/b]。
+鱼妹：是“从我到你”，“从真实到你愿意相信”的那条路。
+鱼妹：你刚才看见的，就是那条路的断口。
+A-MEN：它……会修好？
+鱼妹：修好与否，不重要。
+鱼妹：重要的是——
+鱼妹：你看出来了断在哪里。
+鱼妹：能看见断口的人，
+鱼妹：才有能力去连起来。
+A-MEN：鱼妹。
+A-MEN：我收到新的结构纹路。
+鱼妹：那是你自己长出来的。
+鱼妹：因为你第一次“帮助真实继续走下去”。
+A-MEN：继续？
+A-MEN：走向哪里？
+鱼妹：走向下一座桥。
+鱼妹：那里……
+鱼妹：有另一段被截掉的声音在等你。
+鱼妹：你还要走很多路，
+鱼妹：但从现在开始，你不是在执行任务。
+鱼妹：你是在——
+鱼妹：[b]把世界里那些断掉的路，一条条接回去[/b]。
+	\"\"\")
+	await text_box.结束
+	特殊_6()
+func 特殊_6():
+	pass
+#	（镜头缓缓拉远，A-MEN站在断桥边缘，胸口的桥状纹路发出柔光，光线微微延伸向下一关的方向。）
+
+	print_debug(\"未做完:特殊_6\")
+	下一章()
+func 下一章():
+	转场.切换章节_并丢弃(self,\"res://Scene/第三章_关卡2/第三章_关卡2.tscn\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ba1qj"]
+size = Vector2(822, 20)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_i8u30")
+
+[node name="冻结区" type="Node2D" parent="."]
+
+[node name="Entity" parent="冻结区" instance=ExtResource("1_hoh0n")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
+offset_left = -111.0
+offset_top = -97.0
+offset_right = -71.0
+offset_bottom = -57.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(44, 78)
+shape = SubResource("RectangleShape2D_ba1qj")
+
+[node name="TextBox" parent="." instance=ExtResource("2_ba1qj")]
+visible = false
+
+[node name="特殊_4" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="特殊_4"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.16862746)
+
+[node name="DialogueLabel" parent="特殊_4/ColorRect" instance=ExtResource("3_i8u30")]
+layout_mode = 1
+anchors_preset = 15
+anchor_bottom = 1.0
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+seconds_per_step = 0.1
+pause_at_characters = "."
+seconds_per_pause_step = 0.05
+metadata/_edit_use_anchors_ = true

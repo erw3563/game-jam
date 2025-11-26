@@ -1,15 +1,21 @@
 [gd_scene load_steps=6 format=3 uid="uid://6tntm5jo2ro0"]
 
 [ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="1_qxfuw"]
-[ext_resource type="Texture2D" uid="uid://ctd3abltt45vk" path="res://Scene/第一章  桥/桥.png" id="2_alpqs"]
+[ext_resource type="Texture2D" uid="uid://ctd3abltt45vk" path="res://Scene/第一章_开场/桥.png" id="2_alpqs"]
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="3_1mwi8"]
 
 [sub_resource type="GDScript" id="GDScript_1mwi8"]
 script/source = "extends Node2D
 @onready var 对话框: TextBox = $对话框
+@onready var entity: Player = $Entity
 
 func _ready() -> void:
-	await get_tree().create_timer(2).timeout
+	entity.禁用输入(true)
+	剧情_1()
+	#战斗_2()
+	#下一章()
+func 剧情_1():
+	await get_tree().create_timer(1).timeout
 	对话框.开始(\"\"\"
 ？？？：噢，启动得挺顺利的嘛。
 A-MEN：检测到未知信号。
@@ -51,18 +57,24 @@ A-MEN：当前记忆：空。
 
 	\"\"\")
 	await 对话框.结束
-	var a:AnimationPlayer= $\"/root/转场\"
-	a.play(\"入场\")
-	await a.animation_finished
-	var b:PackedScene=load(\"res://Scene/第一章  桥/第一章_桥_3_教程关.tscn\")
-	var c=b.instantiate()
-	c.ready.connect(func ():
-		visible=false
-		$\"/root/转场\".play(\"退场\")
-		queue_free()
-		
-		)
-	get_tree().root.add_child(c)
+	战斗_2()
+func 战斗_2():
+	转场.切换章节_之后返回(self,\"res://Scene/第一章_开场/第一章_桥_3_教程关.tscn\",剧情_3)
+	
+func 剧情_3():
+	visible=true
+	await get_tree().create_timer(1).timeout
+	对话框.开始(\"\"\"
+鱼妹：挺简单的吧？往后就像刚刚那样战斗就行。
+A-MEN：请求下达首个任务。
+鱼妹：我把坐标发给你。
+鱼妹：接下来你遇到的，将不再是模拟，而是你这个程序诞生后要面对的第一份[i]“现实”[/i]。
+	\"\"\")
+	await 对话框.结束
+	下一章()
+func 下一章():
+	转场.切换章节_并丢弃(self,\"res://Scene/第二章_关卡1/第二章_关卡1_1.tscn\")
+	
 	
 "
 
@@ -73,9 +85,6 @@ size = Vector2(536, 20)
 script = SubResource("GDScript_1mwi8")
 
 [node name="Entity" parent="." instance=ExtResource("1_qxfuw")]
-
-[node name="Camera2D" type="Camera2D" parent="Entity"]
-zoom = Vector2(2, 2)
 
 [node name="桥_这是临时的" type="Sprite2D" parent="."]
 position = Vector2(128, -49)

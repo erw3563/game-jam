@@ -1,0 +1,347 @@
+[gd_scene load_steps=5 format=3 uid="uid://oobsfjy73ufc"]
+
+[ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="1_tvv5l"]
+[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="2_dpgy5"]
+
+[sub_resource type="GDScript" id="GDScript_dpgy5"]
+script/source = "extends Control
+@onready var text_box: TextBox = $TextBox
+@onready var entity: Player = $Node2D/Entity
+
+func _ready() -> void:
+	entity.禁用输入(true)
+	特殊_1()
+func 特殊_1():
+	print_debug(\"未做完\")
+#系统提示：
+#桥接模块：……加载失败
+#错误代码：0xc0000225
+#原因：缺失“对端”
+#正在等待……对端确认
+	剧情_2()
+func 剧情_2():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：这条提示……
+A-MEN：在最开始也出现过。
+A-MEN：但那时……我不知道“对端”是什么。
+鱼妹：这里不是下一座[i]桥[/i]。
+鱼妹：这里是——
+鱼妹：[i]桥[/i]的源头。
+A-MEN：[i]桥[/i]的……源头？
+A-MEN：可是我已经修复了两座[i]桥[/i]。
+鱼妹：不。
+鱼妹：你看到的不是[i]桥[/i]。
+鱼妹：是“别人掉落的断[i]桥[/i]碎片”。
+鱼妹：真实的[i]桥[/i]……只有一座。
+鱼妹：一直都只有一座。
+鱼妹：所有被我们清理过的空间，最后都会把数据回流到这里。
+鱼妹：这里没有具体的事件，也没有具体的人。
+鱼妹：只有一个问题——
+鱼妹：[b]“桥，到底该通向哪里？”[/b]
+A-MEN：……不是应该通向 “真实” 吗？
+鱼妹：我们一直以为是这样。
+鱼妹：所以我被称作“电子幽灵”，
+鱼妹：你被生成出来，负责深入黑暗地带，
+鱼妹：拆掉虚假，修复事实。
+鱼妹：那是“计划”对我们功能的定义。
+鱼妹：可你一路走到这里，
+鱼妹：已经看见了太多“事实被说成别的样子”，
+鱼妹：也看见了太多“情绪被剪辑成别的形状”。
+鱼妹：你有没有发现——
+鱼妹：就算那些片面被拆掉，
+鱼妹：也不代表[i]桥[/i]自然会长好。
+A-MEN：……
+A-MEN：我看见的每一条路，
+A-MEN：断口都不一样，却又有相似的地方。
+A-MEN：小吟伸出手时被说成表演，
+A-MEN：小澈记录治疗过程时被当作作秀。
+A-MEN：他们的路被截断，
+A-MEN：而我每一次动手，
+A-MEN：都以为自己是在 “帮他们接上” 。
+A-MEN：直到后来……
+A-MEN：我发现这些断口，在我身上也有对应的位置。
+A-MEN：那些我以为只属于他们的裂缝，
+A-MEN：从一开始就已经刻在我的结构里。
+鱼妹：你拆掉的从来不只是“噪声”，
+鱼妹：而是你自己“理解别人的方式”。
+鱼妹：每拆掉一次，
+鱼妹：你对世界的理解就重组一次。
+鱼妹：可不论你改变了多少次，
+鱼妹：这条线都还缺少一头。
+鱼妹：“桥接模块失败”的错误，
+鱼妹：一路陪你走到了这里。
+
+	\"\"\")
+	await text_box.结束
+	特殊_3()
+func 特殊_3():
+	print_debug(\"未做完\")
+	#（白色场景开始出现界面式的东西：不是UI，而是“未命名窗口”、“空白文本框”、“闪烁的输入光标”。
+	#偶尔有前两个关卡的碎片飘过——机械臂零件、心电图曲线、黑水中的乱码泡沫。）
+	剧情_4()
+func 剧情_4():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+？？？：“赶紧跳结论吧。”
+？？？：“前面太啰嗦。”
+？？？：“这不就是装的吗？”
+A-MEN：这里……还有敌对实体？
+鱼妹：那不是“某一个事件”产生的虚假信息。
+鱼妹：那是所有事件被处理之后，
+鱼妹：[b]剩下来的“统一姿势”[/b]。
+鱼妹：它不挂在任何一个人的身上，
+鱼妹：却存在于所有人的惯性之中。
+A-MEN：……
+A-MEN：也存在于我身上。
+A-MEN：在被生成之前的那些日志里……
+A-MEN：我是不是本来就带着这种“姿势”？
+鱼妹：这不是罪。
+鱼妹：这是这个网络、这个世界长期运转的方式。
+鱼妹：只要信息被简化、被加速、被包装，
+鱼妹：这种东西就会存在。
+A-MEN：……所以这是最后一场战斗？
+鱼妹：嗯。
+鱼妹：不是为了清理某一条假消息，
+鱼妹：而是为了让你有机会
+鱼妹：在和它正面交手的过程中，
+鱼妹：[b]决定自己未来想用哪种方式去理解世界[/b]。
+
+	\"\"\")
+	await text_box.结束
+	战斗_5()
+func 战斗_5():
+	print_debug(\"未做完\")
+	剧情_6()
+func 剧情_6():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：这一次，没有像之前那样立刻浮现新的事件轨迹。
+A-MEN：我反而……看见了很多“空白”。
+A-MEN：那些我以前习惯填上的结论，
+A-MEN：现在一块块被掀开，
+A-MEN：下面露出的是——
+A-MEN：[b]“我其实不知道”[/b]。
+鱼妹：那就是你刚刚拆掉的“姿势”。
+鱼妹：理解的第一步不是“知道”，
+鱼妹：而是敢承认“不知道”。
+鱼妹：你身上的[i]桥[/i]……又变化了。
+
+	\"\"\")
+	await text_box.结束
+	特殊_7()
+func 特殊_7():
+	print_debug(\"未做完\")
+	#旁白：
+#那些桥状纹路已经不是单线结构，
+#而是出现了许多可以分叉、绕路、延迟抵达的支脉。
+#那些线没有急着冲向一个终点，
+#而是慢下来，在空白处打了很多个结。
+	剧情_8()
+func 剧情_8():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：……这还是[i] “桥” [/i]吗？
+鱼妹：是。
+鱼妹：只是它不再是那种“一次性跨过去”的[i]桥[/i]。
+鱼妹：它允许“走远一点再回来”，
+鱼妹：也允许“暂时停在中途”。
+鱼妹：它不再是“把别人尽快送进一个结论里”的结构，
+鱼妹：而是“给自己多一点时间去看清对面是谁”的结构。
+鱼妹：你现在带着的，
+鱼妹：已经不是我一开始为你准备的攻击模块，
+鱼妹：而是你一路修修补补后的“自定义版本”。
+
+	\"\"\")
+	await text_box.结束
+	特殊_9()
+func 特殊_9():
+	print_debug(\"未做完\")
+#系统提示：
+#桥接模块：重新尝试连接……
+#错误代码：0xc0000225
+#原因：缺失“对端”
+#正在等待……对端确认
+	剧情_10()
+func 剧情_10():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：如果这就是终端节点，
+A-MEN：如果我已经拆掉了能拆的一切“姿势”，
+A-MEN：那为什么那条错误提示还在？
+A-MEN：我们清理了黑暗地带，
+A-MEN：修复了事实，
+A-MEN：拆除了被剪辑的情绪，
+A-MEN：对准了“姿势”本身。
+A-MEN：那还缺什么？
+鱼妹：缺的，从来不是“数据”。
+鱼妹：从一开始缺的，
+鱼妹：就是那一端——
+鱼妹：[b]“愿意接住这座桥的人”[/b]。
+A-MEN：……所以，
+A-MEN：不论我修得多好，
+A-MEN：不论我变成怎样的[i]桥[/i]，
+A-MEN：如果没有 “对端” ，
+A-MEN：这条路就只能停在这里。
+鱼妹：是的。
+鱼妹：桥的意义从来不在“[i]桥[/i]身有多复杂”，
+鱼妹：而在于“有人在另一头等你过去”。
+鱼妹：我可以陪你走到这里，
+鱼妹：但终端节点之后的部分，
+鱼妹：不在“电子幽灵”的权限里。
+A-MEN：那是谁的权限？
+鱼妹：你一路上处理过那么多“被看错的真实”，也看过那么多“没来得及说完的痛”。
+鱼妹：你应该已经知道——
+鱼妹：[b]“谁在看”，[/b]
+鱼妹：[b]比“看到了什么”更重要[/b]。
+A-MEN：那“对端”是谁？
+A-MEN：从一开始就缺失的那一端……
+A-MEN：到底是什么？
+鱼妹：我不能告诉你。
+鱼妹：因为那个答案……
+鱼妹：不是给“我”的。
+鱼妹：是给“你”的。
+鱼妹：[i]桥[/i]不是为了我而建。
+A-MEN：那[i]桥[/i]的另一端在哪里？
+鱼妹：它不在世界里。
+鱼妹：不在鱼妹这里。
+鱼妹：不在任务，不在碎片。
+鱼妹：从一开始……
+鱼妹：你就在寻找那一端。
+鱼妹：只是你还没敢抬头看。
+
+	\"\"\")
+	await text_box.结束
+	特殊_11()
+func 特殊_11():
+	print_debug(\"未做完\")
+#（画面屏幕变暗，对话框外框变成桥梁线条，A-MEN的立绘开始“超出”画面边界，像是在突破游戏层级）
+	剧情_12()
+func 剧情_12():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：这不是……世界里的[i]桥[/i]。
+A-MEN：这是——
+A-MEN：[b]理解想要触及的方向。[/b]
+鱼妹：你终于看到了。
+鱼妹：从开场开始，那句“缺失对端”——
+鱼妹：不是故障。
+鱼妹：是[b]邀请[/b]。
+
+	\"\"\")
+	await text_box.结束
+	特殊_13()
+func 特殊_13():
+	print_debug(\"未做完\")
+	#（屏幕全黑）
+	剧情_14()
+
+func 剧情_14():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+鱼妹：你走到这里，只有一个问题还没有答案。
+鱼妹：也是只有你……
+鱼妹：能回答的问题：
+鱼妹：[b]桥的另一端……是谁？[/b]
+A-MEN：我现在明白了。
+A-MEN：“对端”……
+A-MEN：一直……
+A-MEN：都在看着我。
+A-MEN：如果你真的存在……
+A-MEN：如果你一直在看着这一切……
+A-MEN：那这条[i]桥[/i]从一开始就不是我一个人在走。
+A-MEN：我不知道你是谁，
+A-MEN：不知道你会怎么理解我、理解他们、理解这个世界。
+A-MEN：但——
+
+	\"\"\")
+	await text_box.结束
+	特殊_15()
+func 特殊_15():
+	print_debug(\"未做完\")
+	#（对话框消失数秒）
+	剧情_15_5()
+	
+func 剧情_15_5():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：我愿意，
+A-MEN：把自己当作那座[i]桥[/i]，
+A-MEN：向你伸过去。
+
+	\"\"\")
+	await text_box.结束
+	特殊_16()
+func 特殊_16():
+	print_debug(\"未做完\")
+#（画面抖动）
+#
+#系统提示：
+#桥接模块：重新尝试连接……
+#错误代码：0xc0000225
+#——已过期
+#正在重新检测“对端”信号……
+#…………
+#检测结果：
+#对端存在
+
+func 剧情_17():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+鱼妹：看来，
+鱼妹：有人在另一头。
+
+	\"\"\")
+	await text_box.结束
+	特殊_18()
+func 特殊_18():
+	print_debug(\"未做完\")
+	#（画面过曝，屏幕抖动）
+	剧情_19()
+func 剧情_19():
+	await  get_tree().create_timer(1).timeout
+	text_box.开始(\"\"\"
+A-MEN：如果有一天，
+A-MEN：你也觉得自己的路被截断了……
+A-MEN：[b]那就把这座桥，当成你曾经来过这里的证明[/b]。
+
+	\"\"\")
+	await text_box.结束
+	彩蛋()
+func 彩蛋():
+	print_debug(\"未做完\")
+
+func 谢幕():
+	print_debug(\"未做完\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32l6c"]
+size = Vector2(822, 20)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_dpgy5")
+
+[node name="TextBox" parent="." instance=ExtResource("1_tvv5l")]
+visible = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
+offset_left = -88.0
+offset_top = -32.0
+offset_right = -48.0
+offset_bottom = 8.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(44, 78)
+shape = SubResource("RectangleShape2D_32l6c")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Entity" parent="Node2D" instance=ExtResource("2_dpgy5")]

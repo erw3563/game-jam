@@ -1,7 +1,12 @@
 extends CanvasLayer
 
 class_name TextBox
-
+###使用示例
+	#await  get_tree().create_timer(1).timeout
+	#text_box.开始("""
+#
+	#""")
+	#await text_box.结束
 ###这是公开的
 #敏感符号
 #  : 用于分割 角色名 与 话 (每行必须有一个,首个) （统一用中文）

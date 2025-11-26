@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d12422v4jck8a"
-path="res://.godot/imported/数据之海.jpg-bb9fe47856a3f2ed80d11ef17d45ecd6.ctex"
+path="res://.godot/imported/数据之海.jpg-e3a5f8200760ca6d5a50f02cc151520f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scene/第一章  桥/数据之海.jpg"
-dest_files=["res://.godot/imported/数据之海.jpg-bb9fe47856a3f2ed80d11ef17d45ecd6.ctex"]
+source_file="res://Scene/第一章_开场/数据之海.jpg"
+dest_files=["res://.godot/imported/数据之海.jpg-e3a5f8200760ca6d5a50f02cc151520f.ctex"]
 
 [params]
 
