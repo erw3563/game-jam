@@ -81,7 +81,12 @@ func _check_state():
 			await empty_jump_timer.timeout
 			jump_num -= 1
 
+var 图片_方向=1
+signal 转向
 func _set_mover_velocity_x(delta:float):
+	if 图片_方向*input_x<0:
+		图片_方向=-图片_方向
+		转向.emit()
 	if input_x == 0 and mover.velocity.x != 0:
 		_deceleration(delta)
 	elif input_x == - mover.velocity.x:

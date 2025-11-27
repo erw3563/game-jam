@@ -149,24 +149,32 @@ offset_bottom = -26.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/separation = 20
+alignment = 2
 
 [node name="R" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
 layout_mode = 2
+size_flags_horizontal = 1
 
 [node name="F" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
 layout_mode = 2
+size_flags_horizontal = 1
 "按键" = "F"
 
 [node name="V" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
+visible = false
 layout_mode = 2
+size_flags_horizontal = 1
 "按键" = "V"
 
 [node name="G" parent="CanvasLayer/HBoxContainer" instance=ExtResource("17_dibct")]
+visible = false
 layout_mode = 2
+size_flags_horizontal = 1
 "按键" = "G"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+position_smoothing_enabled = true
 
 [connection signal="hited" from="HealthComponent" to="." method="_on_health_component_hited"]
 [connection signal="fired" from="Attack" to="." method="_on_attack_fired"]

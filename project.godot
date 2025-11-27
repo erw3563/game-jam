@@ -84,6 +84,7 @@ skill_f={
 2d_physics/layer_2="玩家"
 2d_physics/layer_3="怪物"
 2d_physics/layer_4="地图_陷阱_交互物件"
+2d_physics/layer_5="石头人"
 
 [rendering]
 

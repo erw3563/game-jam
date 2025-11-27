@@ -1,0 +1,429 @@
+[gd_scene load_steps=43 format=3 uid="uid://ctlx8hixjtifs"]
+
+[ext_resource type="Script" uid="uid://v4uwxotregtq" path="res://GDBase/Health/health_component.gd" id="1_naxpf"]
+[ext_resource type="Script" uid="uid://cj3xyb234cfoh" path="res://GDBase/Health/health_cells_progress_bar.gd" id="2_4qbqk"]
+[ext_resource type="Script" uid="uid://iubl2fg1wf6e" path="res://Entity/攻击区.gd" id="3_wj4py"]
+[ext_resource type="Texture2D" uid="uid://x2k2pue47oil" path="res://Entity/蝙蝠/Bat-Die.png" id="5_2r4tn"]
+[ext_resource type="Texture2D" uid="uid://bq3e1irimfv5w" path="res://Entity/蝙蝠/Bat-Hurt.png" id="6_etqrk"]
+[ext_resource type="Texture2D" uid="uid://bamw4vl83xc4o" path="res://Entity/蝙蝠/Bat-IdleFly.png" id="7_r81oh"]
+[ext_resource type="Texture2D" uid="uid://bb50qt5kxjlmk" path="res://Entity/蝙蝠/Bat-Run.png" id="8_kdh8u"]
+
+[sub_resource type="GDScript" id="GDScript_807mj"]
+script/source = "extends CharacterBody2D
+@export var 攻击间隔:float=2
+@export var 敌人:CharacterBody2D
+func _ready() -> void:
+	if Engine.is_editor_hint():set_process(false)
+	
+var 模式:Callable=靠近
+func _physics_process(delta: float) -> void:
+	if not 敌人:return
+	模式.call(delta)
+	move_and_slide()
+	
+var 图片_方向:=1
+func 靠近(delta: float):
+	攻击_冷却-=delta
+	var 差值=敌人.global_position-global_position
+	if 差值.x*图片_方向<-1:
+		scale.x=-scale.x
+		图片_方向=-图片_方向
+	if 差值.length()>150:
+		velocity=velocity+(20*差值.normalized()-velocity)*10*delta
+		animated_sprite_2d.play(\"i\")
+	else :
+		velocity=velocity+-velocity*10*delta
+		animated_sprite_2d.play(\"i\")
+		if 攻击_冷却<=0:
+			冲刺(差值.normalized())
+var 攻击_冷却=1
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+func 冲刺(a:Vector2):
+	模式=空模式
+	velocity=a*200
+	animation_player.play(\"a\")
+	await animation_player.animation_finished
+	攻击_冷却=攻击间隔
+	模式=上升
+func 空模式(_delta: float):
+	pass
+func 上升(delta: float):
+	var 差值=敌人.global_position-global_position
+	if 差值.y<50:
+		animated_sprite_2d.play(\"i\")
+		velocity.x=velocity.x-velocity.x*10*delta
+		velocity.y=velocity.y+(-20-velocity.y)*10*delta
+	else :
+		模式=靠近
+func 掉落(delta: float):
+	velocity.y=velocity.y+(50-velocity.y)*10*delta
+
+var 死亡=false
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+func _on_health_component_died() -> void:
+	if 死亡:return
+	死亡=true
+	模式=掉落
+	animated_sprite_2d.play(\"d\")
+	await animated_sprite_2d.animation_finished
+	queue_free()
+func _on_health_component_health_delta_applied(_amount: int) -> void:
+	if 模式==靠近 or 模式==上升:
+		var a=模式
+		模式=空模式
+		animated_sprite_2d.play(\"h\")
+		await animated_sprite_2d.animation_finished
+		模式=a
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_807mj"]
+size = Vector2(24, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ful33"]
+size = Vector2(16, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uafib"]
+size = Vector2(21, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6x32f"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2i3o8"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mcos"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f8brv"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvn64"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryv42"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4h3a"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5o0l"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cafpf"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxksy"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61xgk"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ocax"]
+atlas = ExtResource("5_2r4tn")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4aqb1"]
+atlas = ExtResource("6_etqrk")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fl1p0"]
+atlas = ExtResource("6_etqrk")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2iuoi"]
+atlas = ExtResource("6_etqrk")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jiqx3"]
+atlas = ExtResource("6_etqrk")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rcsg"]
+atlas = ExtResource("6_etqrk")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcet3"]
+atlas = ExtResource("7_r81oh")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6hc2"]
+atlas = ExtResource("7_r81oh")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xp7le"]
+atlas = ExtResource("7_r81oh")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhdro"]
+atlas = ExtResource("7_r81oh")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0o67"]
+atlas = ExtResource("7_r81oh")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0c54j"]
+atlas = ExtResource("7_r81oh")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1bxt"]
+atlas = ExtResource("7_r81oh")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5dvm"]
+atlas = ExtResource("7_r81oh")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8qls"]
+atlas = ExtResource("7_r81oh")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8q3ht"]
+atlas = ExtResource("8_kdh8u")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gsd7u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6x32f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2i3o8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mcos")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f8brv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvn64")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryv42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4h3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5o0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cafpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxksy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61xgk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ocax")
+}],
+"loop": false,
+"name": &"d",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4aqb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fl1p0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2iuoi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jiqx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rcsg")
+}],
+"loop": false,
+"name": &"h",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcet3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6hc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xp7le")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhdro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0o67")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0c54j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1bxt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5dvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n8qls")
+}],
+"loop": true,
+"name": &"i",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8q3ht")
+}],
+"loop": true,
+"name": &"w",
+"speed": 12.0
+}]
+
+[sub_resource type="Animation" id="Animation_lkcvm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageComponent/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_kd53i"]
+resource_name = "a"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"w"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageComponent/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hyl28"]
+_data = {
+&"RESET": SubResource("Animation_lkcvm"),
+&"a": SubResource("Animation_kd53i")
+}
+
+[node name="蝙蝠" type="CharacterBody2D"]
+collision_layer = 4
+script = SubResource("GDScript_807mj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_807mj")
+
+[node name="HealthComponent" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_naxpf")
+max_health = 3
+current_health = 3
+metadata/_custom_type_script = "uid://v4uwxotregtq"
+
+[node name="HealthCellsProgressBar" type="Node2D" parent="HealthComponent" node_paths=PackedStringArray("health_component")]
+position = Vector2(-16, 5)
+script = ExtResource("2_4qbqk")
+health_component = NodePath("..")
+max_cells_num = 3
+current_cells_num = 3
+metadata/_custom_type_script = "uid://cj3xyb234cfoh"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ful33")
+
+[node name="DamageComponent" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_wj4py")
+"击飞强度" = Vector2(0, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageComponent"]
+position = Vector2(0.5, 1)
+shape = SubResource("RectangleShape2D_uafib")
+disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gsd7u")
+animation = &"w"
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hyl28")
+}
+
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="health_delta_applied" from="HealthComponent" to="." method="_on_health_component_health_delta_applied"]
+[connection signal="area_entered" from="DamageComponent" to="DamageComponent" method="_on_area_entered"]

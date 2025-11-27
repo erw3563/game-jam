@@ -1,16 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://0s8jgb1e3m3h"]
+[gd_scene load_steps=6 format=3 uid="uid://0s8jgb1e3m3h"]
 
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="1_cqpao"]
 [ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="2_18ath"]
+[ext_resource type="PackedScene" uid="uid://ctlx8hixjtifs" path="res://Entity/蝙蝠/蝙蝠.tscn" id="3_18ath"]
 
 [sub_resource type="GDScript" id="GDScript_cqpao"]
 script/source = "extends Control
 @onready var entity: Player = $Node2D/Entity
 @onready var text_box: TextBox = $TextBox
 func _ready() -> void:
-	entity.禁用输入(true)
-	剧情_1()
+	#entity.禁用输入(true)
+	#剧情_1()
 	#下一章()
+	pass
+	
 
 func 剧情_1():
 	await  get_tree().create_timer(1).timeout
@@ -238,10 +241,6 @@ script = SubResource("GDScript_cqpao")
 [node name="TextBox" parent="." instance=ExtResource("1_cqpao")]
 visible = false
 
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="Entity" parent="Node2D" instance=ExtResource("2_18ath")]
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
@@ -253,3 +252,19 @@ offset_bottom = 8.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(44, 78)
 shape = SubResource("RectangleShape2D_cqpao")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Entity" parent="Node2D" instance=ExtResource("2_18ath")]
+
+[node name="蝙蝠" parent="Node2D" node_paths=PackedStringArray("敌人") instance=ExtResource("3_18ath")]
+position = Vector2(-54, -97)
+"敌人" = NodePath("../Entity")
+
+[node name="蝙蝠2" parent="Node2D" node_paths=PackedStringArray("敌人") instance=ExtResource("3_18ath")]
+position = Vector2(195, -80)
+"敌人" = NodePath("../Entity")
+
+[node name="蝙蝠3" parent="Node2D" node_paths=PackedStringArray("敌人") instance=ExtResource("3_18ath")]
+position = Vector2(121, 22)
+"敌人" = NodePath("../Entity")

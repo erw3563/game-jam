@@ -1,19 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxmmrhsns4jlr"]
+[gd_scene load_steps=8 format=3 uid="uid://cxmmrhsns4jlr"]
 
-[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="1_hoh0n"]
+[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="2_1ucq2"]
+[ext_resource type="PackedScene" uid="uid://bu5x2qje805pe" path="res://Entity/石头人/石头人.tscn" id="2_64u8c"]
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="2_ba1qj"]
+[ext_resource type="PackedScene" uid="uid://ctlx8hixjtifs" path="res://Entity/蝙蝠/蝙蝠.tscn" id="3_1ucq2"]
 [ext_resource type="PackedScene" uid="uid://cltb6qvsdknov" path="res://Scene/textbox/dialogue_label.tscn" id="3_i8u30"]
 
 [sub_resource type="GDScript" id="GDScript_i8u30"]
 script/source = "extends Control
 @onready var text_box: TextBox = $TextBox
-@onready var entity: Player = $冻结区/Entity
+@onready var entity: Player_2 = $\"冻结区/Entity_2\"
 
 func _ready() -> void:
-	entity.禁用输入(true)
-	剧情_1()
+	#entity.禁用输入(true)
+	#剧情_1()
 	
 	#剧情_3()
+	pass
 func 剧情_1():
 	await  get_tree().create_timer(1).timeout
 	text_box.开始(\"\"\"
@@ -209,7 +212,7 @@ func 下一章():
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ba1qj"]
-size = Vector2(822, 20)
+size = Vector2(1969, 20)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -222,7 +225,39 @@ script = SubResource("GDScript_i8u30")
 
 [node name="冻结区" type="Node2D" parent="."]
 
-[node name="Entity" parent="冻结区" instance=ExtResource("1_hoh0n")]
+[node name="石头人" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("2_64u8c")]
+position = Vector2(-131, 9)
+"敌人" = NodePath("../Entity_2")
+
+[node name="Entity_2" parent="冻结区" instance=ExtResource("2_1ucq2")]
+
+[node name="石头人2" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("2_64u8c")]
+position = Vector2(344, -6)
+"敌人" = NodePath("../Entity_2")
+
+[node name="石头人3" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("2_64u8c")]
+position = Vector2(-265, 19)
+"敌人" = NodePath("../Entity_2")
+
+[node name="石头人4" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("2_64u8c")]
+position = Vector2(263, -5)
+"敌人" = NodePath("../Entity_2")
+
+[node name="蝙蝠" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
+position = Vector2(-155, -161)
+"敌人" = NodePath("../Entity_2")
+
+[node name="蝙蝠2" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
+position = Vector2(352, -113)
+"敌人" = NodePath("../Entity_2")
+
+[node name="蝙蝠3" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
+position = Vector2(-12, -209)
+"敌人" = NodePath("../Entity_2")
+
+[node name="蝙蝠4" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
+position = Vector2(200, -193)
+"敌人" = NodePath("../Entity_2")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
@@ -233,7 +268,7 @@ offset_right = -71.0
 offset_bottom = -57.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(44, 78)
+position = Vector2(61.5, 78)
 shape = SubResource("RectangleShape2D_ba1qj")
 
 [node name="TextBox" parent="." instance=ExtResource("2_ba1qj")]
