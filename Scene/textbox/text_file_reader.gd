@@ -72,3 +72,11 @@ func _on_texture_button_2_pressed() -> void:
 
 func _on_剧本_关闭() -> void:
 	texture_button_2.visible=true
+
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+
+func _on_dialogue_label_started_typing() -> void:
+	if audio_stream_player.stream_paused:audio_stream_player.stream_paused=false
+	else :audio_stream_player.play()
+func _on_dialogue_label_finished_typing() -> void:
+	audio_stream_player.stream_paused=true

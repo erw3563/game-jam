@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 "转场"="*res://全局/转场.tscn"
+"声音"="*res://声音/声音.tscn"
 
 [display]
 

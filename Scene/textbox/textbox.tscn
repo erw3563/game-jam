@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://de18ubvjnfumg"]
+[gd_scene load_steps=12 format=3 uid="uid://de18ubvjnfumg"]
 
 [ext_resource type="Script" uid="uid://dbsv222vu6pxw" path="res://Scene/textbox/text_file_reader.gd" id="1_qvppv"]
 [ext_resource type="PackedScene" uid="uid://c70y4sq4ogtqt" path="res://Scene/textbox/剧本.tscn" id="3_eupp5"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="3_xob1p"]
 [ext_resource type="Texture2D" uid="uid://dv1swcxprdj2n" path="res://Scene/textbox/剧本.png" id="4_pnvkq"]
+[ext_resource type="AudioStream" uid="uid://bgd40bylkxyp0" path="res://声音/打字_1.mp3" id="5_xob1p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnvkq"]
 bg_color = Color(1, 0.79607844, 0.1764706, 1)
@@ -177,7 +178,7 @@ theme_override_constants/margin_bottom = 12
 
 [node name="DialogueLabel" parent="Control/VBoxContainer/文本框/MarginContainer" instance=ExtResource("3_xob1p")]
 layout_mode = 2
-seconds_per_step = 0.05
+seconds_per_step = 0.1
 
 [node name="Polygon2D" type="Polygon2D" parent="Control/VBoxContainer/文本框/MarginContainer"]
 position = Vector2(21, 2)
@@ -213,6 +214,13 @@ texture_normal = ExtResource("4_pnvkq")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_xob1p")
+bus = &"ui音效"
+parameters/looping = true
+
+[connection signal="finished_typing" from="Control/VBoxContainer/文本框/MarginContainer/DialogueLabel" to="." method="_on_dialogue_label_finished_typing"]
+[connection signal="started_typing" from="Control/VBoxContainer/文本框/MarginContainer/DialogueLabel" to="." method="_on_dialogue_label_started_typing"]
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
 [connection signal="关闭" from="剧本" to="." method="_on_剧本_关闭"]
 [connection signal="pressed" from="TextureButton2" to="." method="_on_texture_button_2_pressed"]

@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://uqnd577xkcmm"]
+
+[ext_resource type="Script" uid="uid://cpuo2rkajc7vm" path="res://声音/声音.gd" id="1_fta6o"]
+[ext_resource type="AudioStream" uid="uid://iyqg35hw046l" path="res://声音/音乐/剧情1（开场）.mp3" id="2_udbd8"]
+[ext_resource type="AudioStream" uid="uid://bxvkktq8qgby0" path="res://声音/音乐/剧情2（关卡1）.mp3" id="3_lwe4x"]
+[ext_resource type="AudioStream" uid="uid://dbk5w2y0sdy3a" path="res://声音/音乐/剧情3（关卡2）.mp3" id="4_sspu2"]
+[ext_resource type="AudioStream" uid="uid://co8g8kgwfh4r7" path="res://声音/音乐/剧情4（最终章）.mp3" id="5_fr46c"]
+[ext_resource type="AudioStream" uid="uid://bu0g0l85dgt5g" path="res://声音/音乐/战斗1.mp3" id="6_sspu2"]
+[ext_resource type="AudioStream" uid="uid://31lhrwo1vjvq" path="res://声音/音乐/战斗2.mp3" id="7_fr46c"]
+[ext_resource type="AudioStream" uid="uid://dtadeheuqca8j" path="res://声音/音乐/战斗3（最终章战斗）.mp3" id="8_0w3p8"]
+
+[node name="音乐" type="Node"]
+script = ExtResource("1_fta6o")
+
+[node name="剧情1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_udbd8")
+bus = &"音乐"
+parameters/looping = true
+
+[node name="剧情2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_lwe4x")
+bus = &"音乐"
+parameters/looping = true
+
+[node name="剧情3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_sspu2")
+bus = &"音乐"
+parameters/looping = true
+
+[node name="剧情4" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_fr46c")
+bus = &"音乐"
+parameters/looping = true
+
+[node name="战斗1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_sspu2")
+bus = &"音乐"
+parameters/looping = true
+
+[node name="战斗2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_fr46c")
+bus = &"音乐"
+parameters/looping = true
+
+[node name="战斗3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_0w3p8")
+bus = &"音乐"
+parameters/looping = true

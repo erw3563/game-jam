@@ -10,16 +10,15 @@ class 战斗场景:
 	var _场景_重来:战斗场景  #在多波敌人中使用
 	func 进入战斗():
 		_玩家.禁用输入(false)
-		#if not _玩家.health_component.died.is_connected(_战败)
-		_玩家.health_component.died.connect(_战败)
+		if not _玩家.health_component.died.is_connected(_战败):
+			_玩家.health_component.died.connect(_战败)
 		var a=_场景.duplicate()
 		_场景_使用中=a
 		a.child_exiting_tree.connect(战斗结束)
 		_父节点.add_child(a)
 	func 战斗结束(_a):
 		if _场景_使用中.get_child_count()<=1: ###最后一个正在删除中
-			_玩家.health_component.died.disconnect(_战败)
-			_下一关.call()
+			_下一关_1()
 	func _战败():
 		_玩家.禁用输入(true)
 		var a=await 战败ui.选择(_场景_使用中)
@@ -28,17 +27,22 @@ class 战斗场景:
 				_场景_使用中.queue_free()
 				_玩家.重置()
 				_玩家.health_component.died.disconnect(_战败)
-				if _场景_重来:_场景_重来.进入战斗()
+				if _场景_重来:
+					_玩家.health_component.died.disconnect(_战败)
+					_场景_重来.进入战斗()
 				else :进入战斗()
 			"继续":
 				_玩家.health_component.current_health=_玩家.health_component.max_health
 			"跳过":
 				_场景_使用中.queue_free()
-				_玩家.禁用输入(true)
-				_玩家.health_component.died.disconnect(_战败)
-				_下一关.call()
+				_下一关_1()
 				return
 		_玩家.禁用输入(false)
+	func _下一关_1():
+		_玩家.禁用输入(true)
+		_玩家.health_component.died.disconnect(_战败)
+		_下一关.call()
+			
 	
 static  func 获取战斗场景(战斗场景_:Node,玩家,下一关:Callable)->战斗场景:
 	var a=战斗场景.new()
