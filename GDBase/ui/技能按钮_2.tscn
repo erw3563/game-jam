@@ -45,6 +45,7 @@ func _process(delta: float) -> void:
 	if 冷却值<=0:
 		冷却结束.emit()
 		label_2.text=\"\"
+		set_process(false)
 	
 "
 
@@ -62,6 +63,7 @@ bg_color = Color(0.47152892, 0.48763055, 0.7240258, 0.5529412)
 custom_minimum_size = Vector2(58, 58)
 texture = SubResource("AtlasTexture_dwhkp")
 script = SubResource("GDScript_w0aym")
+"冷却值" = -17.653287000000308
 
 [node name="技能_图标" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -116,7 +118,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_w0aym")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ysopj")
-value = 31.14
 fill_mode = 3
 show_percentage = false
 

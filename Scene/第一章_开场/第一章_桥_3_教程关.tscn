@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=4 uid="uid://c25raeu5fcosf"]
 
 [ext_resource type="TileSet" uid="uid://qk4jyafelh87" path="res://Asset/Tile/tile.tres" id="1_l0dwc"]
-[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="3_jxalb"]
+[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="2_k05nx"]
 
 [sub_resource type="GDScript" id="GDScript_mc7mb"]
 script/source = "extends Node2D
@@ -10,7 +10,7 @@ const 词库=[[\"咿咿呀呀\",\"叽叽喳喳\"]
 ,[\"装聋\",\"作哑\"]
 #,[\"比比画画\",\"真真假假\"]
 ]
-@onready var 玩家: Player = $\"冻结区/Entity\"
+@onready var 玩家: Player_2 = $\"冻结区/Entity_2\"
 
 func _ready() -> void:
 	#if not 玩家:return
@@ -102,4 +102,4 @@ position = Vector2(648, -7)
 
 [node name="冻结区" type="Node2D" parent="."]
 
-[node name="Entity" parent="冻结区" instance=ExtResource("3_jxalb")]
+[node name="Entity_2" parent="冻结区" instance=ExtResource("2_k05nx")]

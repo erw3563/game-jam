@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://drja1l6ib4ss7"]
+
+[ext_resource type="Texture2D" uid="uid://blfl3x4bevtyt" path="res://Entity/主角/弓箭.png" id="1_ckt3k"]
+
+[sub_resource type="GDScript" id="GDScript_ckt3k"]
+script/source = "extends Area2D
+
+@export var 攻击力:int=1
+##请填正数 无需考虑方向,需要父节点的[图片_方向] 受[质量影响,默认1]
+
+func _on_area_entered(area: Area2D) -> void:
+	if area is HealthComponent:
+		area.damage(攻击力)
+		queue_free()
+
+var 图片_方向=1
+@export var 速度=100
+func _ready() -> void:
+	scale.x=图片_方向
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
+	
+func _physics_process(delta: float) -> void:
+	position+=Vector2(速度*delta*图片_方向,0)
+		
+
+
+func _on_timer_timeout() -> void:
+	queue_free()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_flg36"]
+size = Vector2(16, 5)
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 0
+collision_mask = 4
+script = SubResource("GDScript_ckt3k")
+"速度" = 400
+
+[node name="弓箭" type="Sprite2D" parent="."]
+texture = ExtResource("1_ckt3k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(19, -0.5)
+shape = SubResource("RectangleShape2D_flg36")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

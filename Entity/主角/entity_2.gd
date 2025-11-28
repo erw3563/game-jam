@@ -25,6 +25,8 @@ func 冻结(a:bool):###用于跳转场景,但保留当前
 
 func _ready() -> void:
 	_初始位置=position
+	鼠标右键.冷却时间=6
+	鼠标右键.冷却结束.connect(func ():可_闪现=true)
 
 ###
 var _初始位置:Vector2
@@ -51,13 +53,44 @@ func _on_health_component_hited(dir: Vector2i) -> void:
 ############
 var 图片_方向=1
 @onready var 剑: 职业 = $剑2
-var 锁定:bool=false
+@onready var 弓: 职业 = $弓
+@onready var 盾: 职业 = $盾
+@onready var 当前职业:职业=剑
+var 锁定:bool=false:
+	set(a):
+		锁定=a
+		move_gravity_by_input.set_physics_process(!a)
+		
 func _process(_delta: float) -> void:
 	if 锁定:return
 	if Input.is_action_just_pressed("attack"):
 		锁定=true
-		await  剑.普攻()
+		await  当前职业.普攻()
 		锁定=false
+	elif 可_闪现==true and Input.is_action_just_pressed("闪现"):
+		锁定=true
+		await  闪现()
+		锁定=false
+
+var 模式:Callable=空
+func 空(_delta: float) -> void:pass
+func _physics_process(delta: float) -> void:
+	模式.call(delta)
+func 闪现_(_delta: float) -> void:
+	velocity=Vector2(750*图片_方向,0)
+	move_and_slide()
+
+
+@onready var 鼠标右键 = $CanvasLayer/右下/鼠标右键
+var 可_闪现:bool=true
+func 闪现():
+	可_闪现=false
+	模式=闪现_
+	await  get_tree().create_timer(0.25).timeout
+	模式=空
+	鼠标右键.冷却()
+	#可_闪现=false
+	print(可_闪现)
 
 
 func _on_move_gravity_by_input_转向() -> void:
