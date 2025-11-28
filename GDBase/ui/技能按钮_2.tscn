@@ -63,7 +63,7 @@ bg_color = Color(0.47152892, 0.48763055, 0.7240258, 0.5529412)
 custom_minimum_size = Vector2(58, 58)
 texture = SubResource("AtlasTexture_dwhkp")
 script = SubResource("GDScript_w0aym")
-"冷却值" = -17.653287000000308
+"冷却值" = -17.76481444444475
 
 [node name="技能_图标" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -88,13 +88,11 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -6.0
-offset_right = 20.0
-offset_bottom = 36.0
+offset_left = -23.0
+offset_right = 17.0
+offset_bottom = 42.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 30
 text = "R"
 horizontal_alignment = 1

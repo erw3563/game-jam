@@ -6,16 +6,20 @@
 script/source = "extends Area2D
 
 @export var 攻击力:int=1
-##请填正数 无需考虑方向,需要父节点的[图片_方向] 受[质量影响,默认1]
 
 func _on_area_entered(area: Area2D) -> void:
 	if area is HealthComponent:
 		area.damage(攻击力)
-		queue_free()
-
+		if not 穿透:queue_free()
+var 穿透=false
 var 图片_方向=1
 @export var 速度=100
+@onready var 弓箭: Sprite2D = $弓箭
+const 弓箭强化图=preload(\"res://Entity/主角/弓箭_穿透.png\")
 func _ready() -> void:
+	if 穿透:
+		速度=速度*4
+		弓箭.texture=弓箭强化图
 	scale.x=图片_方向
 	if not area_entered.is_connected(_on_area_entered):
 		area_entered.connect(_on_area_entered)

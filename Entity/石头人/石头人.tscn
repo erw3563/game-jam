@@ -55,12 +55,18 @@ func 空模式(_delta: float):
 	pass
 
 var 死亡=false
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var health_component: HealthComponent = $HealthComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 func _on_health_component_died() -> void:
 	if 死亡:return
 	死亡=true
 	模式=空模式
 	animated_sprite_2d.play(\"d\")
+	await get_tree().physics_frame
+	collision_shape_2d.disabled=true
+	health_component.monitorable=false
+	
 	await animated_sprite_2d.animation_finished
 	queue_free()
 func _on_health_component_health_delta_applied(_amount: int) -> void:

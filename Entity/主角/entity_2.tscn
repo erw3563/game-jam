@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://c5p3akujvmitw"]
+[gd_scene load_steps=67 format=3 uid="uid://c5p3akujvmitw"]
 
 [ext_resource type="Script" uid="uid://bo7cdxcjy6i7i" path="res://Entity/主角/entity_2.gd" id="1_aedmp"]
 [ext_resource type="Texture2D" uid="uid://domlvvs4mv48i" path="res://Entity/主角/主角.png" id="2_uhjsk"]
@@ -7,10 +7,19 @@
 [ext_resource type="Script" uid="uid://v4uwxotregtq" path="res://GDBase/Health/health_component.gd" id="5_v6kgo"]
 [ext_resource type="PackedScene" uid="uid://dssccalehutiv" path="res://GDBase/CellProgressBar/cells_progress_bar.tscn" id="6_ajqgl"]
 [ext_resource type="Texture2D" uid="uid://1yfmn2voamr8" path="res://Entity/主角/主角-攻击_1.png" id="7_qjlo7"]
+[ext_resource type="Texture2D" uid="uid://bueumc6ilv2u5" path="res://Entity/主角/按键ui/闪现.png" id="8_0qels"]
+[ext_resource type="Texture2D" uid="uid://biaixp6t131r8" path="res://Entity/主角/按键ui/鼠标左键.png" id="8_ajqgl"]
 [ext_resource type="Script" uid="uid://iubl2fg1wf6e" path="res://Entity/攻击区.gd" id="9_neb7i"]
+[ext_resource type="Texture2D" uid="uid://brgtaan2aiact" path="res://Entity/主角/按键ui/箭头_1.png" id="9_v6kgo"]
+[ext_resource type="Texture2D" uid="uid://s1oh0b6vcoro" path="res://Entity/主角/按键ui/跳跃.png" id="10_ajqgl"]
 [ext_resource type="Texture2D" uid="uid://drhh2ie76i5ir" path="res://Entity/主角/主角_弓_蓄力.png" id="10_neb7i"]
+[ext_resource type="Texture2D" uid="uid://cxkcil5oakd2w" path="res://Entity/主角/按键ui/鼠标右键.png" id="10_vta88"]
+[ext_resource type="Texture2D" uid="uid://d4lxnualbpoto" path="res://Entity/主角/按键ui/箭头.png" id="11_vta88"]
 [ext_resource type="Texture2D" uid="uid://dt4i2tk7iilvt" path="res://Entity/主角/主角_盾.png" id="11_xcxbn"]
 [ext_resource type="PackedScene" uid="uid://o8oiohshndjo" path="res://GDBase/ui/技能按钮_2.tscn" id="13_uhjsk"]
+[ext_resource type="Texture2D" uid="uid://dpg8vyn035ska" path="res://Entity/主角/按键ui/图标_剑.png" id="15_g4f1u"]
+[ext_resource type="Texture2D" uid="uid://boad6f7dv2h2k" path="res://Entity/主角/按键ui/图标_弓.png" id="18_8ndxi"]
+[ext_resource type="Texture2D" uid="uid://c2630hlu30otg" path="res://Entity/主角/按键ui/图标_盾.png" id="20_vmob0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_neb7i"]
 shader = ExtResource("2_xethj")
@@ -99,11 +108,26 @@ func 切入():
 	_攻击段数_当前=0
 
 func 普攻():
+	set_process(true)
+	再次点击鼠标左键=true
+	while 再次点击鼠标左键:
+		再次点击鼠标左键=false
+		await  攻击()
+	set_process(false)
+var _攻击段数_当前:int=0
+const  _普攻:Array[String]=[\"攻击_1\",\"攻击_2\"]
+
+func 攻击():
 	animation_player.play(_普攻[_攻击段数_当前])
 	_攻击段数_当前=(_攻击段数_当前+1)%_普攻.size()
 	await animation_player.animation_finished
-var _攻击段数_当前:int=0
-const  _普攻:Array[String]=[\"攻击_1\",\"攻击_2\"]
+
+func _ready() -> void:
+	set_process(false)
+var 再次点击鼠标左键=false
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed(\"attack\"):
+		再次点击鼠标左键=true
 "
 
 [sub_resource type="Animation" id="Animation_xethj"]
@@ -323,18 +347,6 @@ region = Rect2(144, 0, 144, 144)
 atlas = ExtResource("10_neb7i")
 region = Rect2(432, 0, 144, 144)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ajqgl"]
-atlas = ExtResource("10_neb7i")
-region = Rect2(0, 0, 144, 144)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vta88"]
-atlas = ExtResource("10_neb7i")
-region = Rect2(144, 0, 144, 144)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3uyxx"]
-atlas = ExtResource("10_neb7i")
-region = Rect2(432, 0, 144, 144)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4f1u"]
 animations = [{
 "frames": [],
@@ -351,15 +363,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_v6kgo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ajqgl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vta88")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3uyxx")
 }],
 "loop": false,
 "name": &"蓄力",
@@ -372,13 +375,29 @@ script/source = "extends 职业
 
 var 弓箭=preload(\"res://Entity/主角/弓箭.tscn\")
 func 普攻():
-	play(\"蓄力\")
-	await animation_finished
+	释放=false
+	set_process(true)
+	var 蓄力次数=0
+	while not 释放 and 蓄力次数<3:
+		蓄力次数+=1
+		play(\"蓄力\")
+		await animation_finished
+	if 蓄力次数>=3:
+		放箭(true)
+	else :
+		放箭()
+func 放箭(c:bool=false):
 	var a:Area2D=弓箭.instantiate()
+	a.穿透=c
 	a.图片_方向=entity_2.图片_方向
 	a.global_position=entity_2.global_position
 	entity_2.get_parent().add_child(a)
-	
+var 释放:bool
+func _ready() -> void:
+	set_process(false)
+func _process(_delta: float) -> void:
+	if Input.is_action_just_released(\"attack\"):
+		释放=true
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4k1ox"]
@@ -565,10 +584,10 @@ tracks/1/path = NodePath(".:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.06666667, 2.4333334),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.06666667),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 0]
+"values": [0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -694,9 +713,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -302.0
-offset_top = -84.0
+offset_top = -90.82501
 offset_right = -18.0
-offset_bottom = -26.0
+offset_bottom = -32.825012
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/separation = 20
@@ -705,39 +724,118 @@ alignment = 2
 [node name="鼠标左键" parent="CanvasLayer/右下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = ""
-"冷却值" = -8337.885149965176
+"冷却值" = -8338.202076076286
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标左键"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -5.6450005
+offset_right = 20.0
+offset_bottom = 34.35498
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("8_ajqgl")
 
 [node name="鼠标右键" parent="CanvasLayer/右下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = ""
-"冷却值" = -8337.885149965176
+"技能_图标" = ExtResource("8_0qels")
+"冷却值" = -8338.202076076286
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标右键"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -6.285
+offset_right = 20.0
+offset_bottom = 33.714996
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("10_vta88")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 18.0
-offset_top = -74.0
-offset_right = 302.0
-offset_bottom = -16.0
+offset_left = 10.0
+offset_top = -45.0
+offset_right = 294.0
+offset_bottom = 13.0
 grow_vertical = 0
-scale = Vector2(0.8, 0.8)
+scale = Vector2(0.5, 0.5)
 theme_override_constants/separation = 20
 
 [node name="技能按钮" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
-"按键" = ""
-"冷却值" = -8337.885149965176
+"按键" = "A"
+"技能_图标" = ExtResource("9_v6kgo")
+"冷却值" = -8338.202076076286
 
 [node name="技能按钮2" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
-"按键" = ""
-"冷却值" = -8337.885149965176
+"按键" = "w"
+"技能_图标" = ExtResource("10_ajqgl")
+"冷却值" = -8338.202076076286
 
 [node name="技能按钮3" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
-"按键" = ""
-"冷却值" = -8337.885149965176
+"按键" = "d"
+"技能_图标" = ExtResource("11_vta88")
+"冷却值" = -8338.202076076286
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+
+[node name="中下" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -107.0
+offset_top = -108.045
+offset_right = 107.0
+offset_bottom = -50.045
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="技能按钮" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = "1"
+"技能_图标" = ExtResource("15_g4f1u")
+"冷却值" = -18.054284555555768
+
+[node name="技能按钮2" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = "2"
+"技能_图标" = ExtResource("18_8ndxi")
+"冷却值" = -18.15165366666697
+
+[node name="技能按钮3" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = "3"
+"技能_图标" = ExtResource("20_vmob0")
+"冷却值" = -18.147263222222435
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -746,6 +844,8 @@ position_smoothing_enabled = true
 [node name="剑2" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_m75f7")
 script = SubResource("GDScript_8a2w1")
+"切换按键" = "切_剑"
+"普攻_图标" = ExtResource("15_g4f1u")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="剑2"]
 root_node = NodePath("../..")
@@ -776,13 +876,17 @@ libraries = {
 [node name="弓" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_g4f1u")
 animation = &"蓄力"
-frame = 5
+frame = 2
 frame_progress = 1.0
 script = SubResource("GDScript_8ndxi")
+"切换按键" = "切_弓"
+"普攻_图标" = ExtResource("18_8ndxi")
 
 [node name="盾" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_neb7i")
 script = SubResource("GDScript_xcxbn")
+"切换按键" = "切_盾"
+"普攻_图标" = ExtResource("20_vmob0")
 
 [node name="HealthComponent" type="Area2D" parent="盾"]
 position = Vector2(1, -5)

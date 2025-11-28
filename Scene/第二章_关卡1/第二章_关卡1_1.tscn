@@ -9,13 +9,12 @@
 [sub_resource type="GDScript" id="GDScript_i8u30"]
 script/source = "extends Control
 @onready var text_box: TextBox = $TextBox
-@onready var entity: Player_2 = $\"冻结区/Entity_2\"
+@onready var 玩家: Player_2 = $\"Entity_2\"
 
 func _ready() -> void:
-	#entity.禁用输入(true)
+	#玩家.禁用输入(true)
 	#剧情_1()
-	
-	#剧情_3()
+	战斗_2()
 	pass
 func 剧情_1():
 	await  get_tree().create_timer(1).timeout
@@ -85,9 +84,15 @@ A-MEN：请求执行。
 	\"\"\")
 	await text_box.结束
 	战斗_2()
+
+@onready var 战斗_2_1:=战败ui.获取战斗场景($\"冻结区\",玩家,剧情_3)
 func 战斗_2():
-	print_debug(\"未做完:战斗_2\")
-	剧情_3()
+	战斗_2_1.进入战斗()
+	#print_debug(\"未做完:战斗_2\")
+	#剧情_3()
+	
+
+		
 func 剧情_3():
 	await  get_tree().create_timer(1).timeout
 	text_box.开始(\"\"\"
@@ -223,41 +228,41 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_i8u30")
 
+[node name="Entity_2" parent="." instance=ExtResource("2_1ucq2")]
+
 [node name="冻结区" type="Node2D" parent="."]
 
 [node name="石头人" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("2_64u8c")]
 position = Vector2(-131, 9)
-"敌人" = NodePath("../Entity_2")
-
-[node name="Entity_2" parent="冻结区" instance=ExtResource("2_1ucq2")]
+"敌人" = NodePath("../../Entity_2")
 
 [node name="石头人2" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("2_64u8c")]
 position = Vector2(344, -6)
-"敌人" = NodePath("../Entity_2")
+"敌人" = NodePath("../../Entity_2")
 
 [node name="石头人3" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("2_64u8c")]
 position = Vector2(-265, 19)
-"敌人" = NodePath("../Entity_2")
+"敌人" = NodePath("../../Entity_2")
 
 [node name="石头人4" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("2_64u8c")]
 position = Vector2(263, -5)
-"敌人" = NodePath("../Entity_2")
+"敌人" = NodePath("../../Entity_2")
 
 [node name="蝙蝠" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
 position = Vector2(-155, -161)
-"敌人" = NodePath("../Entity_2")
+"敌人" = NodePath("../../Entity_2")
 
 [node name="蝙蝠2" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
 position = Vector2(352, -113)
-"敌人" = NodePath("../Entity_2")
+"敌人" = NodePath("../../Entity_2")
 
 [node name="蝙蝠3" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
 position = Vector2(-12, -209)
-"敌人" = NodePath("../Entity_2")
+"敌人" = NodePath("../../Entity_2")
 
 [node name="蝙蝠4" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
 position = Vector2(200, -193)
-"敌人" = NodePath("../Entity_2")
+"敌人" = NodePath("../../Entity_2")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

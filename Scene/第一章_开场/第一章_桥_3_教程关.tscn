@@ -23,7 +23,9 @@ func 初始():
 var 阶段:int
 func 放怪():
 	await get_tree().physics_frame
-	if 阶段>=词库.size():return
+	if 阶段>=词库.size():
+		下一关()
+		return
 	match 阶段:
 		_:
 			放怪_常规(阶段,0)

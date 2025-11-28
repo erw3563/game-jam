@@ -17,6 +17,7 @@ func 重置():
 	
 func 禁用输入(a:bool):   ##用于剧情
 	move_gravity_by_input.set_physics_process(!a)
+	禁用攻击=a
 	
 func 冻结(a:bool):###用于跳转场景,但保留当前
 	禁用输入(a)
@@ -25,7 +26,8 @@ func 冻结(a:bool):###用于跳转场景,但保留当前
 
 func _ready() -> void:
 	_初始位置=position
-	鼠标右键.冷却时间=6
+	切换职业(切[0])
+	鼠标右键.冷却时间=4
 	鼠标右键.冷却结束.connect(func ():可_闪现=true)
 
 ###
@@ -52,17 +54,26 @@ func _on_health_component_hited(dir: Vector2i) -> void:
 	
 ############
 var 图片_方向=1
-@onready var 剑: 职业 = $剑2
-@onready var 弓: 职业 = $弓
-@onready var 盾: 职业 = $盾
-@onready var 当前职业:职业=剑
+@onready var 切:Array[职业]=[$剑2,$弓,$盾]
+@onready var 当前职业:职业
 var 锁定:bool=false:
 	set(a):
 		锁定=a
 		move_gravity_by_input.set_physics_process(!a)
-		
+		if a:velocity=Vector2.ZERO
+
+func 切换职业(a:职业):
+	当前职业=a
+	鼠标左键.技能_图标=a.普攻_图标
+
+var 禁用攻击=false
+@onready var 鼠标左键 = $CanvasLayer/右下/鼠标左键
 func _process(_delta: float) -> void:
-	if 锁定:return
+	if 锁定 or 禁用攻击:return
+	for i in 切:
+		if Input.is_action_just_pressed(i.切换按键):
+			切换职业(i)
+			break
 	if Input.is_action_just_pressed("attack"):
 		锁定=true
 		await  当前职业.普攻()
@@ -77,7 +88,7 @@ func 空(_delta: float) -> void:pass
 func _physics_process(delta: float) -> void:
 	模式.call(delta)
 func 闪现_(_delta: float) -> void:
-	velocity=Vector2(750*图片_方向,0)
+	velocity=Vector2(500*图片_方向,0)
 	move_and_slide()
 
 
@@ -86,7 +97,9 @@ var 可_闪现:bool=true
 func 闪现():
 	可_闪现=false
 	模式=闪现_
+	health_component.monitorable=false
 	await  get_tree().create_timer(0.25).timeout
+	health_component.monitorable=true
 	模式=空
 	鼠标右键.冷却()
 	#可_闪现=false
