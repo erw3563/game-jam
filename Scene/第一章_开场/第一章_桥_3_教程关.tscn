@@ -14,6 +14,7 @@ const 词库=[[\"咿咿呀呀\",\"叽叽喳喳\"]
 
 func _ready() -> void:
 	#if not 玩家:return
+	声音.更换音乐(声音.战斗3)
 	玩家.health_component.died.connect(战败)
 	初始()
 func 初始():

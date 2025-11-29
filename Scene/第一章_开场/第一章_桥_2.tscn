@@ -1,16 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://6tntm5jo2ro0"]
+[gd_scene load_steps=7 format=3 uid="uid://6tntm5jo2ro0"]
 
-[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="1_qxfuw"]
-[ext_resource type="Texture2D" uid="uid://ctd3abltt45vk" path="res://Scene/第一章_开场/桥.png" id="2_alpqs"]
+[ext_resource type="Texture2D" uid="uid://r47eokkv8qwa" path="res://Scene/第一章_开场/桥.jpg" id="2_o4yhj"]
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="3_1mwi8"]
+[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="4_vypqq"]
 
 [sub_resource type="GDScript" id="GDScript_1mwi8"]
 script/source = "extends Node2D
 @onready var 对话框: TextBox = $对话框
-@onready var entity: Player = $Entity
+@onready var entity: Player_2 = $Entity_2
 
 func _ready() -> void:
-	entity.禁用输入(true)
+	声音.更换音乐(声音.剧情1)
+	entity.限制相机移动($TextureRect)
+	await entity.镜头至屏幕($TextureRect)
+	#entity.镜头至屏幕_复原()
+	
 	剧情_1()
 	#战斗_2()
 	#下一章()
@@ -59,10 +63,13 @@ A-MEN：当前记忆：空。
 	await 对话框.结束
 	战斗_2()
 func 战斗_2():
+	#await  entity.镜头至屏幕_复原()
 	转场.切换章节_之后返回(self,\"res://Scene/第一章_开场/第一章_桥_3_教程关.tscn\",剧情_3)
 	
 func 剧情_3():
+	声音.更换音乐(声音.剧情1)
 	visible=true
+	#await entity.镜头至屏幕($TextureRect)
 	await get_tree().create_timer(1).timeout
 	对话框.开始(\"\"\"
 鱼妹：挺简单的吧？往后就像刚刚那样战斗就行。
@@ -78,25 +85,46 @@ func 下一章():
 	
 "
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_alpqs"]
-size = Vector2(536, 20)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o4yhj"]
+size = Vector2(1277, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b25ut"]
+size = Vector2(24.5, 528)
 
 [node name="Node2D" type="Node2D"]
 script = SubResource("GDScript_1mwi8")
 
-[node name="Entity" parent="." instance=ExtResource("1_qxfuw")]
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.00003
+offset_top = -475.00003
+offset_right = 1902.0
+offset_bottom = 605.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.415, 0.415)
+texture = ExtResource("2_o4yhj")
+stretch_mode = 6
 
-[node name="桥_这是临时的" type="Sprite2D" parent="."]
-position = Vector2(128, -49)
-texture = ExtResource("2_alpqs")
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(370, -198)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="桥_这是临时的"]
-position = Vector2(-127, -95)
-collision_mask = 0
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-31, 46)
+shape = SubResource("RectangleShape2D_o4yhj")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="桥_这是临时的/StaticBody2D"]
-position = Vector2(0, 190)
-shape = SubResource("RectangleShape2D_alpqs")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-388, -182)
+shape = SubResource("RectangleShape2D_b25ut")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(412, -180)
+shape = SubResource("RectangleShape2D_b25ut")
 
 [node name="对话框" parent="." instance=ExtResource("3_1mwi8")]
 visible = false
+
+[node name="Entity_2" parent="." instance=ExtResource("4_vypqq")]
+position = Vector2(372, -191)

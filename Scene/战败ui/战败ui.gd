@@ -14,9 +14,11 @@ class 战斗场景:
 			_玩家.health_component.died.connect(_战败)
 		var a=_场景.duplicate()
 		_场景_使用中=a
-		a.child_exiting_tree.connect(战斗结束)
+		a.child_exiting_tree.connect(_战斗结束)
+		for i in a.get_children():
+			i.set("敌人",_玩家)
 		_父节点.add_child(a)
-	func 战斗结束(_a):
+	func _战斗结束(_a):
 		if _场景_使用中.get_child_count()<=1: ###最后一个正在删除中
 			_下一关_1()
 	func _战败():
@@ -26,7 +28,6 @@ class 战斗场景:
 			"重来":
 				_场景_使用中.queue_free()
 				_玩家.重置()
-				_玩家.health_component.died.disconnect(_战败)
 				if _场景_重来:
 					_玩家.health_component.died.disconnect(_战败)
 					_场景_重来.进入战斗()
@@ -44,13 +45,15 @@ class 战斗场景:
 		_下一关.call()
 			
 	
-static  func 获取战斗场景(战斗场景_:Node,玩家,下一关:Callable)->战斗场景:
+static  func 获取战斗场景(战斗场景_:Node2D,玩家,下一关:Callable,重来:战斗场景=null)->战斗场景:
 	var a=战斗场景.new()
 	a._父节点=战斗场景_.get_parent()
 	a._父节点.remove_child(战斗场景_)
+	战斗场景_.visible=true
 	a._场景=战斗场景_
 	a._下一关=下一关
 	a._玩家=玩家
+	a._场景_重来=重来
 	return a
 	
 	
@@ -101,7 +104,7 @@ static func 暂停(node: Node, pause: bool):
 		暂停(child, pause)
 ###
 
-
+	
 signal _选择(String)
 const _c=preload("res://Scene/战败ui/战败ui.tscn")
 func _on_button_pressed() -> void:
@@ -111,3 +114,12 @@ func _on_button_2_pressed() -> void:
 func _on_button_3_pressed() -> void:
 	_选择.emit("跳过")
 	
+
+@onready var button: Button = $VBoxContainer/HBoxContainer/Button
+@onready var button_2: Button = $VBoxContainer/HBoxContainer/Button2
+@onready var button_3: Button = $VBoxContainer/HBoxContainer/Button3
+
+func _on_timer_timeout() -> void:
+	button.disabled=false
+	button_2.disabled=false
+	button_3.disabled=false

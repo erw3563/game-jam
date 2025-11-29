@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cxmmrhsns4jlr"]
+[gd_scene load_steps=9 format=3 uid="uid://cxmmrhsns4jlr"]
 
+[ext_resource type="Texture2D" uid="uid://0s6loeor2dxv" path="res://Scene/第二章_关卡1/机械臂.jpg" id="1_l5y7c"]
 [ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="2_1ucq2"]
 [ext_resource type="PackedScene" uid="uid://bu5x2qje805pe" path="res://Entity/石头人/石头人.tscn" id="2_64u8c"]
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="2_ba1qj"]
-[ext_resource type="PackedScene" uid="uid://ctlx8hixjtifs" path="res://Entity/蝙蝠/蝙蝠.tscn" id="3_1ucq2"]
 [ext_resource type="PackedScene" uid="uid://cltb6qvsdknov" path="res://Scene/textbox/dialogue_label.tscn" id="3_i8u30"]
 
 [sub_resource type="GDScript" id="GDScript_i8u30"]
@@ -12,9 +12,12 @@ script/source = "extends Control
 @onready var 玩家: Player_2 = $\"Entity_2\"
 
 func _ready() -> void:
-	#玩家.禁用输入(true)
-	#剧情_1()
-	战斗_2()
+	声音.更换音乐(声音.剧情2)
+	await  get_tree().create_timer(1).timeout
+	玩家.限制相机移动($TextureRect)
+	await 玩家.镜头至屏幕($TextureRect)
+	剧情_1()
+
 	pass
 func 剧情_1():
 	await  get_tree().create_timer(1).timeout
@@ -87,6 +90,9 @@ A-MEN：请求执行。
 
 @onready var 战斗_2_1:=战败ui.获取战斗场景($\"冻结区\",玩家,剧情_3)
 func 战斗_2():
+	声音.更换音乐(声音.战斗1)
+	await  玩家.镜头至屏幕_复原()
+	
 	战斗_2_1.进入战斗()
 	#print_debug(\"未做完:战斗_2\")
 	#剧情_3()
@@ -94,6 +100,8 @@ func 战斗_2():
 
 		
 func 剧情_3():
+	声音.更换音乐(声音.剧情2)
+	await 玩家.镜头至屏幕($TextureRect)
 	await  get_tree().create_timer(1).timeout
 	text_box.开始(\"\"\"
 A-MEN：……目标已分解。
@@ -219,6 +227,9 @@ func 下一章():
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ba1qj"]
 size = Vector2(1969, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p2ile"]
+size = Vector2(21, 449.5)
+
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -227,6 +238,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_i8u30")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -368.0
+offset_top = -315.0
+offset_right = 1552.0
+offset_bottom = 765.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_l5y7c")
 
 [node name="Entity_2" parent="." instance=ExtResource("2_1ucq2")]
 
@@ -248,33 +268,19 @@ position = Vector2(-265, 19)
 position = Vector2(263, -5)
 "敌人" = NodePath("../../Entity_2")
 
-[node name="蝙蝠" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
-position = Vector2(-155, -161)
-"敌人" = NodePath("../../Entity_2")
-
-[node name="蝙蝠2" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
-position = Vector2(352, -113)
-"敌人" = NodePath("../../Entity_2")
-
-[node name="蝙蝠3" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
-position = Vector2(-12, -209)
-"敌人" = NodePath("../../Entity_2")
-
-[node name="蝙蝠4" parent="冻结区" node_paths=PackedStringArray("敌人") instance=ExtResource("3_1ucq2")]
-position = Vector2(200, -193)
-"敌人" = NodePath("../../Entity_2")
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
-offset_left = -111.0
-offset_top = -97.0
-offset_right = -71.0
-offset_bottom = -57.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(61.5, 78)
 shape = SubResource("RectangleShape2D_ba1qj")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-368, -129)
+shape = SubResource("RectangleShape2D_p2ile")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(400, -116)
+shape = SubResource("RectangleShape2D_p2ile")
 
 [node name="TextBox" parent="." instance=ExtResource("2_ba1qj")]
 visible = false

@@ -1,15 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://oobsfjy73ufc"]
+[gd_scene load_steps=9 format=3 uid="uid://oobsfjy73ufc"]
 
+[ext_resource type="Texture2D" uid="uid://rd4gpkttwwx2" path="res://Scene/第四章_终章/数据空间.jpg" id="1_dpgy5"]
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="1_tvv5l"]
-[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="2_dpgy5"]
+[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="3_32l6c"]
+[ext_resource type="PackedScene" uid="uid://bu5x2qje805pe" path="res://Entity/石头人/石头人.tscn" id="3_43t24"]
+[ext_resource type="PackedScene" uid="uid://ctlx8hixjtifs" path="res://Entity/蝙蝠/蝙蝠.tscn" id="4_m1r2l"]
 
 [sub_resource type="GDScript" id="GDScript_dpgy5"]
 script/source = "extends Control
 @onready var text_box: TextBox = $TextBox
-@onready var entity: Player = $Node2D/Entity
+@onready var entity: Player_2 = $Entity_2
 
 func _ready() -> void:
-	entity.禁用输入(true)
+	声音.更换音乐(声音.剧情4)
+	await  get_tree().create_timer(1).timeout
+	entity.限制相机移动($TextureRect)
+	await entity.镜头至屏幕($TextureRect)
 	特殊_1()
 func 特殊_1():
 	print_debug(\"未做完\")
@@ -110,10 +116,14 @@ A-MEN：……所以这是最后一场战斗？
 	\"\"\")
 	await text_box.结束
 	战斗_5()
+@onready var 战斗_5_1=战败ui.获取战斗场景($Node2D,entity,剧情_6)
 func 战斗_5():
-	print_debug(\"未做完\")
-	剧情_6()
+	声音.更换音乐(声音.战斗3)
+	await entity.镜头至屏幕_复原()
+	战斗_5_1.进入战斗()
 func 剧情_6():
+	声音.更换音乐(声音.剧情4)
+	await entity.镜头至屏幕($TextureRect)
 	await  get_tree().create_timer(1).timeout
 	text_box.开始(\"\"\"
 A-MEN：这一次，没有像之前那样立刻浮现新的事件轨迹。
@@ -274,6 +284,7 @@ A-MEN：向你伸过去。
 	特殊_16()
 func 特殊_16():
 	print_debug(\"未做完\")
+	剧情_17()
 #（画面抖动）
 #
 #系统提示：
@@ -309,6 +320,7 @@ A-MEN：[b]那就把这座桥，当成你曾经来过这里的证明[/b]。
 	await text_box.结束
 	彩蛋()
 func 彩蛋():
+	$Label.visible=true
 	print_debug(\"未做完\")
 
 func 谢幕():
@@ -317,6 +329,9 @@ func 谢幕():
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32l6c"]
 size = Vector2(822, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dpgy5"]
+size = Vector2(22, 480)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -327,21 +342,84 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_dpgy5")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -339.0
+offset_top = -317.00003
+offset_right = 1581.0
+offset_bottom = 763.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_dpgy5")
+
 [node name="TextBox" parent="." instance=ExtResource("1_tvv5l")]
 visible = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
-offset_left = -88.0
-offset_top = -32.0
-offset_right = -48.0
-offset_bottom = 8.0
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(44, 78)
 shape = SubResource("RectangleShape2D_32l6c")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-340, -146)
+shape = SubResource("RectangleShape2D_dpgy5")
 
-[node name="Entity" parent="Node2D" instance=ExtResource("2_dpgy5")]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(428, -153)
+shape = SubResource("RectangleShape2D_dpgy5")
+
+[node name="Node2D" type="Node2D" parent="."]
+visible = false
+
+[node name="石头人" parent="Node2D" instance=ExtResource("3_43t24")]
+position = Vector2(285, -24)
+
+[node name="石头人2" parent="Node2D" instance=ExtResource("3_43t24")]
+position = Vector2(-160, -17)
+
+[node name="蝙蝠" parent="Node2D" instance=ExtResource("4_m1r2l")]
+position = Vector2(-70, -95)
+
+[node name="蝙蝠2" parent="Node2D" instance=ExtResource("4_m1r2l")]
+position = Vector2(158, -89)
+
+[node name="Entity_2" parent="." instance=ExtResource("3_32l6c")]
+
+[node name="Node2D2" type="Node2D" parent="."]
+
+[node name="石头人" parent="Node2D2" instance=ExtResource("3_43t24")]
+position = Vector2(285, -24)
+
+[node name="石头人2" parent="Node2D2" instance=ExtResource("3_43t24")]
+position = Vector2(-260, 2)
+
+[node name="蝙蝠" parent="Node2D2" instance=ExtResource("4_m1r2l")]
+position = Vector2(-70, -95)
+
+[node name="蝙蝠2" parent="Node2D2" instance=ExtResource("4_m1r2l")]
+position = Vector2(158, -89)
+
+[node name="石头人3" parent="Node2D2" instance=ExtResource("3_43t24")]
+position = Vector2(285, -24)
+
+[node name="石头人4" parent="Node2D2" instance=ExtResource("3_43t24")]
+position = Vector2(189, -12)
+
+[node name="蝙蝠3" parent="Node2D2" instance=ExtResource("4_m1r2l")]
+position = Vector2(-260, -77)
+
+[node name="蝙蝠4" parent="Node2D2" instance=ExtResource("4_m1r2l")]
+position = Vector2(337, -95)
+
+[node name="石头人5" parent="Node2D2" instance=ExtResource("3_43t24")]
+position = Vector2(-112, -5)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -72.0
+offset_top = -147.0
+offset_right = 184.0
+offset_bottom = -83.0
+theme_override_font_sizes/font_size = 64
+text = "游戏结束"

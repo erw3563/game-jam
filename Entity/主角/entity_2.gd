@@ -15,13 +15,38 @@ func 重置():
 	#await get_tree().physics_frame  无法处理 受击 的 击飞
 	#velocity=Vector2.ZERO
 	
-func 禁用输入(a:bool):   ##用于剧情
+func 禁用输入(a:bool):   ##用于剧情 以及 战斗
 	move_gravity_by_input.set_physics_process(!a)
 	禁用攻击=a
 	
 func 冻结(a:bool):###用于跳转场景,但保留当前
 	禁用输入(a)
 	camera_2d.enabled=!a
+
+var 初始缩放:Vector2
+func 镜头至屏幕(a:Control):##用于剧情
+	禁用输入(true)
+	camera_2d.enabled=true
+	var 左上=a.global_position
+	var 右下=a.scale*a.size+左上
+	var 中间=0.5*(左上+右下)
+	var 大小:Vector2=a.scale*a.size
+	var 倍率=Vector2(get_viewport().get_visible_rect().size)/大小
+	var aaa=max(倍率.x,倍率.y)
+	var b =get_tree().create_tween()
+	b.set_parallel(true)  
+	b.tween_property(camera_2d,"global_position",中间,1) 
+	b.tween_property(camera_2d,"zoom",Vector2(aaa,aaa),1)
+	await b.finished
+	
+func 镜头至屏幕_复原():
+	var b =get_tree().create_tween()
+	b.set_parallel(true) 
+	b.tween_property(camera_2d,"position",Vector2.ZERO,1)  
+	b.tween_property(camera_2d,"zoom",初始缩放,1)
+	await b.finished
+	禁用输入(false)
+	
 ####
 
 func _ready() -> void:
@@ -29,7 +54,15 @@ func _ready() -> void:
 	切换职业(切[0])
 	鼠标右键.冷却时间=4
 	鼠标右键.冷却结束.connect(func ():可_闪现=true)
-
+	初始缩放=camera_2d.zoom
+	
+func 限制相机移动(a:Control):
+	var b=a.global_position
+	var c=a.scale*a.size+b
+	camera_2d.limit_left=b.x
+	camera_2d.limit_top=b.y
+	camera_2d.limit_right=c.x
+	camera_2d.limit_bottom=c.y
 ###
 var _初始位置:Vector2
 

@@ -3,13 +3,13 @@ extends AnimationPlayer
 
 func 切换章节_并丢弃(场景自己:Node,路径:String)->void: 
 	var a=转场
-	a.加载完毕.connect(func ():场景自己.queue_free())
+	a.加载完毕.connect(func ():场景自己.queue_free(),CONNECT_ONE_SHOT)
 	a.切换章节(路径)
 ##场景自己  当前场景  ,  函数 返回触发
 func 切换章节_之后返回(场景自己:Node,路径:String,函数:Callable)->void: 
 	var a=转场
 	var parent=场景自己.get_parent()
-	a.加载完毕.connect(func ():parent.remove_child(场景自己))
+	a.加载完毕.connect(func ():parent.remove_child(场景自己),CONNECT_ONE_SHOT)
 	var c=await  a.切换章节(路径)
 	c.tree_exited.connect(func ():
 		parent.add_child(场景自己)

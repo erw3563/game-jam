@@ -1,19 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://0s8jgb1e3m3h"]
+[gd_scene load_steps=8 format=3 uid="uid://0s8jgb1e3m3h"]
 
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="1_cqpao"]
-[ext_resource type="PackedScene" uid="uid://l6yw5wxqbbm3" path="res://Entity/entity/entity.tscn" id="2_18ath"]
+[ext_resource type="Texture2D" uid="uid://s6yr7523jqos" path="res://Scene/第三章_关卡2/阴雨天.jpg" id="1_f5js2"]
 [ext_resource type="PackedScene" uid="uid://ctlx8hixjtifs" path="res://Entity/蝙蝠/蝙蝠.tscn" id="3_18ath"]
+[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="4_f5js2"]
 
 [sub_resource type="GDScript" id="GDScript_cqpao"]
 script/source = "extends Control
-@onready var entity: Player = $Node2D/Entity
+@onready var entity: Player_2 = $Entity_2
 @onready var text_box: TextBox = $TextBox
 func _ready() -> void:
-	#entity.禁用输入(true)
+	#声音.更换音乐(声音.剧情3)
+	#await  get_tree().create_timer(1).timeout
+	#entity.限制相机移动($TextureRect)
+	#await entity.镜头至屏幕($TextureRect)
 	#剧情_1()
-	#下一章()
 	pass
-	
+	战斗_2()
 
 func 剧情_1():
 	await  get_tree().create_timer(1).timeout
@@ -112,9 +115,18 @@ A-MEN：那结论不需要他存在，只需要一个目标。
 	\"\"\")
 	await text_box.结束
 	战斗_2()
+@onready var 战斗_2_1=战败ui.获取战斗场景($Node2D,entity,战斗_22)
 func 战斗_2():
-	print_debug(\"未做完\")
+	声音.更换音乐(声音.战斗2)
+	await entity.镜头至屏幕_复原()
+	战斗_2_1.进入战斗()
+
+@onready var 战斗_2_2=战败ui.获取战斗场景($Node2D2,entity,剧情_3,战斗_2_1)
+func 战斗_22():
+	战斗_2_2.进入战斗()
 func 剧情_3():
+	声音.更换音乐(声音.剧情3)
+	await entity.镜头至屏幕($TextureRect)
 	await  get_tree().create_timer(1).timeout
 	text_box.开始(\"\"\"
 鱼妹：明白了吗？
@@ -229,6 +241,9 @@ func 下一章():
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cqpao"]
 size = Vector2(822, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2mnue"]
+size = Vector2(15, 331)
+
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -238,33 +253,66 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_cqpao")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -343.0
+offset_top = -183.0
+offset_right = 1577.0
+offset_bottom = 897.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_f5js2")
+
 [node name="TextBox" parent="." instance=ExtResource("1_cqpao")]
 visible = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
-offset_left = -88.0
-offset_top = -32.0
-offset_right = -48.0
-offset_bottom = 8.0
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(44, 78)
 shape = SubResource("RectangleShape2D_cqpao")
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-342, -87)
+shape = SubResource("RectangleShape2D_2mnue")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(425, -81)
+shape = SubResource("RectangleShape2D_2mnue")
+
 [node name="Node2D" type="Node2D" parent="."]
+visible = false
 
-[node name="Entity" parent="Node2D" instance=ExtResource("2_18ath")]
-
-[node name="蝙蝠" parent="Node2D" node_paths=PackedStringArray("敌人") instance=ExtResource("3_18ath")]
+[node name="蝙蝠" parent="Node2D" instance=ExtResource("3_18ath")]
 position = Vector2(-54, -97)
-"敌人" = NodePath("../Entity")
 
-[node name="蝙蝠2" parent="Node2D" node_paths=PackedStringArray("敌人") instance=ExtResource("3_18ath")]
+[node name="蝙蝠2" parent="Node2D" instance=ExtResource("3_18ath")]
 position = Vector2(195, -80)
-"敌人" = NodePath("../Entity")
 
-[node name="蝙蝠3" parent="Node2D" node_paths=PackedStringArray("敌人") instance=ExtResource("3_18ath")]
+[node name="蝙蝠3" parent="Node2D" instance=ExtResource("3_18ath")]
 position = Vector2(121, 22)
-"敌人" = NodePath("../Entity")
+
+[node name="蝙蝠4" parent="Node2D" instance=ExtResource("3_18ath")]
+position = Vector2(-191, -8)
+
+[node name="Entity_2" parent="." instance=ExtResource("4_f5js2")]
+
+[node name="Node2D2" type="Node2D" parent="."]
+visible = false
+
+[node name="蝙蝠" parent="Node2D2" instance=ExtResource("3_18ath")]
+position = Vector2(-54, -97)
+
+[node name="蝙蝠2" parent="Node2D2" instance=ExtResource("3_18ath")]
+position = Vector2(195, -80)
+
+[node name="蝙蝠3" parent="Node2D2" instance=ExtResource("3_18ath")]
+position = Vector2(121, 22)
+
+[node name="蝙蝠4" parent="Node2D2" instance=ExtResource("3_18ath")]
+position = Vector2(-191, -8)
+
+[node name="蝙蝠5" parent="Node2D2" instance=ExtResource("3_18ath")]
+position = Vector2(-284, -106)
+
+[node name="蝙蝠6" parent="Node2D2" instance=ExtResource("3_18ath")]
+position = Vector2(310, -30)

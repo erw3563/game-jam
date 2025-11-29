@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bm80fb5f0cum4"]
+[gd_scene load_steps=9 format=3 uid="uid://bm80fb5f0cum4"]
 
 [ext_resource type="Script" uid="uid://b10f8x0bki6h0" path="res://全局/转场.gd" id="1_yjrdj"]
+[ext_resource type="Texture2D" uid="uid://c8bkixxcfbl8d" path="res://全局/晚夜.jpg" id="2_ololj"]
 
 [sub_resource type="Animation" id="Animation_yjrdj"]
 length = 0.001
@@ -131,7 +132,7 @@ script = ExtResource("1_yjrdj")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 3
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="TextureRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_yjrdj")
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,4 +140,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.45247936, 0.45247936, 0.45247936, 1)
+texture = ExtResource("2_ololj")
+expand_mode = 1
+stretch_mode = 6
