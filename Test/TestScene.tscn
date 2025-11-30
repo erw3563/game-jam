@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=4 uid="uid://ckftfiwcnxsfq"]
+[gd_scene load_steps=4 format=4 uid="uid://ckftfiwcnxsfq"]
 
 [ext_resource type="TileSet" uid="uid://qk4jyafelh87" path="res://Asset/Tile/tile.tres" id="1_804c2"]
 [ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/player.tscn" id="3_8ovih"]
+[ext_resource type="PackedScene" uid="uid://bu5x2qje805pe" path="res://Entity/石头人/石头人.tscn" id="3_xbm2f"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -11,3 +12,7 @@ tile_set = ExtResource("1_804c2")
 
 [node name="Player" parent="." instance=ExtResource("3_8ovih")]
 position = Vector2(-28, -32)
+
+[node name="石头人" parent="." node_paths=PackedStringArray("敌人") instance=ExtResource("3_xbm2f")]
+position = Vector2(-201, -49)
+"敌人" = NodePath("../Player")

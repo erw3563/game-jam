@@ -16,7 +16,7 @@ func _physics_process(delta: float) -> void:
 func init(shooter_:Node,velocity_:Vector2,time:float = -1):
 	velocity = velocity_
 	shooter = shooter_
-	rotation = velocity.angle()
+	global_rotation = velocity.angle()
 	$DamageComponent.set_node_enter_whitelist(shooter)
 	if time == -1:
 		return

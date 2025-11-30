@@ -1,6 +1,8 @@
 extends Node2D
 class_name Launcher
 
+signal fired(fire_dir:Vector2)
+
 @onready var spawner: Spawner = Spawner.new()
 
 @export var shooter:Node
@@ -55,7 +57,7 @@ func fire(fire_dir:Vector2,bullet_mods:Array[Node] = []):
 		var scatter_angel = randf_range(-max_scatter_angle,+max_scatter_angle)
 		var dir = fire_dir.rotated(scatter_angel)
 		bullet.init(shooter,bullet_velocity * dir,bullet_exit_time)
-	
+		fired.emit(fire_dir)
 	if remaining_bullets > 0:
 		remaining_bullets = max(0,remaining_bullets - 1)
 

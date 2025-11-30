@@ -45,8 +45,10 @@ func _process(delta: float) -> void:
 		label_2.text=\"\"
 		set_process(false)
 
-
 func _on_dash_component_dashed(dash_dir: Vector2) -> void:
+	冷却()
+
+func _on_grab_launcher_fired(fire_dir: Vector2) -> void:
 	冷却()
 "
 

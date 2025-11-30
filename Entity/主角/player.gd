@@ -6,10 +6,12 @@ class_name Player_2
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var dash_component: DashComponent = $PlayerMoveComponent/DashComponent
 @onready var player_move_component: PlayerHorizontalMoveInCurveComponent = $PlayerMoveComponent
-@onready var 鼠标右键 = $CanvasLayer/右下/鼠标右键
+@onready var dash_ui: TextureRect = $CanvasLayer/SkillButtonUI/DashUI
+@onready var attack_ui = $CanvasLayer/SkillButtonUI/AttackUI
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var 切:Array[职业]=[$剑2,$弓,$盾]
 @onready var 当前职业:职业
+@onready var grab_component: GrabThrowComponent = $GrabThrowComponent
 
 var player_dir:float
 
@@ -79,10 +81,9 @@ var 锁定:bool=false:
 
 func 切换职业(a:职业):
 	当前职业=a
-	鼠标左键.技能_图标=a.普攻_图标
+	attack_ui.技能_图标=a.普攻_图标
 
 var 禁用攻击=false
-@onready var 鼠标左键 = $CanvasLayer/右下/鼠标左键
 func _process(_delta: float) -> void:
 	if 锁定 or 禁用攻击:return
 	for i in 切:
@@ -96,6 +97,8 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("attack_dash"):
 		var dash_dir:Vector2 = (get_global_mouse_position() - position).normalized()
 		dash_component.set_dash_dir(dash_dir)
+	
+
 
 var 模式:Callable=空
 func 空(_delta: float) -> void:pass
@@ -106,7 +109,6 @@ func _on_health_component_health_delta_applied(_amount: int) -> void:
 	animation_player.play("受击")
 
 func _on_player_move_component_turned(dir: float) -> void:
-	scale.x = - scale.x
 	player_dir = dir
 
 func _on_dash_component_dashed(dir:Vector2) -> void:

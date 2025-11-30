@@ -531,10 +531,11 @@ collision_mask = 17
 script = SubResource("GDScript_807mj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 13.5)
+position = Vector2(-2.5, -18.5)
 shape = SubResource("RectangleShape2D_807mj")
 
 [node name="HealthComponent" type="Area2D" parent="."]
+position = Vector2(-1, -32)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_espnf")
@@ -553,6 +554,7 @@ position = Vector2(-0.5, 15)
 shape = SubResource("RectangleShape2D_ful33")
 
 [node name="DamageComponent" type="Area2D" parent="."]
+position = Vector2(-1, -32)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("3_ful33")
@@ -563,6 +565,7 @@ shape = SubResource("RectangleShape2D_uafib")
 disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_gsd7u")
 animation = &"a"
 
