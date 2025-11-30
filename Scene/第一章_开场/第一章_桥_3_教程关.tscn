@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=4 uid="uid://c25raeu5fcosf"]
+[gd_scene load_steps=5 format=4 uid="uid://c25raeu5fcosf"]
 
 [ext_resource type="TileSet" uid="uid://qk4jyafelh87" path="res://Asset/Tile/tile.tres" id="1_l0dwc"]
 [ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="2_k05nx"]
+[ext_resource type="PackedScene" uid="uid://rxjrhmrrksql" path="res://Entity/字体系_怪物/小怪_字.tscn" id="3_io8c7"]
 
 [sub_resource type="GDScript" id="GDScript_mc7mb"]
 script/source = "extends Node2D
@@ -10,77 +11,17 @@ const 词库=[[\"咿咿呀呀\",\"叽叽喳喳\"]
 ,[\"装聋\",\"作哑\"]
 #,[\"比比画画\",\"真真假假\"]
 ]
-@onready var 玩家: Player_2 = $\"冻结区/Entity_2\"
+@onready var 玩家: Player_2 = $\"Entity_2\"
 
 func _ready() -> void:
 	#if not 玩家:return
 	声音.更换音乐(声音.战斗3)
-	玩家.health_component.died.connect(战败)
-	初始()
-func 初始():
-	阶段=0
-	小怪_存在数目=0
-	放怪()
-var 阶段:int
-func 放怪():
-	await get_tree().physics_frame
-	if 阶段>=词库.size():
-		下一关()
-		return
-	match 阶段:
-		_:
-			放怪_常规(阶段,0)
-			放怪_常规(阶段,1)
-	阶段+=1
-
-var 小怪=preload(\"res://Entity/字体系_怪物/小怪_字.tscn\")
-@onready var marker_2d: Marker2D = $Marker2D
-@onready var marker_2d_2: Marker2D = $Marker2D/Marker2D
-@onready var ww:Dictionary[int,Marker2D]={0:marker_2d,1:marker_2d_2}
-func 放怪_常规(阶段_,w:int):
-	var h:String=词库[阶段_][w]
-	var a= 位置(ww.get(w).global_position,h)
-	for i in h.length():
-		var b=小怪_产生(h[i])
-		b.global_position=a[i]
-		冻结区.add_child(b)
+	战斗_1()
+@onready var 战斗_1_1=战败ui.获取战斗场景组([$\"冻结区\",$\"冻结区2\",$\"冻结区3\"],玩家,下一关)
+func 战斗_1():
+	战斗_1_1.进入战斗()
 
 
-func 小怪_产生(字:String)->CharacterBody2D:
-	var a=小怪.instantiate()
-	a.敌人=玩家
-	a.字=字
-	小怪_存在数目+=1
-	a.死亡.connect(死亡)
-	return a
-func 位置(w:Vector2,s:String):
-	var 间隔=20
-	var r=[]
-	for i in s.length():
-		r.append(w+Vector2(i-(s.length()-1)*0.5,0)*间隔)
-	return r
-
-var 小怪_存在数目:int=0
-func 死亡():
-	小怪_存在数目-=1
-	if 小怪_存在数目<=0:
-		放怪()
-@onready var 冻结区: Node2D = $冻结区
-
-func 战败():
-	var a=await 战败ui.选择(冻结区)
-	match a:
-		\"重来\":
-			for n in 冻结区.get_children():
-				if n==玩家:continue
-				n.queue_free()
-			玩家.重置()
-			
-			初始()
-		\"继续\":
-			玩家.health_component.current_health=玩家.health_component.max_health
-		\"跳过\":
-			下一关()
 func 下一关():
 	var a:AnimationPlayer= $\"/root/转场\"
 	a.play(\"入场\")
@@ -97,12 +38,120 @@ script = SubResource("GDScript_mc7mb")
 tile_map_data = PackedByteArray("AAAgAAcAAAAEAAgAAAAfAAcAAAACAAAAAAAeAAcAAAACAAAAAAAdAAcAAAACAAAAAAAcAAcAAAACAAAAAAAbAAcAAAACAAAAAAAaAAcAAAACAAAAAAAZAAcAAAACAAAAAAAYAAcAAAACAAAAAAAXAAcAAAACAAAAAAAWAAcAAAACAAAAAAAVAAcAAAACAAAAAAAUAAcAAAACAAAAAAATAAcAAAACAAAAAAASAAcAAAACAAAAAAARAAcAAAACAAAAAAAQAAcAAAACAAAAAAAPAAcAAAACAAAAAAAOAAcAAAACAAAAAAANAAcAAAACAAAAAAAMAAcAAAACAAAAAAALAAcAAAACAAAAAAAKAAcAAAACAAAAAAAJAAcAAAACAAAAAAAIAAcAAAACAAAAAAAHAAcAAAACAAAAAAAGAAcAAAACAAAAAAAFAAcAAAACAAAAAAAEAAcAAAACAAAAAAADAAcAAAACAAAAAAACAAcAAAACAAAAAAABAAcAAAACAAAAAAAAAAcAAAACAAAAAAD//wcAAAACAAAAAAD+/wcAAAACAAAAAAD9/wcAAAACAAAAAAD8/wcAAAACAAAAAAD7/wcAAAACAAAAAAD6/wcAAAACAAAAAAD5/wcAAAACAAAAAAD4/wcAAAACAAAAAAD3/wcAAAACAAAAAAD2/wcAAAACAAAAAAD1/wcAAAACAAAAAAD0/wcAAAACAAAAAADz/wcAAAACAAAAAADy/wcAAAACAAAAAADx/wcAAAACAAAAAADw/wcAAAACAAAAAADv/wcAAAACAAAAAADu/wcAAAACAAAAAADt/wcAAAACAAAAAADs/wcAAAACAAAAAADr/wcAAAACAAAAAADq/wcAAAACAAAAAADp/wcAAAACAAAAAADo/wcAAAACAAAAAADn/wcAAAACAAAAAADm/wcAAAACAAAAAADl/wcAAAACAAAAAADk/wcAAAACAAAAAADj/wcAAAACAAAAAADi/wcAAAACAAAAAADh/wcAAAACAAAAAADg/wcAAAACAAAAAADf/wcAAAAAAAgAAADf//L/AAADAAEAAADf//P/AAADAAIAAADf//T/AAADAAIAAADf//X/AAADAAIAAADf//b/AAADAAIAAADf//f/AAADAAIAAADf//j/AAADAAIAAADf//n/AAADAAIAAADf//r/AAADAAIAAADf//v/AAADAAIAAADf//z/AAADAAIAAADf//3/AAADAAIAAADf//7/AAADAAIAAADf////AAADAAIAAADf/wAAAAADAAIAAADf/wEAAAADAAIAAADf/wIAAAADAAIAAADf/wMAAAADAAIAAADf/wQAAAADAAIAAADf/wUAAAADAAIAAADf/wYAAAADAAIAAAAgAO3/AAADAAEAAAAgAO7/AAADAAIAAAAgAO//AAADAAIAAAAgAPD/AAADAAIAAAAgAPH/AAADAAIAAAAgAPL/AAADAAIAAAAgAPP/AAADAAIAAAAgAPT/AAADAAIAAAAgAPX/AAADAAIAAAAgAPb/AAADAAIAAAAgAPf/AAADAAIAAAAgAPj/AAADAAIAAAAgAPn/AAADAAIAAAAgAPr/AAADAAIAAAAgAPv/AAADAAIAAAAgAPz/AAADAAIAAAAgAP3/AAADAAIAAAAgAP7/AAADAAIAAAAgAP//AAADAAIAAAAgAAAAAAADAAIAAAAgAAEAAAADAAIAAAAgAAIAAAADAAIAAAAgAAMAAAADAAIAAAAgAAQAAAADAAIAAAAgAAUAAAADAAIAAAAgAAYAAAADAAIAAAA=")
 tile_set = ExtResource("1_l0dwc")
 
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(-297, 16)
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="Marker2D" type="Marker2D" parent="Marker2D"]
-position = Vector2(648, -7)
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -396.0
+offset_top = -29.0
+offset_right = 401.0
+offset_bottom = 3.0
+theme_override_font_sizes/font_size = 32
+text = "剑:可以空中连砍    弓:可以蓄力  盾:成功格挡,回复生命"
+
+[node name="Entity_2" parent="." instance=ExtResource("2_k05nx")]
 
 [node name="冻结区" type="Node2D" parent="."]
+visible = false
 
-[node name="Entity_2" parent="冻结区" instance=ExtResource("2_k05nx")]
+[node name="CharacterBody2D" parent="冻结区" instance=ExtResource("3_io8c7")]
+position = Vector2(-396, 5)
+"字" = "咿"
+
+[node name="CharacterBody2D2" parent="冻结区" instance=ExtResource("3_io8c7")]
+position = Vector2(-437, 5)
+"字" = "咿"
+
+[node name="CharacterBody2D3" parent="冻结区" instance=ExtResource("3_io8c7")]
+position = Vector2(-354, 5)
+"字" = "呀"
+
+[node name="CharacterBody2D4" parent="冻结区" instance=ExtResource("3_io8c7")]
+position = Vector2(-315, 5)
+"字" = "呀"
+
+[node name="CharacterBody2D5" parent="冻结区" instance=ExtResource("3_io8c7")]
+position = Vector2(321, 5)
+"字" = "叽"
+
+[node name="CharacterBody2D6" parent="冻结区" instance=ExtResource("3_io8c7")]
+position = Vector2(280, 5)
+"字" = "叽"
+
+[node name="CharacterBody2D7" parent="冻结区" instance=ExtResource("3_io8c7")]
+position = Vector2(363, 5)
+"字" = "喳"
+
+[node name="CharacterBody2D8" parent="冻结区" instance=ExtResource("3_io8c7")]
+position = Vector2(402, 5)
+"字" = "喳"
+
+[node name="冻结区2" type="Node2D" parent="."]
+visible = false
+
+[node name="CharacterBody2D" parent="冻结区2" instance=ExtResource("3_io8c7")]
+position = Vector2(-396, 5)
+"字" = "阴"
+"血量" = 3
+
+[node name="CharacterBody2D2" parent="冻结区2" instance=ExtResource("3_io8c7")]
+position = Vector2(-437, 5)
+"字" = "阳"
+"血量" = 3
+
+[node name="CharacterBody2D3" parent="冻结区2" instance=ExtResource("3_io8c7")]
+position = Vector2(-354, 5)
+"字" = "怪"
+"血量" = 3
+
+[node name="CharacterBody2D4" parent="冻结区2" instance=ExtResource("3_io8c7")]
+position = Vector2(-315, 5)
+"字" = "气"
+"血量" = 3
+
+[node name="CharacterBody2D6" parent="冻结区2" instance=ExtResource("3_io8c7")]
+position = Vector2(321, 5)
+"字" = "手"
+"血量" = 3
+
+[node name="CharacterBody2D5" parent="冻结区2" instance=ExtResource("3_io8c7")]
+position = Vector2(280, 5)
+"字" = "指"
+"血量" = 3
+
+[node name="CharacterBody2D7" parent="冻结区2" instance=ExtResource("3_io8c7")]
+position = Vector2(363, 5)
+"字" = "画"
+"血量" = 3
+
+[node name="CharacterBody2D8" parent="冻结区2" instance=ExtResource("3_io8c7")]
+position = Vector2(402, 5)
+"字" = "脚"
+"血量" = 3
+
+[node name="冻结区3" type="Node2D" parent="."]
+visible = false
+
+[node name="CharacterBody2D" parent="冻结区3" instance=ExtResource("3_io8c7")]
+position = Vector2(-355, 5)
+"字" = "装"
+"血量" = 8
+
+[node name="CharacterBody2D2" parent="冻结区3" instance=ExtResource("3_io8c7")]
+position = Vector2(-396, 5)
+"字" = "聋"
+"血量" = 8
+
+[node name="CharacterBody2D6" parent="冻结区3" instance=ExtResource("3_io8c7")]
+position = Vector2(321, 5)
+"字" = "哑"
+"血量" = 8
+
+[node name="CharacterBody2D5" parent="冻结区3" instance=ExtResource("3_io8c7")]
+position = Vector2(274, 5)
+"字" = "作"
+"血量" = 8

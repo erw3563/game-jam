@@ -117,14 +117,12 @@ A-MEN：……所以这是最后一场战斗？
 	\"\"\")
 	await text_box.结束
 	战斗_5()
-@onready var 战斗_5_1=战败ui.获取战斗场景($Node2D,entity,战斗_52_2)
+@onready var 战斗_5_1=战败ui.获取战斗场景组([$Node2D,$Node2D2],entity,剧情_6)
 func 战斗_5():
 	声音.更换音乐(声音.战斗3)
 	await entity.镜头至屏幕_复原()
 	战斗_5_1.进入战斗()
-@onready var 战斗_5_2=战败ui.获取战斗场景($Node2D2,entity,剧情_6,战斗_5_1)
-func 战斗_52_2():
-	战斗_5_2.进入战斗()
+
 func 剧情_6():
 	声音.更换音乐(声音.剧情4)
 	await entity.镜头至屏幕($TextureRect)

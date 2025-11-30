@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://rxjrhmrrksql"]
+[gd_scene load_steps=7 format=3 uid="uid://rxjrhmrrksql"]
 
 [ext_resource type="Script" uid="uid://v4uwxotregtq" path="res://GDBase/Health/health_component.gd" id="1_1tn36"]
 [ext_resource type="Script" uid="uid://cj3xyb234cfoh" path="res://GDBase/Health/health_cells_progress_bar.gd" id="2_6oee2"]
-[ext_resource type="Script" uid="uid://crsfwmq4lqlfe" path="res://GDBase/Health/damage_component.gd" id="3_r4jkb"]
 
 [sub_resource type="GDScript" id="GDScript_807mj"]
 script/source = "@tool
@@ -14,13 +13,19 @@ var 字体=preload(\"res://Entity/字体系_怪物/dingliehuobanfont20241217-2.t
 		if a.length()!=1:return
 		queue_redraw()
 @export var 敌人:CharacterBody2D
+
+@export var 血量:int=2
+@onready var health_component: HealthComponent = $HealthComponent
+
 func _ready() -> void:
 	if Engine.is_editor_hint():set_process(false)
+	health_component.max_health=血量
+	health_component.current_health=血量
 func _draw() -> void:
 	var 左下角=字体.get_string_size(字)*Vector2(-0.5,0.5)
 	draw_char(字体,左下角,字,16)
 	
-var 落地_等待:float=0
+var 落地_等待:float=randf_range(0,0.4)
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		set_process(false)
@@ -46,7 +51,31 @@ func _on_health_component_died() -> void:
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6oee2"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uafib"]
+[sub_resource type="GDScript" id="GDScript_r4jkb"]
+script/source = "extends Area2D
+
+@export var 攻击力:int=1
+##请填正数 无需考虑方向,需要父节点的[图片_方向] 受[质量影响,默认1]
+@onready var timer: Timer = $Timer
+
+@export var 击飞强度:Vector2  =Vector2(2,1)
+func _on_area_entered(area: Area2D) -> void:
+	if area is HealthComponent:
+		var a=sign(area.global_position-global_position).x
+		area.damage_with_dir(攻击力,击飞强度*Vector2(-a,1))
+	timer.start()
+	await  get_tree().physics_frame
+	monitoring=false
+
+
+func _ready() -> void:
+	if not area_entered.is_connected(_on_area_entered):
+		area_entered.connect(_on_area_entered)
+
+
+func _on_timer_timeout() -> void:
+	monitoring=true
+"
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 4
@@ -71,17 +100,19 @@ shape = SubResource("RectangleShape2D_6oee2")
 position = Vector2(-13, 4)
 script = ExtResource("2_6oee2")
 health_component = NodePath("..")
-max_cells_num = 2
-current_cells_num = 2
 metadata/_custom_type_script = "uid://cj3xyb234cfoh"
 
-[node name="DamageComponent" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("3_r4jkb")
-metadata/_custom_type_script = "uid://crsfwmq4lqlfe"
+script = SubResource("GDScript_r4jkb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageComponent"]
-shape = SubResource("RectangleShape2D_uafib")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_807mj")
+
+[node name="Timer" type="Timer" parent="Area2D"]
+wait_time = 0.1
+one_shot = true
 
 [connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="timeout" from="Area2D/Timer" to="Area2D" method="_on_timer_timeout"]
