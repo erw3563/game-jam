@@ -1,8 +1,7 @@
 [gd_scene load_steps=5 format=4 uid="uid://c25raeu5fcosf"]
 
 [ext_resource type="TileSet" uid="uid://qk4jyafelh87" path="res://Asset/Tile/tile.tres" id="1_l0dwc"]
-[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="2_k05nx"]
-[ext_resource type="PackedScene" uid="uid://rxjrhmrrksql" path="res://Entity/字体系_怪物/小怪_字.tscn" id="3_io8c7"]
+[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/player.tscn" id="2_k05nx"]
 
 [sub_resource type="GDScript" id="GDScript_mc7mb"]
 script/source = "extends Node2D

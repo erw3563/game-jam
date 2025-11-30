@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://cxmmrhsns4jlr"]
 
 [ext_resource type="Texture2D" uid="uid://0s6loeor2dxv" path="res://Scene/第二章_关卡1/机械臂.jpg" id="1_l5y7c"]
-[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="2_1ucq2"]
+[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/player.tscn" id="2_1ucq2"]
 [ext_resource type="PackedScene" uid="uid://bu5x2qje805pe" path="res://Entity/石头人/石头人.tscn" id="2_64u8c"]
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="2_ba1qj"]
 [ext_resource type="PackedScene" uid="uid://cltb6qvsdknov" path="res://Scene/textbox/dialogue_label.tscn" id="3_i8u30"]
