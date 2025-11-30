@@ -12,7 +12,10 @@ class_name TextBox
 #  : 用于分割 角色名 与 话 (每行必须有一个,首个) （统一用中文）
 # [] 用于加工 文字
 # 空行 允许
+@onready var texture_button: TextureButton = $TextureButton
+
 func 开始(a:String):
+	texture_button.grab_focus()
 	visible=true
 	剧本=切割多行文本(a)
 	进度=0

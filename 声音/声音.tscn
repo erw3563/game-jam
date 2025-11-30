@@ -14,35 +14,42 @@ script = ExtResource("1_fta6o")
 
 [node name="剧情1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_udbd8")
+volume_db = -9.142
 bus = &"音乐"
 parameters/looping = true
 
 [node name="剧情2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_lwe4x")
+volume_db = -9.143
 bus = &"音乐"
 parameters/looping = true
 
 [node name="剧情3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_sspu2")
+volume_db = -10.857
 bus = &"音乐"
 parameters/looping = true
 
 [node name="剧情4" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_fr46c")
+volume_db = -2.857
 bus = &"音乐"
 parameters/looping = true
 
 [node name="战斗1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_sspu2")
+volume_db = -5.143
 bus = &"音乐"
 parameters/looping = true
 
 [node name="战斗2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_fr46c")
+volume_db = -7.428
 bus = &"音乐"
 parameters/looping = true
 
 [node name="战斗3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_0w3p8")
+volume_db = 1.143
 bus = &"音乐"
 parameters/looping = true

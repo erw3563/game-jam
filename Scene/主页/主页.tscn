@@ -1,0 +1,235 @@
+[gd_scene load_steps=7 format=3 uid="uid://bwfqegaly2enf"]
+
+[ext_resource type="Theme" uid="uid://dx3qanifd1whh" path="res://Scene/主页/主体.tres" id="1_gftoo"]
+[ext_resource type="Texture2D" uid="uid://dv1filgh2ppn8" path="res://Scene/主页/叉3.png" id="1_pvfdj"]
+[ext_resource type="Texture2D" uid="uid://bldy2qws8vla8" path="res://Scene/主页/叉2.png" id="2_saf3g"]
+[ext_resource type="Texture2D" uid="uid://dk3nmtfiinx6v" path="res://Scene/主页/叉.png" id="3_gftoo"]
+[ext_resource type="Texture2D" uid="uid://ce7pper7gx656" path="res://Scene/主页/警告.png" id="4_saf3g"]
+
+[sub_resource type="GDScript" id="GDScript_gftoo"]
+script/source = "extends Control
+
+
+
+func _on_button_pressed() -> void:
+	转场.切换章节_并丢弃(self,\"res://Scene/第一章_开场/第一章_桥.tscn\")
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_gftoo")
+script = SubResource("GDScript_gftoo")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.38039216, 0.50980395, 0.78039217, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -54.0
+offset_right = 236.0
+offset_bottom = -15.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.7490196, 0.26666668, 0.37254903, 1)
+text = "Error code:0xc0000225
+Bridge endpoint not found..."
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -183.0
+offset_top = -94.0
+offset_right = -23.0
+offset_bottom = -21.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.023529412, 0.02745098, 0.07450981, 1)
+text = "Status:ONLINE
+User:A-MEN
+Network:???
+Ghost Module:RUNNING"
+
+[node name="Control" type="Control" parent="."]
+modulate = Color(0.023529412, 0.02745098, 0.07450981, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+scale = Vector2(4, 4)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -56.0
+offset_bottom = 16.0
+grow_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_pvfdj")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_saf3g")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="Control/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_gftoo")
+stretch_mode = 2
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control2"]
+modulate = Color(0.023529412, 0.02745098, 0.07450981, 1)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -222.0
+offset_right = 256.0
+offset_bottom = -158.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 64
+text = "--------"
+
+[node name="Label2" type="Label" parent="Control2"]
+modulate = Color(0.023529412, 0.02745098, 0.07450981, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -232.0
+offset_top = -174.0
+offset_bottom = -158.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 64
+text = "--------"
+horizontal_alignment = 2
+
+[node name="Control" type="Control" parent="Control2"]
+modulate = Color(0.7607843, 0.2784314, 0.28235295, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control2/Control"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 84.0
+offset_right = 228.0
+offset_bottom = 218.0
+texture = ExtResource("4_saf3g")
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="Control2/Control"]
+layout_mode = 0
+offset_left = 782.0
+offset_top = 98.0
+offset_right = 871.0
+offset_bottom = 175.0
+texture = ExtResource("4_saf3g")
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="Control2/Control"]
+layout_mode = 0
+offset_left = 916.0
+offset_top = 166.0
+offset_right = 1100.0
+offset_bottom = 368.0
+texture = ExtResource("4_saf3g")
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="Control2/Control"]
+layout_mode = 0
+offset_left = 455.0
+offset_right = 512.0
+offset_bottom = 53.0
+texture = ExtResource("4_saf3g")
+stretch_mode = 5
+
+[node name="Label" type="RichTextLabel" parent="Control2/Control"]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 68.0
+offset_right = 321.0
+offset_bottom = 84.0
+bbcode_enabled = true
+text = "[b][i]system error[/i][/b]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="主菜单" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -108.0
+offset_right = 68.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="主菜单"]
+layout_mode = 2
+text = "Start"
+flat = true
+
+[node name="Button2" type="Button" parent="主菜单"]
+layout_mode = 2
+text = "Continue"
+flat = true
+
+[node name="Button3" type="Button" parent="主菜单"]
+layout_mode = 2
+text = "Settings"
+flat = true
+
+[node name="Button5" type="Button" parent="主菜单"]
+layout_mode = 2
+text = "Credits"
+flat = true
+
+[node name="Button4" type="Button" parent="主菜单"]
+layout_mode = 2
+text = "Shutdown"
+flat = true
+
+[connection signal="pressed" from="主菜单/Button" to="." method="_on_button_pressed"]

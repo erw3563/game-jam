@@ -27,10 +27,20 @@ subpixel_positioning=4
 keep_rounding_remainders=true
 oversampling=0.0
 Fallbacks=null
-fallbacks=[]
+fallbacks=[Resource("uid://csqm783hxms5k", "res://Entity/字体系_怪物/dingliehuobanfont20241217-2.ttf")]
 Compress=null
 compress=true
-preload=[]
-language_support={}
-script_support={}
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "新建配置",
+"size": Vector2i(16, 0),
+&"variation_embolden": 0.0
+}]
+language_support={
+"en": true
+}
+script_support={
+"Latn": true
+}
 opentype_features={}

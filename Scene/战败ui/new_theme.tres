@@ -1,0 +1,30 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bkwg34hknfutg"]
+
+[ext_resource type="StyleBox" uid="uid://cmby4ka2ns3yq" path="res://Scene/战败ui/new_style_box_flat.tres" id="1_mr73v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mr73v"]
+bg_color = Color(0.1254902, 0.13333334, 0.14117648, 0.32156864)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3rx87"]
+bg_color = Color(1, 1, 0.6118008, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[resource]
+Button/colors/font_color = Color(0.7882353, 0.8666667, 1, 1)
+Button/colors/font_disabled_color = Color(0.7882353, 0.8666667, 1, 1)
+Button/colors/font_focus_color = Color(0.7882353, 0.8666667, 1, 1)
+Button/colors/font_hover_color = Color(0.7882353, 0.8666667, 1, 1)
+Button/colors/font_hover_pressed_color = Color(0.7882353, 0.8666667, 1, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_mr73v")
+Button/styles/focus = ExtResource("1_mr73v")
+Button/styles/hover = SubResource("StyleBoxFlat_3rx87")
+Button/styles/normal = ExtResource("1_mr73v")
+Button/styles/pressed = ExtResource("1_mr73v")
+Label/colors/font_color = Color(0.78936666, 0.86647344, 1, 1)

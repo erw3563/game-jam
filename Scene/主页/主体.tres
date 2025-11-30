@@ -1,0 +1,12 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://dx3qanifd1whh"]
+
+[ext_resource type="FontFile" uid="uid://dx2k78fa72r2n" path="res://VonwaonBitmap-16px.ttf" id="1_phioj"]
+[ext_resource type="FontFile" uid="uid://csqm783hxms5k" path="res://Entity/字体系_怪物/dingliehuobanfont20241217-2.ttf" id="2_wfs1d"]
+
+[resource]
+default_font = ExtResource("2_wfs1d")
+Button/colors/font_color = Color(0.5541404, 0.654246, 0.8258557, 1)
+Button/colors/font_hover_color = Color(0.51972955, 0.9329034, 1, 1)
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_phioj")
+Label/fonts/font = ExtResource("1_phioj")

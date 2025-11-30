@@ -1,9 +1,74 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvjaoyv22lnvf"]
+[gd_scene load_steps=6 format=3 uid="uid://cvjaoyv22lnvf"]
 
 [ext_resource type="Script" uid="uid://0dxghkqrcmgf" path="res://Scene/战败ui/战败ui.gd" id="1_k44xs"]
+[ext_resource type="Theme" uid="uid://bkwg34hknfutg" path="res://Scene/战败ui/new_theme.tres" id="2_b43ao"]
 
-[node name="战败ui" type="CanvasLayer"]
+[sub_resource type="Animation" id="Animation_b43ao"]
+resource_name = "a"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.39999998),
+"transitions": PackedFloat32Array(2.9281712, 1),
+"update": 0,
+"values": [Vector2(0.26, 0.26), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.39999998),
+"transitions": PackedFloat32Array(2.9281707, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_2jeyl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2jeyl"]
+_data = {
+&"RESET": SubResource("Animation_2jeyl"),
+&"a": SubResource("Animation_b43ao")
+}
+
+[node name="战败ui" type="CanvasLayer" node_paths=PackedStringArray("button", "button_2", "button_3")]
 script = ExtResource("1_k44xs")
+button = NodePath("Control/VBoxContainer/HBoxContainer/Button")
+button_2 = NodePath("Control/VBoxContainer/HBoxContainer/Button2")
+button_3 = NodePath("Control/VBoxContainer/HBoxContainer/Button3")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -11,9 +76,30 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.46666667, 0.46666667, 0.46666667, 0.79607844)
+color = Color(0.38608095, 0.46162418, 0.49321133, 0.79607844)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2jeyl")
+}
+autoplay = "a"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -25,8 +111,9 @@ offset_right = 246.0
 offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_b43ao")
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_font_sizes/font_size = 64
@@ -34,18 +121,18 @@ text = "战败"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
 custom_minimum_size = Vector2(0, 55.41)
 layout_mode = 2
 theme_override_constants/separation = 50
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
 text = "重来"
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Button"]
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer/Button"]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -59,13 +146,13 @@ text = "重新打一遍"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Button2" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
 text = "继续"
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Button2"]
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer/Button2"]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -79,13 +166,13 @@ text = "满血复活，再战"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Button3" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 disabled = true
 text = "跳过"
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Button3"]
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer/Button3"]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -99,11 +186,7 @@ text = "跳过战斗"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
-autostart = true
-
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button3" to="." method="_on_button_3_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/Button3" to="." method="_on_button_3_pressed"]

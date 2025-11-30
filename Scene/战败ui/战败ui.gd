@@ -115,9 +115,9 @@ func _on_button_3_pressed() -> void:
 	_选择.emit("跳过")
 	
 
-@onready var button: Button = $VBoxContainer/HBoxContainer/Button
-@onready var button_2: Button = $VBoxContainer/HBoxContainer/Button2
-@onready var button_3: Button = $VBoxContainer/HBoxContainer/Button3
+@export var button: Button
+@export var button_2: Button
+@export var button_3: Button
 
 func _on_timer_timeout() -> void:
 	button.disabled=false
