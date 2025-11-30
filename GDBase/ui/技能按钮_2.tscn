@@ -29,8 +29,6 @@ func _ready() -> void:
 	label.text=按键
 	#set_process(false)
 
-
-
 @export var 冷却时间:float=4
 @export var 冷却值:float=0
 signal 冷却结束
@@ -46,7 +44,6 @@ func _process(delta: float) -> void:
 		冷却结束.emit()
 		label_2.text=\"\"
 		set_process(false)
-	
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0aym"]
@@ -63,7 +60,7 @@ bg_color = Color(0.47152892, 0.48763055, 0.7240258, 0.5529412)
 custom_minimum_size = Vector2(58, 58)
 texture = SubResource("AtlasTexture_dwhkp")
 script = SubResource("GDScript_w0aym")
-"冷却值" = -17.76481444444475
+"冷却值" = -17.89814777777808
 
 [node name="技能_图标" type="MarginContainer" parent="."]
 layout_mode = 1

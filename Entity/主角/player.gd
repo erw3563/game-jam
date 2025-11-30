@@ -88,9 +88,18 @@ func _process(_delta: float) -> void:
 		if Input.is_action_just_pressed(i.切换按键):
 			切换职业(i)
 			break
+	if Input.is_action_just_pressed("attack"):
+		锁定=true
+		await  当前职业.普攻()
+		锁定=false
 	if Input.is_action_just_pressed("attack_dash"):
 		var dash_dir:Vector2 = (get_global_mouse_position() - position).normalized()
 		dash_component.set_dash_dir(dash_dir)
+
+var 模式:Callable=空
+func 空(_delta: float) -> void:pass
+func _physics_process(delta: float) -> void:
+	模式.call(delta)
 
 func _on_health_component_health_delta_applied(_amount: int) -> void:
 	animation_player.play("受击")
