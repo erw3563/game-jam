@@ -104,7 +104,6 @@ animations = [{
 script/source = "#extends AnimatedSprite2D
 extends 职业
 
-
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func 切入():
@@ -513,7 +512,6 @@ animations = [{
 [sub_resource type="GDScript" id="GDScript_xcxbn"]
 script/source = "extends 职业
 
-
 @onready var health_component: HealthComponent = $\"../HealthComponent\"
 @onready var 回复: HealthComponent = $HealthComponent
 @onready var progress_bar: ProgressBar = $ProgressBar
@@ -731,7 +729,7 @@ alignment = 2
 [node name="鼠标左键" parent="CanvasLayer/右下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = ""
-"冷却值" = -8338.808630891102
+"冷却值" = -8338.873132002213
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标左键"]
 layout_mode = 1
@@ -753,7 +751,7 @@ layout_mode = 2
 "按键" = ""
 "技能_图标" = ExtResource("8_0qels")
 "冷却时间" = 1.0
-"冷却值" = -17.92530777777808
+"冷却值" = -17.98980888888919
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标右键"]
 layout_mode = 1
@@ -786,19 +784,19 @@ theme_override_constants/separation = 20
 layout_mode = 2
 "按键" = "A"
 "技能_图标" = ExtResource("9_v6kgo")
-"冷却值" = -8338.808630891102
+"冷却值" = -8338.873132002213
 
 [node name="MoveUp" parent="CanvasLayer/MoveInputButton" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "w"
 "技能_图标" = ExtResource("10_ajqgl")
-"冷却值" = -8338.808630891102
+"冷却值" = -8338.873132002213
 
 [node name="MoveRight" parent="CanvasLayer/MoveInputButton" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "d"
 "技能_图标" = ExtResource("11_vta88")
-"冷却值" = -8338.808630891102
+"冷却值" = -8338.873132002213
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -831,19 +829,19 @@ alignment = 1
 layout_mode = 2
 "按键" = "1"
 "技能_图标" = ExtResource("15_g4f1u")
-"冷却值" = -18.660839370370603
+"冷却值" = -18.725340481481712
 
 [node name="技能按钮2" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "2"
 "技能_图标" = ExtResource("18_8ndxi")
-"冷却值" = -18.75820848148181
+"冷却值" = -18.82270959259292
 
 [node name="技能按钮3" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "3"
 "技能_图标" = ExtResource("20_vmob0")
-"冷却值" = -18.753818037037274
+"冷却值" = -18.818319148148383
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
