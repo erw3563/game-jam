@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://c70y4sq4ogtqt"]
+[gd_scene load_steps=4 format=3 uid="uid://c70y4sq4ogtqt"]
 
 [ext_resource type="Texture2D" uid="uid://bsakgf6u78sd4" path="res://Scene/textbox/叉.png" id="2_0fd1n"]
 
@@ -22,6 +22,13 @@ func _on_texture_button_pressed() -> void:
 	关闭.emit()
 "
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_seq1i"]
+bg_color = Color(0.20950082, 0.22642587, 0.24881959, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -38,7 +45,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.33333334)
+color = Color(0.43201151, 0.4829774, 0.5339433, 0.7882353)
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -48,11 +55,26 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -304.9375
-offset_top = -232.25
+offset_top = -282.0
 offset_right = 304.9375
-offset_bottom = 232.25
+offset_bottom = 282.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_seq1i")
+
+[node name="TextureButton" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -18.9375
+offset_top = -17.75
+offset_right = 21.0625
+offset_bottom = 22.25
+grow_horizontal = 0
+texture_normal = ExtResource("2_0fd1n")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="剧本" type="MarginContainer" parent="Panel"]
 layout_mode = 1
@@ -74,18 +96,4 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TextureButton" type="TextureButton" parent="."]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -57.0
-offset_top = 12.0
-offset_right = -17.0
-offset_bottom = 52.0
-grow_horizontal = 0
-texture_normal = ExtResource("2_0fd1n")
-ignore_texture_size = true
-stretch_mode = 0
-
-[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Panel/TextureButton" to="." method="_on_texture_button_pressed"]
