@@ -1,7 +1,7 @@
 extends Area2D
 class_name DamageComponent
 
-signal attacked
+signal attacked(area:Area2D)
 
 @export var whitelist:Array[Node]
 @export_group("伤害参数")
@@ -53,7 +53,7 @@ func _on_area_entered(area: Area2D) -> void:
 	var dir:Vector2 = sign(global_position - area.global_position)
 	for i in damage_num:
 		area.damage_with_dir(damage_amount,dir)
-	attacked.emit()
+	attacked.emit(area)
 	_create_attack_timer()
 	if is_bleed_damage:
 		for child in area.get_children():
