@@ -55,31 +55,37 @@ func 下一段():
 		结束.emit()
 	进度+=1
 
+
+####跳过打字 或 下一段
 func _on_texture_button_pressed() -> void:
-	#if text.显示完毕_或立即显示():下一段()
 	if  dialogue_label.is_typing: 
 		dialogue_label.skip_typing()
 	else :
 		下一段()
 	
 		
-
-@onready var texture_button_2: TextureButton = $TextureButton2
+#####剧本
+#@onready var texture_button_2: TextureButton = $TextureButton2
 @onready var juben: Control = $剧本
-
 func _on_texture_button_2_pressed() -> void:
-	texture_button_2.visible=false
+	#texture_button_2.visible=false
 	juben.初始(剧本.slice(0,进度))
 	juben.visible=true
-
-
 func _on_剧本_关闭() -> void:
-	texture_button_2.visible=true
+	#texture_button_2.visible=true
+	pass
 
+####打字音效
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
-
 func _on_dialogue_label_started_typing() -> void:
 	if audio_stream_player.stream_paused:audio_stream_player.stream_paused=false
 	else :audio_stream_player.play()
 func _on_dialogue_label_finished_typing() -> void:
 	audio_stream_player.stream_paused=true
+	
+	
+	
+func 跳过对话():
+	if  dialogue_label.is_typing: 
+		dialogue_label.skip_typing()
+	结束.emit()
