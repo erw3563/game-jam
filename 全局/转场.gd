@@ -15,7 +15,12 @@ func 切换章节_之后返回(场景自己:Node,路径:String,函数:Callable)-
 		parent.add_child(场景自己)
 		函数.call()
 		)
-
+func 切换章节_之后返回_丢弃(场景自己:Node)->void: ###与 切换章节_之后返回 是一对
+	play("入场")
+	入场.emit()
+	await animation_finished
+	场景自己.tree_exited.connect(func ():play("退场"))
+	场景自己.queue_free()
 #######基础
 	
 signal 入场  ##入场开始
