@@ -4,7 +4,8 @@ class_name Player_2
 
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var camera_2d: Camera2D = $Camera2D
-@onready var player_move_component: PlayerHorizontalMoveInCurveComponent = $MoveGravityByInput
+@onready var dash_component: DashComponent = $PlayerMoveComponent/DashComponent
+@onready var player_move_component: PlayerHorizontalMoveInCurveComponent = $PlayerMoveComponent
 @onready var 鼠标右键 = $CanvasLayer/右下/鼠标右键
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var 切:Array[职业]=[$剑2,$弓,$盾]
@@ -53,7 +54,6 @@ func _ready() -> void:
 	_初始位置=position
 	切换职业(切[0])
 	鼠标右键.冷却时间=4
-	鼠标右键.冷却结束.connect(func ():可_闪现=true)
 	初始缩放=camera_2d.zoom
 	
 func 限制相机移动(a:Control):
@@ -70,7 +70,6 @@ func _on_health_component_hited(dir: Vector2i) -> void:
 	player_move_component.set_velocity(-dir * 256)
 	
 ############
-var player_dir=1
 var 锁定:bool=false:
 	set(a):
 		锁定=a
@@ -89,38 +88,12 @@ func _process(_delta: float) -> void:
 		if Input.is_action_just_pressed(i.切换按键):
 			切换职业(i)
 			break
-	if Input.is_action_just_pressed("attack"):
-		锁定=true
-		await  当前职业.普攻()
-		锁定=false
-	elif 可_闪现==true and Input.is_action_just_pressed("闪现"):
-		锁定=true
-		await  闪现()
-		锁定=false
-
-var 模式:Callable=空
-func 空(_delta: float) -> void:pass
-func _physics_process(delta: float) -> void:
-	模式.call(delta)
-func 闪现_(_delta: float) -> void:
-	velocity=Vector2(500 * player_dir,0)
-	move_and_slide()
-
-
-var 可_闪现:bool=true
-func 闪现():
-	可_闪现=false
-	模式=闪现_
-	health_component.monitorable=false
-	await  get_tree().create_timer(0.25).timeout
-	health_component.monitorable=true
-	模式=空
-	鼠标右键.冷却()
-
+	if Input.is_action_just_pressed("attack_dash"):
+		var dash_dir:Vector2 = (get_global_mouse_position() - position).normalized()
+		dash_component.set_dash_dir(dash_dir)
 
 func _on_health_component_health_delta_applied(_amount: int) -> void:
 	animation_player.play("受击")
 
-func _on_move_gravity_by_input_turned(dir_: float) -> void:
-	scale.x = -scale.x
-	player_dir = dir_
+func _on_player_move_component_turned(dir: float) -> void:
+	scale.x = - scale.x

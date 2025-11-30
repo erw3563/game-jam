@@ -1,9 +1,10 @@
-[gd_scene load_steps=67 format=3 uid="uid://c5p3akujvmitw"]
+[gd_scene load_steps=68 format=3 uid="uid://c5p3akujvmitw"]
 
 [ext_resource type="Script" uid="uid://bo7cdxcjy6i7i" path="res://Entity/主角/player.gd" id="1_aedmp"]
 [ext_resource type="Texture2D" uid="uid://domlvvs4mv48i" path="res://Entity/主角/主角.png" id="2_uhjsk"]
 [ext_resource type="Shader" uid="uid://clp8hn51js7q0" path="res://Shader/受击.gdshader" id="2_xethj"]
-[ext_resource type="Script" uid="uid://twsbkr63b21g" path="res://GDBase/Move/Input/move_gravity_by_input_component.gd" id="3_kohgm"]
+[ext_resource type="Script" uid="uid://twsbkr63b21g" path="res://GDBase/Move/Input/player_move_horizontal_component.gd" id="3_kohgm"]
+[ext_resource type="Script" uid="uid://cvpy87ergxgak" path="res://GDBase/Move/Input/player_dash_component.gd" id="5_hc435"]
 [ext_resource type="Script" uid="uid://v4uwxotregtq" path="res://GDBase/Health/health_component.gd" id="5_v6kgo"]
 [ext_resource type="PackedScene" uid="uid://dssccalehutiv" path="res://GDBase/CellProgressBar/cells_progress_bar.tscn" id="6_ajqgl"]
 [ext_resource type="Texture2D" uid="uid://1yfmn2voamr8" path="res://Entity/主角/主角-攻击_1.png" id="7_qjlo7"]
@@ -668,21 +669,18 @@ texture = ExtResource("2_uhjsk")
 position = Vector2(2.5, -5)
 shape = SubResource("RectangleShape2D_sxyjl")
 
-[node name="MoveGravityByInput" type="Node" parent="." node_paths=PackedStringArray("mover")]
+[node name="PlayerMoveComponent" type="Node" parent="." node_paths=PackedStringArray("mover")]
 script = ExtResource("3_kohgm")
 mover = NodePath("..")
 gravity = 16.0
-up_action = "move_up"
-jump_power = 256.0
-max_jump_num = 2
-jump_num = 2
-empty_jump_time = 1.0
-dash_time = 0.2
-dash_speed = 512.0
 time_faster = 0.2
 faster_curve = SubResource("Curve_h2qjg")
-time_slower = 0.2
+time_slower = 0.3
 slower_curve = SubResource("Curve_boq8c")
+
+[node name="DashComponent" type="Node" parent="PlayerMoveComponent" node_paths=PackedStringArray("player_move_component")]
+script = ExtResource("5_hc435")
+player_move_component = NodePath("..")
 
 [node name="HealthComponent" type="Area2D" parent="."]
 position = Vector2(1, -5)
@@ -723,7 +721,7 @@ alignment = 2
 [node name="鼠标左键" parent="CanvasLayer/右下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = ""
-"冷却值" = -8338.542164854063
+"冷却值" = -8339.238080187393
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标左键"]
 layout_mode = 1
@@ -744,7 +742,7 @@ texture = ExtResource("8_ajqgl")
 layout_mode = 2
 "按键" = ""
 "技能_图标" = ExtResource("8_0qels")
-"冷却值" = -8338.542164854063
+"冷却值" = -8339.238080187393
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标右键"]
 layout_mode = 1
@@ -777,19 +775,19 @@ theme_override_constants/separation = 20
 layout_mode = 2
 "按键" = "A"
 "技能_图标" = ExtResource("9_v6kgo")
-"冷却值" = -8338.542164854063
+"冷却值" = -8339.238080187393
 
 [node name="技能按钮2" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "w"
 "技能_图标" = ExtResource("10_ajqgl")
-"冷却值" = -8338.542164854063
+"冷却值" = -8339.238080187393
 
 [node name="技能按钮3" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "d"
 "技能_图标" = ExtResource("11_vta88")
-"冷却值" = -8338.542164854063
+"冷却值" = -8339.238080187393
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -822,19 +820,19 @@ alignment = 1
 layout_mode = 2
 "按键" = "1"
 "技能_图标" = ExtResource("15_g4f1u")
-"冷却值" = -18.394373333332922
+"冷却值" = -19.090288666665757
 
 [node name="技能按钮2" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "2"
 "技能_图标" = ExtResource("18_8ndxi")
-"冷却值" = -18.491742444444125
+"冷却值" = -19.18765777777696
 
 [node name="技能按钮3" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "3"
 "技能_图标" = ExtResource("20_vmob0")
-"冷却值" = -18.48735199999959
+"冷却值" = -19.183267333332427
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -929,7 +927,7 @@ value = 83.97
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
-[connection signal="turned" from="MoveGravityByInput" to="." method="_on_move_gravity_by_input_turned"]
+[connection signal="turned" from="PlayerMoveComponent" to="." method="_on_player_move_component_turned"]
 [connection signal="health_delta_applied" from="HealthComponent" to="." method="_on_health_component_health_delta_applied"]
 [connection signal="hited" from="HealthComponent" to="." method="_on_health_component_hited"]
 [connection signal="health_delta_applied" from="盾/HealthComponent" to="盾" method="_on_health_component_health_delta_applied"]
