@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://r47eokkv8qwa" path="res://Scene/第一章_开场/桥.jpg" id="2_o4yhj"]
 [ext_resource type="PackedScene" uid="uid://de18ubvjnfumg" path="res://Scene/textbox/textbox.tscn" id="3_1mwi8"]
-[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/entity_2.tscn" id="4_vypqq"]
+[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/player.tscn" id="4_vypqq"]
 
 [sub_resource type="GDScript" id="GDScript_1mwi8"]
 script/source = "extends Node2D

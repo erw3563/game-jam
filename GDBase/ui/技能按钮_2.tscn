@@ -46,7 +46,7 @@ func _process(delta: float) -> void:
 		set_process(false)
 
 
-func _on_dash_component_dashed(dash_dir: Vector2) -> void:
+func _on_dash_component_dashed(_dash_dir: Vector2) -> void:
 	冷却()
 "
 
@@ -64,7 +64,7 @@ bg_color = Color(0.47152892, 0.48763055, 0.7240258, 0.5529412)
 custom_minimum_size = Vector2(58, 58)
 texture = SubResource("AtlasTexture_dwhkp")
 script = SubResource("GDScript_w0aym")
-"冷却值" = -17.89814777777808
+"冷却值" = -18.036412111111535
 
 [node name="技能_图标" type="MarginContainer" parent="."]
 layout_mode = 1

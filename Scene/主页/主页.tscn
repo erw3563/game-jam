@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwfqegaly2enf"]
+[gd_scene load_steps=11 format=3 uid="uid://bwfqegaly2enf"]
 
 [ext_resource type="Theme" uid="uid://dx3qanifd1whh" path="res://Scene/主页/主体.tres" id="1_gftoo"]
 [ext_resource type="Texture2D" uid="uid://dv1filgh2ppn8" path="res://Scene/主页/叉3.png" id="1_pvfdj"]
+[ext_resource type="Texture2D" uid="uid://r47eokkv8qwa" path="res://Scene/第一章_开场/桥.jpg" id="2_hrhcw"]
 [ext_resource type="Texture2D" uid="uid://bldy2qws8vla8" path="res://Scene/主页/叉2.png" id="2_saf3g"]
 [ext_resource type="Texture2D" uid="uid://dk3nmtfiinx6v" path="res://Scene/主页/叉.png" id="3_gftoo"]
 [ext_resource type="Texture2D" uid="uid://ce7pper7gx656" path="res://Scene/主页/警告.png" id="4_saf3g"]
@@ -19,6 +20,51 @@ func _on_texture_rect_3_pressed() -> void:
 	get_tree().quit()
 "
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q6vi2"]
+
+[sub_resource type="Shader" id="Shader_gftoo"]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform sampler2D displace : source_color;
+uniform float dispAmt      : hint_range(0.0, 0.1);
+uniform float abberationAmtX : hint_range(0.0, 0.1);
+uniform float abberationAmtY : hint_range(0.0, 0.1);
+uniform float dispsize       : hint_range(0.1, 2.0);
+uniform float maxAlpha       : hint_range(0.9, 1.0);
+
+// 把偏移和色差全部在顶点阶段算好，变成 3 组 UV
+varying vec2 uv_r;
+varying vec2 uv_g;
+varying vec2 uv_b;
+
+void vertex() {
+    vec4 disp = texture(displace, UV * dispsize);   // 采样扰动图
+    vec2 offset = disp.xy * dispAmt;                // 位移量
+
+    uv_r = UV - offset - vec2(abberationAmtX, abberationAmtY);
+    uv_g = UV - offset;                             // 绿色无额外色差
+    uv_b = UV - offset + vec2(abberationAmtX, abberationAmtY);
+}
+
+void fragment() {
+    float r = texture(TEXTURE, uv_r).r;
+    float g = texture(TEXTURE, uv_g).g;
+    float b = texture(TEXTURE, uv_b).b;
+    float a = texture(TEXTURE, UV).a * maxAlpha;    // 原 alpha 再缩放
+
+    COLOR = vec4(r, g, b, a);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hrhcw"]
+shader = SubResource("Shader_gftoo")
+shader_parameter/displace = ExtResource("2_hrhcw")
+shader_parameter/dispAmt = 0.0470000022325
+shader_parameter/abberationAmtX = 0.04400000209
+shader_parameter/abberationAmtY = 0.0590000028025
+shader_parameter/dispsize = 0.65200002771012
+shader_parameter/maxAlpha = 0.95299997867564
+
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -30,6 +76,7 @@ theme = ExtResource("1_gftoo")
 script = SubResource("GDScript_gftoo")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_q6vi2")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,6 +86,8 @@ grow_vertical = 2
 color = Color(0.38039216, 0.50980395, 0.78039217, 1)
 
 [node name="Label" type="Label" parent="."]
+material = SubResource("ShaderMaterial_hrhcw")
+use_parent_material = true
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
