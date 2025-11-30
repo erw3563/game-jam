@@ -44,6 +44,10 @@ func _process(delta: float) -> void:
 		冷却结束.emit()
 		label_2.text=\"\"
 		set_process(false)
+
+
+func _on_dash_component_dashed(dash_dir: Vector2) -> void:
+	冷却()
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w0aym"]
