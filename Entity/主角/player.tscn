@@ -848,7 +848,7 @@ alignment = 2
 [node name="AttackUI" parent="CanvasLayer/SkillButtonUI" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = ""
-"冷却值" = -8339.632160446656
+"冷却值" = -8339.644257446656
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/SkillButtonUI/AttackUI"]
 layout_mode = 1
@@ -870,7 +870,7 @@ layout_mode = 2
 "按键" = ""
 "技能_图标" = ExtResource("8_0qels")
 "冷却时间" = 1.0
-"冷却值" = -18.748837333334766
+"冷却值" = -18.760934333334767
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/SkillButtonUI/DashUI"]
 layout_mode = 1
@@ -890,46 +890,15 @@ texture = ExtResource("10_vta88")
 [node name="GrabUI" parent="CanvasLayer/SkillButtonUI" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 script = SubResource("GDScript_evy36")
-"按键" = "F"
 "冷却时间" = 2.0
-"冷却值" = -18.367053444445876
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/SkillButtonUI/GrabUI"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -5.6450005
-offset_right = 20.0
-offset_bottom = 34.35498
-grow_horizontal = 2
-grow_vertical = 0
-texture = ExtResource("8_ajqgl")
+"冷却值" = -18.379150444445877
 
 [node name="TeleportUI" parent="CanvasLayer/SkillButtonUI" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 script = SubResource("GDScript_253p8")
 "按键" = "F"
 "冷却时间" = 2.0
-"冷却值" = -18.46038677777921
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/SkillButtonUI/TeleportUI"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -5.6450005
-offset_right = 20.0
-offset_bottom = 34.35498
-grow_horizontal = 2
-grow_vertical = 0
-texture = ExtResource("8_ajqgl")
+"冷却值" = -18.47248377777921
 
 [node name="MoveButtonUI" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 2
@@ -947,19 +916,19 @@ theme_override_constants/separation = 20
 layout_mode = 2
 "按键" = "A"
 "技能_图标" = ExtResource("9_v6kgo")
-"冷却值" = -8339.632160446656
+"冷却值" = -8339.644257446656
 
 [node name="MoveUp" parent="CanvasLayer/MoveButtonUI" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "w"
 "技能_图标" = ExtResource("10_ajqgl")
-"冷却值" = -8339.632160446656
+"冷却值" = -8339.644257446656
 
 [node name="MoveRight" parent="CanvasLayer/MoveButtonUI" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "d"
 "技能_图标" = ExtResource("11_vta88")
-"冷却值" = -8339.632160446656
+"冷却值" = -8339.644257446656
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -992,19 +961,19 @@ alignment = 1
 layout_mode = 2
 "按键" = "1"
 "技能_图标" = ExtResource("15_g4f1u")
-"冷却值" = -19.484368925927292
+"冷却值" = -19.496465925927293
 
 [node name="技能按钮2" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "2"
 "技能_图标" = ExtResource("18_8ndxi")
-"冷却值" = -19.581738037038495
+"冷却值" = -19.593835037038495
 
 [node name="技能按钮3" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "3"
 "技能_图标" = ExtResource("20_vmob0")
-"冷却值" = -19.57734759259396
+"冷却值" = -19.58944459259396
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
