@@ -1,3 +1,11 @@
-[gd_scene format=3 uid="uid://dk0p17xp58elr"]
+[gd_scene load_steps=3 format=3 uid="uid://dk0p17xp58elr"]
+
+[ext_resource type="TileSet" uid="uid://qk4jyafelh87" path="res://Asset/Tile/tile.tres" id="1_k05nx"]
+[ext_resource type="PackedScene" uid="uid://c5p3akujvmitw" path="res://Entity/主角/player.tscn" id="2_io8c7"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_k05nx")
+
+[node name="Player" parent="." instance=ExtResource("2_io8c7")]
