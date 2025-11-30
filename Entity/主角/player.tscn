@@ -270,10 +270,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcxbn"]
-size = Vector2(52, 43)
+size = Vector2(50, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aedmp"]
-size = Vector2(55, 42)
+size = Vector2(49, 27)
 
 [sub_resource type="Animation" id="Animation_aedmp"]
 length = 0.001
@@ -390,7 +390,7 @@ func 普攻():
 func 放箭(c:bool=false):
 	var a:Area2D=弓箭.instantiate()
 	a.穿透=c
-	a.图片_方向=entity_2.图片_方向
+	a.图片_方向=entity_2.player_dir
 	a.global_position=entity_2.global_position
 	entity_2.get_parent().add_child(a)
 var 释放:bool
@@ -721,7 +721,7 @@ alignment = 2
 [node name="鼠标左键" parent="CanvasLayer/右下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = ""
-"冷却值" = -8339.238080187393
+"冷却值" = -8338.542164854063
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标左键"]
 layout_mode = 1
@@ -742,7 +742,7 @@ texture = ExtResource("8_ajqgl")
 layout_mode = 2
 "按键" = ""
 "技能_图标" = ExtResource("8_0qels")
-"冷却值" = -8339.238080187393
+"冷却值" = -8338.542164854063
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标右键"]
 layout_mode = 1
@@ -775,19 +775,19 @@ theme_override_constants/separation = 20
 layout_mode = 2
 "按键" = "A"
 "技能_图标" = ExtResource("9_v6kgo")
-"冷却值" = -8339.238080187393
+"冷却值" = -8338.542164854063
 
 [node name="技能按钮2" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "w"
 "技能_图标" = ExtResource("10_ajqgl")
-"冷却值" = -8339.238080187393
+"冷却值" = -8338.542164854063
 
 [node name="技能按钮3" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "d"
 "技能_图标" = ExtResource("11_vta88")
-"冷却值" = -8339.238080187393
+"冷却值" = -8338.542164854063
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -820,19 +820,19 @@ alignment = 1
 layout_mode = 2
 "按键" = "1"
 "技能_图标" = ExtResource("15_g4f1u")
-"冷却值" = -19.090288666665757
+"冷却值" = -18.394373333332922
 
 [node name="技能按钮2" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "2"
 "技能_图标" = ExtResource("18_8ndxi")
-"冷却值" = -19.18765777777696
+"冷却值" = -18.491742444444125
 
 [node name="技能按钮3" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "3"
 "技能_图标" = ExtResource("20_vmob0")
-"冷却值" = -19.183267333332427
+"冷却值" = -18.48735199999959
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -857,12 +857,12 @@ collision_mask = 4
 script = ExtResource("9_neb7i")
 
 [node name="攻击_1" type="CollisionShape2D" parent="剑2/攻击区"]
-position = Vector2(16, -6.5)
+position = Vector2(21, -6)
 shape = SubResource("RectangleShape2D_xcxbn")
 disabled = true
 
 [node name="攻击_2" type="CollisionShape2D" parent="剑2/攻击区"]
-position = Vector2(17.5, -6)
+position = Vector2(21.5, -5.5)
 shape = SubResource("RectangleShape2D_aedmp")
 disabled = true
 

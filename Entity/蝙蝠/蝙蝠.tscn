@@ -28,7 +28,7 @@ func 靠近(delta: float):
 	if 差值.x*图片_方向<-1:
 		scale.x=-scale.x
 		图片_方向=-图片_方向
-	if 差值.length()>150:
+	if 差值.length()>130:
 		velocity=velocity+(20*差值.normalized()-velocity)*10*delta
 		animated_sprite_2d.play(\"i\")
 	else :
@@ -401,8 +401,6 @@ metadata/_custom_type_script = "uid://v4uwxotregtq"
 position = Vector2(-16, 5)
 script = ExtResource("2_4qbqk")
 health_component = NodePath("..")
-max_cells_num = 3
-current_cells_num = 3
 metadata/_custom_type_script = "uid://cj3xyb234cfoh"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
