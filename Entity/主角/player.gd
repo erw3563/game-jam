@@ -11,6 +11,8 @@ class_name Player_2
 @onready var 切:Array[职业]=[$剑2,$弓,$盾]
 @onready var 当前职业:职业
 
+var player_dir:float
+
 ##用于 战败 中的 重来
 func 重置():
 	health_component.current_health=health_component.max_health
@@ -105,6 +107,7 @@ func _on_health_component_health_delta_applied(_amount: int) -> void:
 
 func _on_player_move_component_turned(dir: float) -> void:
 	scale.x = - scale.x
+	player_dir = dir
 
 func _on_dash_component_dashed(dir:Vector2) -> void:
 	$DashAttackComponent.fire(dir)
