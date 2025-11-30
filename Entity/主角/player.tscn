@@ -731,7 +731,7 @@ alignment = 2
 [node name="鼠标左键" parent="CanvasLayer/右下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = ""
-"冷却值" = -8338.734804224434
+"冷却值" = -8338.808630891102
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标左键"]
 layout_mode = 1
@@ -752,7 +752,8 @@ texture = ExtResource("8_ajqgl")
 layout_mode = 2
 "按键" = ""
 "技能_图标" = ExtResource("8_0qels")
-"冷却值" = -18.006445888889836
+"冷却时间" = 1.0
+"冷却值" = -17.92530777777808
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标右键"]
 layout_mode = 1
@@ -785,19 +786,19 @@ theme_override_constants/separation = 20
 layout_mode = 2
 "按键" = "A"
 "技能_图标" = ExtResource("9_v6kgo")
-"冷却值" = -8338.734804224434
+"冷却值" = -8338.808630891102
 
 [node name="MoveUp" parent="CanvasLayer/MoveInputButton" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "w"
 "技能_图标" = ExtResource("10_ajqgl")
-"冷却值" = -8338.734804224434
+"冷却值" = -8338.808630891102
 
 [node name="MoveRight" parent="CanvasLayer/MoveInputButton" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "d"
 "技能_图标" = ExtResource("11_vta88")
-"冷却值" = -8338.734804224434
+"冷却值" = -8338.808630891102
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -830,19 +831,19 @@ alignment = 1
 layout_mode = 2
 "按键" = "1"
 "技能_图标" = ExtResource("15_g4f1u")
-"冷却值" = -18.587012703703934
+"冷却值" = -18.660839370370603
 
 [node name="技能按钮2" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "2"
 "技能_图标" = ExtResource("18_8ndxi")
-"冷却值" = -18.68438181481514
+"冷却值" = -18.75820848148181
 
 [node name="技能按钮3" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
 layout_mode = 2
 "按键" = "3"
 "技能_图标" = ExtResource("20_vmob0")
-"冷却值" = -18.679991370370605
+"冷却值" = -18.753818037037274
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -939,6 +940,7 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="turned" from="PlayerMoveComponent" to="." method="_on_player_move_component_turned"]
 [connection signal="dashed" from="PlayerMoveComponent/DashComponent" to="." method="_on_dash_component_dashed"]
+[connection signal="dashed" from="PlayerMoveComponent/DashComponent" to="CanvasLayer/右下/鼠标右键" method="_on_dash_component_dashed"]
 [connection signal="health_delta_applied" from="HealthComponent" to="." method="_on_health_component_health_delta_applied"]
 [connection signal="hited" from="HealthComponent" to="." method="_on_health_component_hited"]
 [connection signal="health_delta_applied" from="盾/HealthComponent" to="盾" method="_on_health_component_health_delta_applied"]

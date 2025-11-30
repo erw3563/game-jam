@@ -53,7 +53,6 @@ func 镜头至屏幕_复原():
 func _ready() -> void:
 	_初始位置=position
 	切换职业(切[0])
-	鼠标右键.冷却时间=4
 	初始缩放=camera_2d.zoom
 	
 func 限制相机移动(a:Control):
