@@ -88,4 +88,5 @@ func _on_dialogue_label_finished_typing() -> void:
 func 跳过对话():
 	if  dialogue_label.is_typing: 
 		dialogue_label.skip_typing()
+	visible=false
 	结束.emit()

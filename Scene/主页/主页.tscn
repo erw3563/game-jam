@@ -13,6 +13,10 @@ script/source = "extends Control
 
 func _on_button_pressed() -> void:
 	转场.切换章节_并丢弃(self,\"res://Scene/第一章_开场/第一章_桥.tscn\")
+
+
+func _on_texture_rect_3_pressed() -> void:
+	get_tree().quit()
 "
 
 [node name="Control" type="Control"]
@@ -66,39 +70,6 @@ text = "Status:ONLINE
 User:A-MEN
 Network:???
 Ghost Module:RUNNING"
-
-[node name="Control" type="Control" parent="."]
-modulate = Color(0.023529412, 0.02745098, 0.07450981, 1)
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-grow_horizontal = 0
-scale = Vector2(4, 4)
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -56.0
-offset_bottom = 16.0
-grow_horizontal = 0
-
-[node name="TextureRect" type="TextureRect" parent="Control/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("1_pvfdj")
-stretch_mode = 2
-
-[node name="TextureRect2" type="TextureRect" parent="Control/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("2_saf3g")
-stretch_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="Control/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("3_gftoo")
-stretch_mode = 2
 
 [node name="Control2" type="Control" parent="."]
 layout_mode = 1
@@ -193,6 +164,36 @@ text = "[b][i]system error[/i][/b]"
 fit_content = true
 autowrap_mode = 0
 
+[node name="右上角" type="Control" parent="."]
+modulate = Color(0.023529412, 0.02745098, 0.07450981, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+scale = Vector2(4, 4)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="右上角"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -56.0
+offset_bottom = 16.0
+grow_horizontal = 0
+
+[node name="TextureRect" type="TextureButton" parent="右上角/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("1_pvfdj")
+
+[node name="TextureRect2" type="TextureButton" parent="右上角/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_saf3g")
+
+[node name="TextureRect3" type="TextureButton" parent="右上角/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_gftoo")
+
 [node name="主菜单" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -232,4 +233,6 @@ layout_mode = 2
 text = "Shutdown"
 flat = true
 
+[connection signal="pressed" from="右上角/HBoxContainer/TextureRect3" to="." method="_on_texture_rect_3_pressed"]
 [connection signal="pressed" from="主菜单/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="主菜单/Button4" to="." method="_on_texture_rect_3_pressed"]
