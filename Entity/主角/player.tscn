@@ -1,0 +1,935 @@
+[gd_scene load_steps=67 format=3 uid="uid://c5p3akujvmitw"]
+
+[ext_resource type="Script" uid="uid://bo7cdxcjy6i7i" path="res://Entity/主角/player.gd" id="1_aedmp"]
+[ext_resource type="Texture2D" uid="uid://domlvvs4mv48i" path="res://Entity/主角/主角.png" id="2_uhjsk"]
+[ext_resource type="Shader" uid="uid://clp8hn51js7q0" path="res://Shader/受击.gdshader" id="2_xethj"]
+[ext_resource type="Script" uid="uid://twsbkr63b21g" path="res://GDBase/Move/Input/move_gravity_by_input_component.gd" id="3_kohgm"]
+[ext_resource type="Script" uid="uid://v4uwxotregtq" path="res://GDBase/Health/health_component.gd" id="5_v6kgo"]
+[ext_resource type="PackedScene" uid="uid://dssccalehutiv" path="res://GDBase/CellProgressBar/cells_progress_bar.tscn" id="6_ajqgl"]
+[ext_resource type="Texture2D" uid="uid://1yfmn2voamr8" path="res://Entity/主角/主角-攻击_1.png" id="7_qjlo7"]
+[ext_resource type="Texture2D" uid="uid://bueumc6ilv2u5" path="res://Entity/主角/按键ui/闪现.png" id="8_0qels"]
+[ext_resource type="Texture2D" uid="uid://biaixp6t131r8" path="res://Entity/主角/按键ui/鼠标左键.png" id="8_ajqgl"]
+[ext_resource type="Script" uid="uid://iubl2fg1wf6e" path="res://Entity/攻击区.gd" id="9_neb7i"]
+[ext_resource type="Texture2D" uid="uid://brgtaan2aiact" path="res://Entity/主角/按键ui/箭头_1.png" id="9_v6kgo"]
+[ext_resource type="Texture2D" uid="uid://s1oh0b6vcoro" path="res://Entity/主角/按键ui/跳跃.png" id="10_ajqgl"]
+[ext_resource type="Texture2D" uid="uid://drhh2ie76i5ir" path="res://Entity/主角/主角_弓_蓄力.png" id="10_neb7i"]
+[ext_resource type="Texture2D" uid="uid://cxkcil5oakd2w" path="res://Entity/主角/按键ui/鼠标右键.png" id="10_vta88"]
+[ext_resource type="Texture2D" uid="uid://d4lxnualbpoto" path="res://Entity/主角/按键ui/箭头.png" id="11_vta88"]
+[ext_resource type="Texture2D" uid="uid://dt4i2tk7iilvt" path="res://Entity/主角/主角_盾.png" id="11_xcxbn"]
+[ext_resource type="PackedScene" uid="uid://o8oiohshndjo" path="res://GDBase/ui/技能按钮_2.tscn" id="13_uhjsk"]
+[ext_resource type="Texture2D" uid="uid://dpg8vyn035ska" path="res://Entity/主角/按键ui/图标_剑.png" id="15_g4f1u"]
+[ext_resource type="Texture2D" uid="uid://boad6f7dv2h2k" path="res://Entity/主角/按键ui/图标_弓.png" id="18_8ndxi"]
+[ext_resource type="Texture2D" uid="uid://c2630hlu30otg" path="res://Entity/主角/按键ui/图标_盾.png" id="20_vmob0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_neb7i"]
+shader = ExtResource("2_xethj")
+shader_parameter/is_hit = false
+shader_parameter/flash_color = Vector4(0.4, 0.4, 0.4, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxyjl"]
+size = Vector2(15, 28)
+
+[sub_resource type="Curve" id="Curve_h2qjg"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_boq8c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8a2w1"]
+atlas = ExtResource("7_qjlo7")
+region = Rect2(144, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xethj"]
+atlas = ExtResource("7_qjlo7")
+region = Rect2(288, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_neb7i"]
+atlas = ExtResource("7_qjlo7")
+region = Rect2(432, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcxbn"]
+atlas = ExtResource("7_qjlo7")
+region = Rect2(576, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aedmp"]
+atlas = ExtResource("7_qjlo7")
+region = Rect2(720, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhjsk"]
+atlas = ExtResource("7_qjlo7")
+region = Rect2(864, 0, 144, 144)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m75f7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8a2w1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xethj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_neb7i")
+}],
+"loop": false,
+"name": &"a_1",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcxbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aedmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhjsk")
+}],
+"loop": false,
+"name": &"a_2",
+"speed": 8.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_8a2w1"]
+script/source = "#extends AnimatedSprite2D
+extends 职业
+
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+func 切入():
+	_攻击段数_当前=0
+
+func 普攻():
+	set_process(true)
+	再次点击鼠标左键=true
+	while 再次点击鼠标左键:
+		再次点击鼠标左键=false
+		await  攻击()
+	set_process(false)
+var _攻击段数_当前:int=0
+const  _普攻:Array[String]=[\"攻击_1\",\"攻击_2\"]
+
+func 攻击():
+	animation_player.play(_普攻[_攻击段数_当前])
+	_攻击段数_当前=(_攻击段数_当前+1)%_普攻.size()
+	await animation_player.animation_finished
+
+func _ready() -> void:
+	set_process(false)
+var 再次点击鼠标左键=false
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed(\"attack\"):
+		再次点击鼠标左键=true
+"
+
+[sub_resource type="Animation" id="Animation_xethj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("剑2:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("剑2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("剑2/攻击区/攻击_1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("剑2/攻击区/攻击_2:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_8a2w1"]
+resource_name = "攻击_1"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("剑2:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"a_1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("剑2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("剑2/攻击区/攻击_1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_neb7i"]
+resource_name = "攻击_2"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("剑2/攻击区/攻击_2:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("剑2:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"a_2"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("剑2:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xcxbn"]
+_data = {
+&"RESET": SubResource("Animation_xethj"),
+&"攻击_1": SubResource("Animation_8a2w1"),
+&"攻击_2": SubResource("Animation_neb7i")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xcxbn"]
+size = Vector2(52, 43)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aedmp"]
+size = Vector2(55, 42)
+
+[sub_resource type="Animation" id="Animation_aedmp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("主角:material:shader_parameter/is_hit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("主角:material:shader_parameter/qiang_hua")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_xcxbn"]
+resource_name = "受击"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("主角:material:shader_parameter/is_hit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.23333333, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("主角:material:shader_parameter/qiang_hua")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uhjsk"]
+_data = {
+&"RESET": SubResource("Animation_aedmp"),
+&"受击": SubResource("Animation_xcxbn")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kohgm"]
+atlas = ExtResource("10_neb7i")
+region = Rect2(0, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qels"]
+atlas = ExtResource("10_neb7i")
+region = Rect2(144, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6kgo"]
+atlas = ExtResource("10_neb7i")
+region = Rect2(432, 0, 144, 144)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4f1u"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kohgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0qels")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6kgo")
+}],
+"loop": false,
+"name": &"蓄力",
+"speed": 8.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_8ndxi"]
+script/source = "extends 职业
+@onready var entity_2: Player_2 = $\"..\"
+
+var 弓箭=preload(\"res://Entity/主角/弓箭.tscn\")
+func 普攻():
+	释放=false
+	set_process(true)
+	var 蓄力次数=0
+	while not 释放 and 蓄力次数<3:
+		蓄力次数+=1
+		play(\"蓄力\")
+		await animation_finished
+	if 蓄力次数>=3:
+		放箭(true)
+	else :
+		放箭()
+func 放箭(c:bool=false):
+	var a:Area2D=弓箭.instantiate()
+	a.穿透=c
+	a.图片_方向=entity_2.图片_方向
+	a.global_position=entity_2.global_position
+	entity_2.get_parent().add_child(a)
+var 释放:bool
+func _ready() -> void:
+	set_process(false)
+func _process(_delta: float) -> void:
+	if Input.is_action_just_released(\"attack\"):
+		释放=true
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4k1ox"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(0, 144, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_087rr"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(144, 144, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yupi5"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(288, 144, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5ump"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(432, 144, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83s0x"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(0, 288, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrjxe"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(144, 288, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2fao"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(288, 288, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mli5a"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(432, 288, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8gqq"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(0, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6k3s"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(144, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktqnd"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(288, 0, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0a5ax"]
+atlas = ExtResource("11_xcxbn")
+region = Rect2(432, 0, 144, 144)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_neb7i"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4k1ox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_087rr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yupi5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5ump")
+}],
+"loop": false,
+"name": &"受击",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83s0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrjxe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2fao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mli5a")
+}],
+"loop": false,
+"name": &"攻击",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8gqq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6k3s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktqnd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0a5ax")
+}],
+"loop": true,
+"name": &"蓄力",
+"speed": 8.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_xcxbn"]
+script/source = "extends 职业
+
+
+@onready var health_component: HealthComponent = $\"../HealthComponent\"
+@onready var 回复: HealthComponent = $HealthComponent
+@onready var progress_bar: ProgressBar = $ProgressBar
+
+signal 结束
+func 普攻():
+	health_component.monitorable=false
+	回复.monitorable=true
+	progress_bar.visible=true
+	攻击_=false
+	按下攻击=false
+	蓄力时间=0
+	play(\"蓄力\")
+	set_process(true)
+	await 结束
+func _ready() -> void:
+	set_process(false)
+var 攻击_:bool
+var 蓄力时间:float
+var 蓄力上线:float=1
+var 按下攻击:bool ##盾 是 松开 攻击
+func _process(delta: float) -> void:
+	蓄力时间+=delta
+	progress_bar.value=(1-蓄力时间/蓄力上线)*100
+	if Input.is_action_just_released(\"attack\"):
+		按下攻击=true
+	if 按下攻击 and 蓄力时间>=0.4 or  蓄力时间>=蓄力上线:
+		攻击()
+		set_process(false)
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+func 攻击():
+	攻击_=true
+	health_component.monitorable=true
+	回复.monitorable=false
+	progress_bar.visible=false
+	animation_player.play(\"普攻_攻击\")
+	await animation_player.animation_finished
+	结束.emit()
+
+
+func _on_health_component_health_delta_applied(_amount: int) -> void:
+	health_component.current_health+=1
+	play(\"受击\")
+	await animation_finished
+	if 攻击_==false:
+		play(\"蓄力\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uhjsk"]
+size = Vector2(42, 83)
+
+[sub_resource type="Animation" id="Animation_0qels"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.06666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("攻击区/攻击_1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_kohgm"]
+resource_name = "普攻_攻击"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"攻击"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.36666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("攻击区/攻击_1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.10595577, 0.3728828, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v6kgo"]
+_data = {
+&"RESET": SubResource("Animation_0qels"),
+&"普攻_攻击": SubResource("Animation_kohgm")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xcxbn"]
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aedmp"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Player" type="CharacterBody2D"]
+z_index = 1
+collision_layer = 2
+script = ExtResource("1_aedmp")
+
+[node name="主角" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_neb7i")
+position = Vector2(0, -2)
+texture = ExtResource("2_uhjsk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, -5)
+shape = SubResource("RectangleShape2D_sxyjl")
+
+[node name="MoveGravityByInput" type="Node" parent="." node_paths=PackedStringArray("mover")]
+script = ExtResource("3_kohgm")
+mover = NodePath("..")
+gravity = 16.0
+up_action = "move_up"
+jump_power = 256.0
+max_jump_num = 2
+jump_num = 2
+empty_jump_time = 1.0
+dash_time = 0.2
+dash_speed = 512.0
+time_faster = 0.2
+faster_curve = SubResource("Curve_h2qjg")
+time_slower = 0.2
+slower_curve = SubResource("Curve_boq8c")
+
+[node name="HealthComponent" type="Area2D" parent="."]
+position = Vector2(1, -5)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("5_v6kgo")
+max_health = 3
+current_health = 3
+is_hited_with_invulnerable = true
+hitd_invulnerable_time = 1.0
+metadata/_custom_type_script = "uid://v4uwxotregtq"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]
+position = Vector2(2, -1)
+shape = SubResource("RectangleShape2D_sxyjl")
+
+[node name="CellsProgressBar" parent="HealthComponent" node_paths=PackedStringArray("health_component") instance=ExtResource("6_ajqgl")]
+position = Vector2(-12, 10)
+health_component = NodePath("..")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="右下" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -302.0
+offset_top = -90.82501
+offset_right = -18.0
+offset_bottom = -32.825012
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="鼠标左键" parent="CanvasLayer/右下" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = ""
+"冷却值" = -8338.542164854063
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标左键"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -5.6450005
+offset_right = 20.0
+offset_bottom = 34.35498
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("8_ajqgl")
+
+[node name="鼠标右键" parent="CanvasLayer/右下" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = ""
+"技能_图标" = ExtResource("8_0qels")
+"冷却值" = -8338.542164854063
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/右下/鼠标右键"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -6.285
+offset_right = 20.0
+offset_bottom = 33.714996
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("10_vta88")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -45.0
+offset_right = 294.0
+offset_bottom = 13.0
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+theme_override_constants/separation = 20
+
+[node name="技能按钮" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = "A"
+"技能_图标" = ExtResource("9_v6kgo")
+"冷却值" = -8338.542164854063
+
+[node name="技能按钮2" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = "w"
+"技能_图标" = ExtResource("10_ajqgl")
+"冷却值" = -8338.542164854063
+
+[node name="技能按钮3" parent="CanvasLayer/HBoxContainer2" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = "d"
+"技能_图标" = ExtResource("11_vta88")
+"冷却值" = -8338.542164854063
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+
+[node name="中下" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -107.0
+offset_top = -108.045
+offset_right = 107.0
+offset_bottom = -50.045
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="技能按钮" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = "1"
+"技能_图标" = ExtResource("15_g4f1u")
+"冷却值" = -18.394373333332922
+
+[node name="技能按钮2" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = "2"
+"技能_图标" = ExtResource("18_8ndxi")
+"冷却值" = -18.491742444444125
+
+[node name="技能按钮3" parent="CanvasLayer/Control/中下" instance=ExtResource("13_uhjsk")]
+layout_mode = 2
+"按键" = "3"
+"技能_图标" = ExtResource("20_vmob0")
+"冷却值" = -18.48735199999959
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+limit_smoothed = true
+position_smoothing_enabled = true
+
+[node name="剑2" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_m75f7")
+script = SubResource("GDScript_8a2w1")
+"切换按键" = "切_剑"
+"普攻_图标" = ExtResource("15_g4f1u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="剑2"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_xcxbn")
+}
+
+[node name="攻击区" type="Area2D" parent="剑2"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("9_neb7i")
+
+[node name="攻击_1" type="CollisionShape2D" parent="剑2/攻击区"]
+position = Vector2(16, -6.5)
+shape = SubResource("RectangleShape2D_xcxbn")
+disabled = true
+
+[node name="攻击_2" type="CollisionShape2D" parent="剑2/攻击区"]
+position = Vector2(17.5, -6)
+shape = SubResource("RectangleShape2D_aedmp")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_uhjsk")
+}
+
+[node name="弓" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_g4f1u")
+animation = &"蓄力"
+frame = 2
+frame_progress = 1.0
+script = SubResource("GDScript_8ndxi")
+"切换按键" = "切_弓"
+"普攻_图标" = ExtResource("18_8ndxi")
+
+[node name="盾" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_neb7i")
+script = SubResource("GDScript_xcxbn")
+"切换按键" = "切_盾"
+"普攻_图标" = ExtResource("20_vmob0")
+
+[node name="HealthComponent" type="Area2D" parent="盾"]
+position = Vector2(1, -5)
+collision_layer = 2
+collision_mask = 0
+monitorable = false
+script = ExtResource("5_v6kgo")
+is_hited_with_invulnerable = true
+hitd_invulnerable_time = 1.0
+metadata/_custom_type_script = "uid://v4uwxotregtq"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="盾/HealthComponent"]
+position = Vector2(2, -1)
+shape = SubResource("RectangleShape2D_sxyjl")
+
+[node name="攻击区" type="Area2D" parent="盾"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("9_neb7i")
+
+[node name="攻击_1" type="CollisionShape2D" parent="盾/攻击区"]
+position = Vector2(23, -2.5)
+shape = SubResource("RectangleShape2D_uhjsk")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="盾"]
+libraries = {
+&"": SubResource("AnimationLibrary_v6kgo")
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="盾"]
+visible = false
+offset_left = -11.0
+offset_top = -29.0
+offset_right = 15.0
+offset_bottom = -27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_xcxbn")
+theme_override_styles/fill = SubResource("StyleBoxFlat_aedmp")
+value = 83.97
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[connection signal="turned" from="MoveGravityByInput" to="." method="_on_move_gravity_by_input_turned"]
+[connection signal="health_delta_applied" from="HealthComponent" to="." method="_on_health_component_health_delta_applied"]
+[connection signal="hited" from="HealthComponent" to="." method="_on_health_component_hited"]
+[connection signal="health_delta_applied" from="盾/HealthComponent" to="盾" method="_on_health_component_health_delta_applied"]
