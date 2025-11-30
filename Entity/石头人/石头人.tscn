@@ -546,8 +546,6 @@ metadata/_custom_type_script = "uid://v4uwxotregtq"
 position = Vector2(-23, 27)
 script = ExtResource("2_mh5es")
 health_component = NodePath("..")
-max_cells_num = 12
-current_cells_num = 12
 metadata/_custom_type_script = "uid://cj3xyb234cfoh"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HealthComponent"]

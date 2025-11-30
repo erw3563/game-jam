@@ -5,6 +5,10 @@ class_name Player_2
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var player_move_component: PlayerHorizontalMoveInCurveComponent = $MoveGravityByInput
+@onready var 鼠标右键 = $CanvasLayer/右下/鼠标右键
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var 切:Array[职业]=[$剑2,$弓,$盾]
+@onready var 当前职业:职业
 
 ##用于 战败 中的 重来
 func 重置():
@@ -62,27 +66,11 @@ func 限制相机移动(a:Control):
 ###
 var _初始位置:Vector2
 
-func _on_fire_ball_created_interval_timer(timer: Timer) -> void:
-	$CanvasLayer/HBoxContainer/R.init(timer)
-func _on_circular_chop_created_interval_timer(timer: Timer) -> void:
-	$CanvasLayer/HBoxContainer/F.init(timer)
-
-func _on_attack_fired(dir: Vector2) -> void:
-	player_move_component.set_velocity(-dir * 16)
-func _on_fire_fired(dir: Vector2) -> void:
-	player_move_component.set_velocity(-dir * 16)
-func _on_fire_ball_fired(dir: Vector2) -> void:
-	player_move_component.set_velocity(-dir * 256)
-func _on_circular_chop_fired(dir: Vector2) -> void:
-	player_move_component.set_velocity(-dir * 512)
-
 func _on_health_component_hited(dir: Vector2i) -> void:
 	player_move_component.set_velocity(-dir * 256)
 	
 ############
 var player_dir=1
-@onready var 切:Array[职业]=[$剑2,$弓,$盾]
-@onready var 当前职业:职业
 var 锁定:bool=false:
 	set(a):
 		锁定=a
@@ -119,7 +107,6 @@ func 闪现_(_delta: float) -> void:
 	move_and_slide()
 
 
-@onready var 鼠标右键 = $CanvasLayer/右下/鼠标右键
 var 可_闪现:bool=true
 func 闪现():
 	可_闪现=false
@@ -130,10 +117,9 @@ func 闪现():
 	模式=空
 	鼠标右键.冷却()
 
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 func _on_health_component_health_delta_applied(_amount: int) -> void:
 	animation_player.play("受击")
-
 
 func _on_move_gravity_by_input_turned(dir_: float) -> void:
 	scale.x = -scale.x
