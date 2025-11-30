@@ -10,9 +10,8 @@ signal turned(dir:float)
 @export_group("按键动作")
 @export var left_action:String = "move_left"
 @export var right_action:String = "move_right"
-@export var up_action:String = "jump"
+@export var up_action:String = "move_up"
 @export var down_action:String = "move_down"
-@export var dash_action:String = "dash"
 
 @export_group("跳跃")
 @export var jump_power:float = 258
@@ -29,14 +28,9 @@ var empty_jump_timer:Timer
 @export_subgroup("空中移动速度偏移")
 @export var jump_action_offset:float = 4 ##由跳跃键和下蹲键引起空中下落速度偏移
 @export var air_velocity_x_multiplication:float = 0.8
-@export_subgroup("跳跃输入容错")
+@export_subgroup("跳跃提前输入容错")
 @export var advance_input_jump_time:float = 0.2
 var advance_input_jump_timer:Timer
-
-@export_group("冲刺")
-@export var dash_time:float = 1
-@export var dash_speed:float = 256
-var dash_timer:Timer
 
 @export_group("加速")
 @export var time_faster:float = 1
@@ -53,29 +47,37 @@ var slower_progress:float = 0:
 	set(value):
 		slower_progress = clamp(value,0,1)
 
-
 var input_x:float
 var input_y:float
+var input_dir:Vector2
+var mover_dir:float = 1
 
 enum MoveState{
 	Ground,
-	Air
-}
+	Air}
 
 var current_MoveState:MoveState
 
-var highest_velocity:Vector2 = Vector2.ZERO
-var added_velocity:Vector2 = Vector2.ZERO
+var external_velocity:Vector2 = Vector2.ZERO##外界设置的速度
+var added_velocity:Vector2 = Vector2.ZERO##外界添加的速度
 
 func set_velocity(velocity:Vector2):
-	highest_velocity = velocity
+	external_velocity = velocity
 
 func set_added_velocity(velocity:Vector2):
 	added_velocity = velocity
 
+func get_velocity()->Vector2:
+	return mover.velocity
+
+func get_input_dir()->Vector2:
+	return input_dir
+
+func get_mover_pos()->Vector2:
+	return mover.position
+
 func _ready() -> void:
 	empty_jump_timer = _create_timer(empty_jump_time)
-	dash_timer = _create_timer(dash_time)
 	advance_input_jump_timer = _create_timer(advance_input_jump_time)
 
 func _physics_process(delta: float) -> void:
@@ -85,21 +87,19 @@ func _physics_process(delta: float) -> void:
 	_check_MoveState()
 	_set_mover_velocity_x(delta)
 	_set_mover_veloctiy_y()
-	_check_highest_velocity()
-	_check_dash()
+	_check_external_setted_velocity()
 	mover.move_and_slide()
 
 func _check_input():
-	var pre_input_x = input_x
 	input_x = Input.get_axis(left_action,right_action)
 	input_y = Input.get_axis(up_action,down_action)
+	input_dir = Input.get_vector(left_action,right_action,up_action,down_action)
 	if !mover.is_on_floor() and Input.is_action_just_pressed(up_action):
 		if advance_input_jump_timer.is_stopped():
 			advance_input_jump_timer.start()
-	
-	if pre_input_x != input_x and input_x != 0:
-		turned.emit(input_x)
-
+	if mover_dir != input_x and input_x != 0:
+		mover_dir = input_x
+		turned.emit(mover_dir)
 
 func _check_MoveState():
 	if mover.is_on_floor():
@@ -155,8 +155,7 @@ func _set_mover_veloctiy_y():
 		mover.velocity.y = 0
 	else:
 		mover.velocity.y += gravity + input_y * jump_action_offset
-	
-	if jump_num > 0 and Input.is_action_just_pressed(up_action):
+	if jump_num > 0 and input_y == -1:
 		mover.velocity.y = -jump_power 
 		jump_num -= 1
 	elif mover.is_on_floor() and !advance_input_jump_timer.is_stopped():
@@ -164,21 +163,11 @@ func _set_mover_veloctiy_y():
 		jump_num -= 1
 		advance_input_jump_timer.stop()
 
-func _jump():
-	if jump_num > 0 and Input.is_action_just_pressed(up_action):
-		mover.velocity.y = input_y * jump_power 
-		jump_num -= 1
-
-func _check_dash():
-	if Input.is_action_just_pressed(dash_action):
-		dash_timer.start()
-	if !dash_timer.is_stopped():
-		mover.velocity.x = dash_speed * signf(mover.velocity.x)
-
-func _check_highest_velocity():
-	if highest_velocity != Vector2.ZERO:
-		mover.velocity = highest_velocity
-		highest_velocity = Vector2.ZERO
+##这是由外界干预设置的速度
+func _check_external_setted_velocity():
+	if external_velocity != Vector2.ZERO:
+		mover.velocity = external_velocity
+		external_velocity = Vector2.ZERO
 
 func _check_added_velocity():
 	if added_velocity != Vector2.ZERO:
