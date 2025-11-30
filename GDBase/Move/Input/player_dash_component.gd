@@ -1,6 +1,8 @@
 extends Node
 class_name DashComponent
 
+signal dashed(dash_dir:Vector2)
+
 @export var player_move_component:PlayerHorizontalMoveInCurveComponent
 @export var dash_action:String = "dash"
 @export var dash_time:float = 0.2
@@ -15,6 +17,7 @@ func set_dash_dir(dash_dir:Vector2):
 		dash_timer.start()
 		dash_interval_timer.start()
 		external_dash_dir = dash_dir
+		dashed.emit(external_dash_dir)
 
 func _ready() -> void:
 	_create_dash_timer()
@@ -30,6 +33,8 @@ func _check_dash():
 		dash_timer.start()
 		dash_interval_timer.start()
 		external_dash_dir = Vector2.ZERO
+		var input_dir:Vector2 = player_move_component.get_input_dir()
+		dashed.emit(input_dir)
 
 func _dash():
 	if dash_timer.is_stopped():

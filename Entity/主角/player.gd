@@ -106,3 +106,6 @@ func _on_health_component_health_delta_applied(_amount: int) -> void:
 
 func _on_player_move_component_turned(dir: float) -> void:
 	scale.x = - scale.x
+
+func _on_dash_component_dashed(dir:Vector2) -> void:
+	$DashAttackComponent.fire(dir)
