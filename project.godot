@@ -23,8 +23,8 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=768
-window/size/viewport_height=512
+window/size/viewport_width=922
+window/size/viewport_height=518
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

@@ -103,12 +103,10 @@ static  func 选择(暂停节点: Node)->String:  ##b 填一个可通往根节�
 	await 暂停节点.get_tree().physics_frame
 	var a=_c.instantiate()
 	暂停节点.get_tree().root.add_child(a)
-	#暂停节点.call_deferred("战败ui.暂停", true)
 	暂停(暂停节点,true)
 	var c=await a._选择
 	a.queue_free()
 	暂停(暂停节点,false)
-	#暂停节点.call_deferred("战败ui.暂停", false)
 	return c
 static func 暂停(node: Node, pause: bool):
 	# 停止/恢复 process & physics
